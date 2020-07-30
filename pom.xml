@@ -30,6 +30,42 @@
         <springdoc.openapi.ui.version>1.4.3</springdoc.openapi.ui.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-ui</artifactId>
+                <version>${springdoc.openapi.ui.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>maven-local-releases</id>
+            <name>releases</name>
+            <url>http://localhost:8081/repository/maven-local-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>maven-local-snapshots</id>
+            <name>snapshots</name>
+            <url>http://localhost:8081/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <repositories>
+        <repository>
+            <id>maven-local-releases</id>
+            <name>releases</name>
+            <url>http://localhost:8081/repository/maven-local-releases/</url>
+        </repository>
+        <repository>
+            <id>maven-central</id>
+            <name>central</name>
+            <url>http://localhost:8081/repository/maven-central/</url>
+        </repository>
+    </repositories>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -40,18 +76,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.junit.vintage</groupId>
-                    <artifactId>junit-vintage-engine</artifactId>
-                </exclusion>
-            </exclusions>
         </dependency>
 
         <dependency>
@@ -88,40 +112,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springdoc</groupId>
-                <artifactId>springdoc-openapi-ui</artifactId>
-                <version>${springdoc.openapi.ui.version}</version>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
-
-    <distributionManagement>
-        <repository>
-            <id>maven-local-releases</id>
-            <name>releases</name>
-            <url>http://localhost:8081/repository/maven-local-releases/</url>
-        </repository>
-        <snapshotRepository>
-            <id>maven-local-snapshots</id>
-            <name>snapshots</name>
-            <url>http://localhost:8081/repository/maven-snapshots/</url>
-        </snapshotRepository>
-    </distributionManagement>
-
-    <repositories>
-        <repository>
-            <id>maven-local-releases</id>
-            <name>releases</name>
-            <url>http://localhost:8081/repository/maven-local-releases/</url>
-        </repository>
-        <repository>
-            <id>maven-central</id>
-            <name>central</name>
-            <url>http://localhost:8081/repository/maven-central/</url>
-        </repository>
-    </repositories>
 </project>
