@@ -22,7 +22,10 @@
     <dependency>
       <groupId>com.example</groupId>
       <artifactId>poc-api</artifactId>
-      <version>1.${revision}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.example</groupId>
+      <artifactId>poc-components</artifactId>
     </dependency>
   </dependencies>
   <build>

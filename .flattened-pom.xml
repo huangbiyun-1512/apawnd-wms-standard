@@ -40,6 +40,7 @@
     <springdoc.openapi.ui.version>1.4.3</springdoc.openapi.ui.version>
     <java.version>11</java.version>
     <revision>0.1-RELEASE</revision>
+    <poc.components.version>1.0.1-RELEASE</poc.components.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -47,6 +48,16 @@
         <groupId>org.springdoc</groupId>
         <artifactId>springdoc-openapi-ui</artifactId>
         <version>${springdoc.openapi.ui.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.example</groupId>
+        <artifactId>poc-api</artifactId>
+        <version>1.0.1-RELEASE</version>
+      </dependency>
+      <dependency>
+        <groupId>com.example</groupId>
+        <artifactId>poc-components</artifactId>
+        <version>${poc.components.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
