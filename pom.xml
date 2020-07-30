@@ -28,6 +28,8 @@
         <revision>0.1-RELEASE</revision>
 
         <springdoc.openapi.ui.version>1.4.3</springdoc.openapi.ui.version>
+
+        <poc.components.version>1.0.1-RELEASE</poc.components.version>
     </properties>
 
     <dependencyManagement>
@@ -36,6 +38,18 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.openapi.ui.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>poc-api</artifactId>
+                <version>1.${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.example</groupId>
+                <artifactId>poc-components</artifactId>
+                <version>${poc.components.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

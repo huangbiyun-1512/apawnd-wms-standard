@@ -1,6 +1,7 @@
-package com.example.controller.v1;
+package com.example.poc.controller.v1;
 
 import com.example.poc.api.HealthCheckApi;
+import com.example.poc.components.annotation.AutoLogging;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ public class HealthCheckApiController implements HealthCheckApi {
 
   @Override
   @GetMapping("/health")
+  @AutoLogging
   public ResponseEntity isAlive() {
     return ResponseEntity.ok(true);
   }
