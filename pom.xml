@@ -56,12 +56,12 @@
 
     <distributionManagement>
         <repository>
-            <id>maven-local-releases</id>
+            <id>maven-releases</id>
             <name>releases</name>
-            <url>http://localhost:8081/repository/maven-local-releases/</url>
+            <url>http://localhost:8081/repository/maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>maven-local-snapshots</id>
+            <id>maven-snapshots</id>
             <name>snapshots</name>
             <url>http://localhost:8081/repository/maven-snapshots/</url>
         </snapshotRepository>
@@ -69,9 +69,9 @@
 
     <repositories>
         <repository>
-            <id>maven-local-releases</id>
+            <id>maven-releases</id>
             <name>releases</name>
-            <url>http://localhost:8081/repository/maven-local-releases/</url>
+            <url>http://localhost:8081/repository/maven-releases/</url>
         </repository>
         <repository>
             <id>maven-central</id>
