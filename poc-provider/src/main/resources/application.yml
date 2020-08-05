@@ -1,7 +1,5 @@
-server:
-  port: 8080
-logging:
-  config: classpath:logback-spring.xml
 spring:
-  profiles:
-    active: local
+  application:
+    name: poc-domain
+  messages:
+    basename: static/i18n/messages
