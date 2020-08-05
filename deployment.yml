@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: poc-domain-deployment
+  labels:
+    app: poc-domain
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: poc-domain
+  template:
+    metadata:
+      labels:
+        app: poc-domain
+    spec:
+      containers:
+        - name: poc-domain
+          image: huangbiyun1512/poc-domain:latest
+          ports:
+            - containerPort: 8080
