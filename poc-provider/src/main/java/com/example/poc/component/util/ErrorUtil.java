@@ -25,6 +25,14 @@ public class ErrorUtil {
         return this.buildErrorList(HttpStatus.BAD_REQUEST.value(), key, detail);
     }
 
+    public List<BaseErrorDto> build408ErrorList(String key) {
+        return this.buildErrorList(HttpStatus.REQUEST_TIMEOUT.value(), key);
+    }
+
+    public List<BaseErrorDto> build408ErrorList(String key, String detail) {
+        return this.buildErrorList(HttpStatus.REQUEST_TIMEOUT.value(), key, detail);
+    }
+
     public List<BaseErrorDto> build500ErrorList(String key) {
         return this.buildErrorList(HttpStatus.INTERNAL_SERVER_ERROR.value(), key);
     }
