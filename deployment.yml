@@ -17,5 +17,6 @@ spec:
       containers:
         - name: poc-domain
           image: huangbiyun1512/poc-domain:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 8080
