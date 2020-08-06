@@ -24,6 +24,9 @@ public class InboundController implements InboundApi {
   public ResponseEntity createPurchaseOrder(@Valid @RequestBody PoDto poDto) {
     log.info("po_number: {}", poDto.getPoNumber());
     log.info("create_date: {}", poDto.getCreateDate());
+    log.info("order_pcs: {}", poDto.getOrderPcs());
+    log.info("lp_sequence: {}", poDto.getLpSequence());
+    log.info("generic_field1: {}", poDto.getGenericField1());
     return ResponseEntity.created(null).build();
   }
 }
