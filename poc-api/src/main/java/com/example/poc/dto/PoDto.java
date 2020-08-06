@@ -1,16 +1,18 @@
 package com.example.poc.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
 @Data
-@AllArgsConstructor
+@NoArgsConstructor
 public class PoDto {
 
+  @NotEmpty
   private String poNumber;
   private String typeName;
   private String vendorCode;

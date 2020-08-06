@@ -1,4 +1,4 @@
-package com.example.poc.enums;
+package com.example.poc.component.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -3,6 +3,7 @@ package com.example.poc.controller.v1;
 import com.common.poc.components.annotation.AutoLogging;
 import com.example.poc.api.InboundApi;
 import com.example.poc.dto.PoDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+@Slf4j
 @RestController
 @RequestMapping("api/v1/inbound")
 public class InboundController implements InboundApi {
@@ -20,6 +22,7 @@ public class InboundController implements InboundApi {
   @PostMapping(value = "/purchase_orders", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity createPurchaseOrder(@Valid @RequestBody PoDto poDto) {
-    return null;
+    log.info("po_number:{}", poDto.getPoNumber());
+    return ResponseEntity.created(null).build();
   }
 }

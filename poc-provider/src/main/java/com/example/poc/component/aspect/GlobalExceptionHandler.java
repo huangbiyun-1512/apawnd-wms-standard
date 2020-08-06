@@ -1,6 +1,7 @@
 package com.example.poc.component.aspect;
 
 import com.common.poc.components.dto.BaseErrorDto;
+import com.common.poc.components.dto.BaseResponseDto;
 import com.common.poc.components.exception.BusinessException;
 import com.example.poc.component.constant.MessageConstant;
 import com.example.poc.component.util.ErrorUtil;
@@ -17,6 +18,7 @@ import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeoutException;
 
@@ -105,18 +107,23 @@ public class GlobalExceptionHandler {
             MessageConstant.MESSAGE_KEY_E01_0001, e.getMessage()));
   }
 
-  private ResponseEntity<Object> buildResponseEntity(Iterable<? extends BaseErrorDto> errors) {
+  private ResponseEntity buildResponseEntity(Iterable<? extends BaseErrorDto> errors) {
     int status = HttpStatus.BAD_REQUEST.value();
 
-    if (null != errors) {
+    if (!Objects.isNull(errors)) {
       for (BaseErrorDto error : errors) {
         status = Integer.valueOf(error.getStatus());
-        log.error("Error: status=[{}], code=[{}], title=[{}], detail=[{}]",
-            error.getStatus(), error.getCode(), error.getTitle(), error.getDetail());
+        break;
       }
     }
 
-    return new ResponseEntity<>(errors, new HttpHeaders(), HttpStatus.valueOf(status));
+    BaseResponseDto baseResponseDto =
+        BaseResponseDto.builder().errors(errors).build();
+
+    return new ResponseEntity<>(
+        baseResponseDto,
+        new HttpHeaders(),
+        HttpStatus.valueOf(status));
   }
 
   private ResponseEntity handleKindsOfException(Exception e) {
