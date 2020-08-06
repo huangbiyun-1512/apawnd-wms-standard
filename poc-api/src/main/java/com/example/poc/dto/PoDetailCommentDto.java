@@ -3,11 +3,12 @@ package com.example.poc.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @NoArgsConstructor
-public class PoDetailCommentDto {
+public class PoDetailCommentDto implements Serializable {
 
   private String actionCode;
   private Integer sequence;

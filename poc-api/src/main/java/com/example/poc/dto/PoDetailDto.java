@@ -3,13 +3,14 @@ package com.example.poc.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PoDetailDto {
+public class PoDetailDto implements Serializable {
 
   private List<PoDetailCommentDto> commentList;
   private String actionCode;

@@ -1,6 +1,7 @@
 package com.example.poc.config;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,7 @@ public class JacksonConfig {
   public ObjectMapper objectMapper() {
     return new ObjectMapper()
         .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-        .setSerializationInclusion(JsonInclude.Include.NON_NULL);
+        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
   }
 }
