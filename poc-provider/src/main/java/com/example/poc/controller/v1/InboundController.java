@@ -22,7 +22,8 @@ public class InboundController implements InboundApi {
   @PostMapping(value = "/purchase_orders", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity createPurchaseOrder(@Valid @RequestBody PoDto poDto) {
-    log.info("po_number:{}", poDto.getPoNumber());
+    log.info("po_number: {}", poDto.getPoNumber());
+    log.info("create_date: {}", poDto.getCreateDate());
     return ResponseEntity.created(null).build();
   }
 }

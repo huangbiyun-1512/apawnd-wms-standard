@@ -1,5 +1,6 @@
 package com.example.poc.dto;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -13,10 +14,14 @@ import java.util.List;
 @NoArgsConstructor
 public class PoDto implements Serializable {
 
+  @Schema(name = "po_number", required = true)
   @NotEmpty
   private String poNumber;
+  @Schema(name = "type_name")
   private String typeName;
+  @Schema(name = "vendor_code")
   private String vendorCode;
+  @Schema(name = "create_date")
   private Instant createDate;
   private String warehouseId;
   private String status;
