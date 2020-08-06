@@ -27,9 +27,9 @@ public class HealthCheckApiController implements HealthCheckApi {
   @AutoLogging
   public ResponseEntity isAlive() {
     log.info("code:{}, title:{}, detail:{}",
-        messageUtil.get(MessageConstant.MESSAGE_KEY_I01_0001_CODE),
-        messageUtil.get(MessageConstant.MESSAGE_KEY_I01_0001_TITLE),
-        messageUtil.get(MessageConstant.MESSAGE_KEY_I01_0001_DETAIL));
+        messageUtil.getCode(MessageConstant.MESSAGE_KEY_I01_0001),
+        messageUtil.getTitle(MessageConstant.MESSAGE_KEY_I01_0001),
+        messageUtil.getDetail(MessageConstant.MESSAGE_KEY_I01_0001));
 
     return ResponseEntity.ok(true);
   }

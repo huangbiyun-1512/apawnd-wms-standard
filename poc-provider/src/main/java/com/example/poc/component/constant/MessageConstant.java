@@ -2,8 +2,9 @@ package com.example.poc.component.constant;
 
 public class MessageConstant {
 
-  public static final String MESSAGE_KEY_I01_0001_CODE = "I01-0001.code";
-  public static final String MESSAGE_KEY_I01_0001_TITLE = "I01-0001.title";
-  public static final String MESSAGE_KEY_I01_0001_DETAIL = "I01-0001.detail";
+  public static final String MESSAGE_KEY_I01_0001 = "I01-0001";
 
+  public static final String MESSAGE_SUFFIX_CODE = ".code";
+  public static final String MESSAGE_SUFFIX_TITLE = ".title";
+  public static final String MESSAGE_SUFFIX_DETAIL = ".detail";
 }
