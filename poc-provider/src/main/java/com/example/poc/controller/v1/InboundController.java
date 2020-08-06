@@ -1,0 +1,25 @@
+package com.example.poc.controller.v1;
+
+import com.common.poc.components.annotation.AutoLogging;
+import com.example.poc.api.InboundApi;
+import com.example.poc.dto.PoDto;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
+
+@RestController
+@RequestMapping("api/v1/inbound")
+public class InboundController implements InboundApi {
+
+  @Override
+  @PostMapping(value = "/purchase_orders", produces = MediaType.APPLICATION_JSON_VALUE)
+  @AutoLogging
+  public ResponseEntity createPurchaseOrder(@Valid @RequestBody PoDto poDto) {
+    return null;
+  }
+}
