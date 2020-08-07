@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
-    <contextName>${HOSTNAME}</contextName>
-    <springProperty scope="context" name="appName" source="spring.application.name"/>
+    <property name="LOGS" value="./logs"/>
 
-    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
@@ -14,56 +13,29 @@
         </layout>
     </appender>
 
-    <root level="DEBUG">
-        <appender-ref ref="consoleLog"/>
+    <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOGS}/spring-boot-logger.log</file>
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>
+                %d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%-31t] [%-54logger{0}] %marker%m%ex{full} - %logger - %F:%L%n
+            </pattern>
+        </layout>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOGS}/archived/spring-boot-logger-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="RollingFile"/>
     </root>
 
-<!--    <springProfile name="production">-->
-<!--        <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">-->
-<!--            <filter class="ch.qos.logback.classic.filter.ThresholdFilter">-->
-<!--                <level>INFO</level>-->
-<!--            </filter>-->
-<!--            <layout class="ch.qos.logback.classic.PatternLayout">-->
-<!--                <pattern>-->
-<!--                    %d{yyyy-MM-dd HH:mm:ss.SSS} %-5p [%-31t] [%-54logger{0}] %marker%m%ex{full} - %logger - %F:%L%n-->
-<!--                </pattern>-->
-<!--            </layout>-->
-<!--        </appender>-->
-
-<!--        <appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">-->
-<!--            <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">-->
-<!--                <providers>-->
-<!--                    <timestamp>-->
-<!--                        <timeZone>GMT+8</timeZone>-->
-<!--                    </timestamp>-->
-<!--                    <pattern>-->
-<!--                        <pattern>-->
-<!--                            {-->
-<!--                            "logger_name": "%logger{40}",-->
-<!--                            "thread_name": "%thread",-->
-<!--                            "level": "%level",-->
-<!--                            "instance_id": "%contextName",-->
-<!--                            "module_name": "${appName}",-->
-<!--                            "message": "%marker%m%ex{full} - %logger - %F:%L%n"-->
-<!--                            }-->
-<!--                        </pattern>-->
-<!--                    </pattern>-->
-<!--                </providers>-->
-<!--            </encoder>-->
-
-<!--            <topic>stockhub-stockfulfiller-logs</topic>-->
-<!--            <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.HostNameKeyingStrategy"/>-->
-<!--            <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>-->
-<!--            <producerConfig>bootstrap.servers=de-kafka.dktapp.cloud:9092</producerConfig>-->
-<!--            <producerConfig>acks=1</producerConfig>-->
-<!--            <producerConfig>linger.ms=1000</producerConfig>-->
-<!--            <producerConfig>max.block.ms=0</producerConfig>-->
-<!--            <producerConfig>client.id=${HOSTNAME}-${CONTEXT_NAME}-logback</producerConfig>-->
-<!--        </appender>-->
-
-<!--        <root level="INFO">-->
-<!--            <appender-ref ref="consoleLog"/>-->
-<!--            <appender-ref ref="kafkaAppender"/>-->
-<!--        </root>-->
-<!--    </springProfile>-->
+    <logger name="com.example.poc" level="trace" additivity="false">
+        <appender-ref ref="Console"/>
+        <appender-ref ref="RollingFile"/>
+    </logger>
 </configuration>
