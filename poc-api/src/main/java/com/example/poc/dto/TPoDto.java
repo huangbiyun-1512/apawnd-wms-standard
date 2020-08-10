@@ -128,8 +128,8 @@ public class TPoDto implements Serializable {
   @Schema(name = "generic_field10")
   private String genericField10;
   @Schema(name = "comment_list")
-  private List<PoCommentDto> commentList;
+  private List<TPoCommentDto> commentList;
   @Schema(name = "detail_list")
-  private List<PoDetailDto> detailList;
+  private List<TPoDetailDto> detailList;
 
 }
