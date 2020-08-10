@@ -12,13 +12,13 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PoDto implements Serializable {
+public class TPoDto implements Serializable {
 
   @Schema(name = "po_number", required = true)
   @NotEmpty
   private String poNumber;
-  @Schema(name = "type_name")
-  private String typeName;
+  @Schema(name = "type_id")
+  private String typeId;
   @Schema(name = "vendor_code")
   private String vendorCode;
   @Schema(name = "create_date")

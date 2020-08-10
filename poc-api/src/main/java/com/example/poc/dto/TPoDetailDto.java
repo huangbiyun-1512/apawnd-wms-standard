@@ -11,12 +11,10 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class PoDetailDto implements Serializable {
+public class TPoDetailDto implements Serializable {
 
-  @Schema(name = "detail_comment_list")
-  private List<PoDetailCommentDto> detailCommentList;
-  @Schema(name = "action_code")
-  private String actionCode;
+  @Schema(name = "po_number")
+  private String poNumber;
   @Schema(name = "line_number")
   private String lineNumber;
   @Schema(name = "item_number")
@@ -31,6 +29,8 @@ public class PoDetailDto implements Serializable {
   private Instant deliveryDate;
   @Schema(name = "originator")
   private String originator;
+  @Schema(name = "wh_id")
+  private String whId;
   @Schema(name = "order_uom")
   private String orderUom;
   @Schema(name = "special_processing")
@@ -75,6 +75,8 @@ public class PoDetailDto implements Serializable {
   private Instant custsheetnoEnterDt;
   @Schema(name = "earliest_delivery_date")
   private Instant earliestDeliveryDate;
+  @Schema(name = "earliest_ship_date")
+  private Instant earliestShipDate;
   @Schema(name = "latest_delivery_date")
   private Instant latestDeliveryDate;
   @Schema(name = "latest_ship_date")
@@ -165,5 +167,6 @@ public class PoDetailDto implements Serializable {
   private BigDecimal preFreeQty;
   @Schema(name = "is_rekit_item")
   private String isRekitItem;
-
+  @Schema(name = "detail_comment_list")
+  private List<TPoDetailCommentDto> detailCommentList;
 }
