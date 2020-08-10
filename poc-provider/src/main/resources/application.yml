@@ -3,3 +3,8 @@ spring:
     name: poc-domain
   messages:
     basename: static/i18n/messages
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'prometheus'
