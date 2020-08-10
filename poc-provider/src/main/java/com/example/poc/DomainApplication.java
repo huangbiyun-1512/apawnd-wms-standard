@@ -2,12 +2,14 @@ package com.example.poc;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.PostConstruct;
 import java.time.ZoneOffset;
 import java.util.TimeZone;
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.*"})
 public class DomainApplication {
 
   public static void main(String[] args) {
