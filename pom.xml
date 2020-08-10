@@ -28,7 +28,7 @@
         <revision>0.1-RELEASE</revision>
 
         <springdoc.openapi.ui.version>1.4.3</springdoc.openapi.ui.version>
-
+        <logstash.logback.encoder.version>6.2</logstash.logback.encoder.version>
         <poc.components.version>1.0.1-RELEASE</poc.components.version>
     </properties>
 
@@ -38,6 +38,12 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-ui</artifactId>
                 <version>${springdoc.openapi.ui.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash.logback.encoder.version}</version>
             </dependency>
 
             <dependency>
@@ -94,6 +100,11 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-ui</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>net.logstash.logback</groupId>
+            <artifactId>logstash-logback-encoder</artifactId>
         </dependency>
 
         <dependency>
