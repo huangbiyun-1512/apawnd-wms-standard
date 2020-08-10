@@ -1,7 +1,6 @@
 package com.example.poc.component.util;
 
 import com.common.poc.components.dto.BaseErrorDto;
-import com.example.poc.component.constant.MessageConstant;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -58,9 +57,9 @@ public class ErrorUtil {
             BaseErrorDto
                 .builder()
                 .status(String.valueOf(status))
-                .code(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_CODE))
-                .title(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_TITLE))
-                .detail(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_DETAIL))
+                .code(messageUtil.getCode(key))
+                .title(messageUtil.getTitle(key))
+                .detail(messageUtil.getDetail(key))
                 .build();
         return error;
     }
@@ -70,8 +69,8 @@ public class ErrorUtil {
             BaseErrorDto
                 .builder()
                 .status(String.valueOf(status))
-                .code(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_CODE))
-                .title(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_TITLE))
+                .code(messageUtil.getCode(key))
+                .title(messageUtil.getTitle(key))
                 .detail(detail)
                 .build();
         return error;
@@ -82,9 +81,9 @@ public class ErrorUtil {
             BaseErrorDto
                 .builder()
                 .status(String.valueOf(status))
-                .code(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_CODE))
-                .title(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_TITLE))
-                .detail(messageUtil.get(key + MessageConstant.MESSAGE_SUFFIX_DETAIL, objs))
+                .code(messageUtil.getCode(key))
+                .title(messageUtil.getTitle(key))
+                .detail(messageUtil.getDetail(key, objs))
                 .build();
         return error;
     }
