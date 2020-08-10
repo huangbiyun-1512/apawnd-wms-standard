@@ -2,6 +2,7 @@ package com.example.poc.api;
 
 import com.common.poc.components.dto.BaseResponseDto;
 import com.example.poc.dto.PoDto;
+import com.example.poc.dto.TPoDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -48,6 +49,12 @@ public interface InboundApi {
           content = @Content(
               schema = @Schema(implementation = BaseResponseDto.class)))
   })
-  ResponseEntity queryPurchaseOrder(String poNumber, String whId);
+  ResponseEntity<BaseResponseDto<TPoDto>> queryPurchaseOrder(
+      @Parameter(
+          description = "PO Number",
+          required = true) String poNumber,
+      @Parameter(
+          description = "Warehouse Id",
+          required = true) String whId);
 
 }

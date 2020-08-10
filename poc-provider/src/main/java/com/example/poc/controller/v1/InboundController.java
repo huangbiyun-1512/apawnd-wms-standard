@@ -39,6 +39,6 @@ public class InboundController implements InboundApi {
       @RequestParam("wh_id") String whId) {
 //    log.info("po_number: {}", poNumber);
 //    log.info("wh_id: {}", whId);
-    return ResponseEntity.ok(BaseResponseDto.fail());
+    return ResponseEntity.badRequest().body(BaseResponseDto.fail());
   }
 }
