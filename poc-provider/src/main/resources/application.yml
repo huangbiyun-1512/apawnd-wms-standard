@@ -3,6 +3,11 @@ spring:
     name: poc-domain
   messages:
     basename: static/i18n/messages
+  datasource:
+    url: jdbc:sqlserver://localhost:1433;DatabaseName=Test
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    username: sa
+    password: Decathl0n
 management:
   endpoints:
     web:
