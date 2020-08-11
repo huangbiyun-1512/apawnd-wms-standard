@@ -8,6 +8,10 @@ spring:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: sa
     password: Decathl0n
+logging:
+  config: classpath:logback-spring.xml
+server:
+  port: 18080
 management:
   endpoints:
     web:
