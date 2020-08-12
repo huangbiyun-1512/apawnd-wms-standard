@@ -4,6 +4,8 @@ management:
       exposure:
         include: 'prometheus'
 spring:
+  profiles:
+    active: local
   application:
     name: poc-domain
   cloud:
