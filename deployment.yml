@@ -1,11 +1,58 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: poc-domain-config
+  namespace: default
+data:
+  application.yml: |-
+    spirng:
+      profiles: local
+      messages:
+        basename: static/i18n/messages
+      datasource:
+        url: jdbc:sqlserver://localhost:1433;DatabaseName=Test
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: sa
+        password: Decathl0n
+    server:
+          port: 18080
+    logging:
+      config: classpath:logback-spring.xml
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: 'prometheus'
+    ---
+    spirng:
+      profiles: development
+      messages:
+        basename: static/i18n/messages
+      datasource:
+        url: jdbc:sqlserver://192.168.99.1:1433;DatabaseName=Test
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: sa
+        password: Decathl0n
+    server:
+          port: 18080
+    logging:
+      config: classpath:logback-spring.xml
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: 'prometheus'
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: poc-domain-deployment
+  name: poc-domain
+  namespace: default
   labels:
     app: poc-domain
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: poc-domain
@@ -17,9 +64,42 @@ spec:
       containers:
         - name: poc-domain
           image: 192.168.99.1:8083/poc-domain
+          command: ["java"]
+          args: ["-Dfile.encoding=UTF-8", "-jar", "app.jar", "--spring.profiles.active=development"]
           imagePullPolicy: Always
           ports:
             - containerPort: 18080
-          env:
-            - name: JAVA_OPTIONS
-              value: -Dspring.profiles.active=development
+      imagePullSecrets:
+        - name: regcred
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: poc-domain
+  namespace: default
+spec:
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 18080
+  selector:
+    app: poc-domain
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: poc-domain
+  namespace: default
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: poc-domain
+              servicePort: 80
+

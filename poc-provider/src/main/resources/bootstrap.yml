@@ -7,4 +7,4 @@ spring:
         enabled: true
         sources:
           - name: poc-domain-config
-            namespace: poc-app
+            namespace: default

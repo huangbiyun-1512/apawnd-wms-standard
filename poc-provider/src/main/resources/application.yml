@@ -1,6 +1,6 @@
-#spring:
-#  profiles:
-#    active: local
+spring:
+  application:
+    name: poc-domain
 #  messages:
 #    basename: static/i18n/messages
 #  datasource:
