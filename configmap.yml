@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: poc-domain-config
+  namespace: poc-app
+data:
+  application.yml: |-
+    spirng:
+      profiles: local
+      messages:
+        basename: static/i18n/messages
+      datasource:
+        url: jdbc:sqlserver://localhost:1433;DatabaseName=Test
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: sa
+        password: Decathl0n
+    server:
+          port: 18080
+    logging:
+      config: classpath:logback-spring.xml
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: 'prometheus'
+    ---
+    spirng:
+      profiles: development
+      messages:
+        basename: static/i18n/messages
+      datasource:
+        url: jdbc:sqlserver://localhost:1433;DatabaseName=Test
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: sa
+        password: Decathl0n
+    server:
+          port: 18080
+    logging:
+      config: classpath:logback-spring.xml
+    management:
+      endpoints:
+        web:
+          exposure:
+            include: 'prometheus'

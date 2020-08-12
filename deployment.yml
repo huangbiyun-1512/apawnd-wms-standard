@@ -19,4 +19,7 @@ spec:
           image: huangbiyun1512/poc-domain:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 18080
+          env:
+            - name: JAVA_OPTIONS
+              value: -Dspring.profiles.active=development

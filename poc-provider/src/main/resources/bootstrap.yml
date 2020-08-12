@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: poc-domain
+  cloud:
+    kubernetes:
+      config:
+        name: poc-domain-config
+        namespace: poc-app
