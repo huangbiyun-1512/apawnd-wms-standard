@@ -4,5 +4,7 @@ spring:
   cloud:
     kubernetes:
       config:
-        name: poc-domain-config
-        namespace: poc-app
+        enabled: true
+        sources:
+          - name: poc-domain-config
+            namespace: poc-app

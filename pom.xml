@@ -34,6 +34,7 @@
         <poc.components.version>1.0.1-RELEASE</poc.components.version>
         <spring.cloud.starter.openfeign.version>2.2.4.RELEASE</spring.cloud.starter.openfeign.version>
         <spring.cloud.starter.kubernetes.version>1.1.5.RELEASE</spring.cloud.starter.kubernetes.version>
+        <spring.cloud.starter.kubernetes.config.version>1.1.5.RELEASE</spring.cloud.starter.kubernetes.config.version>
     </properties>
 
     <dependencyManagement>
@@ -84,6 +85,12 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-kubernetes</artifactId>
                 <version>${spring.cloud.starter.kubernetes.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
+                <version>${spring.cloud.starter.kubernetes.config.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -169,6 +176,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-kubernetes</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
         </dependency>
 
         <dependency>
