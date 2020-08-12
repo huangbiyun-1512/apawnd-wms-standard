@@ -5,8 +5,7 @@ metadata:
   namespace: default
 data:
   application.yml: |-
-    spirng:
-      profiles: local
+    spring:
       messages:
         basename: static/i18n/messages
       datasource:
@@ -15,33 +14,7 @@ data:
         username: sa
         password: Decathl0n
     server:
-          port: 18080
-    logging:
-      config: classpath:logback-spring.xml
-    management:
-      endpoints:
-        web:
-          exposure:
-            include: 'prometheus'
-    ---
-    spirng:
-      profiles: development
-      messages:
-        basename: static/i18n/messages
-      datasource:
-        url: jdbc:sqlserver://192.168.99.1:1433;DatabaseName=Test
-        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        username: sa
-        password: Decathl0n
-    server:
-          port: 18080
-    logging:
-      config: classpath:logback-spring.xml
-    management:
-      endpoints:
-        web:
-          exposure:
-            include: 'prometheus'
+      port: 18080
 
 ---
 apiVersion: apps/v1
@@ -61,16 +34,17 @@ spec:
       labels:
         app: poc-domain
     spec:
+      serviceAccountName: config-reader
+      imagePullSecrets:
+        - name: regcred
       containers:
         - name: poc-domain
           image: 192.168.99.1:8083/poc-domain
-          command: ["java"]
-          args: ["-Dfile.encoding=UTF-8", "-jar", "app.jar", "--spring.profiles.active=development"]
+#          command: ["java"]
+#          args: ["-Dfile.encoding=UTF-8", "-jar", "app.jar", "--spring.profiles.active=development"]
           imagePullPolicy: Always
           ports:
             - containerPort: 18080
-      imagePullSecrets:
-        - name: regcred
 
 ---
 apiVersion: v1
