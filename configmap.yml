@@ -29,7 +29,7 @@ data:
       messages:
         basename: static/i18n/messages
       datasource:
-        url: jdbc:sqlserver://localhost:1433;DatabaseName=Test
+        url: jdbc:sqlserver://192.168.99.1:1433;DatabaseName=Test
         driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
         username: sa
         password: Decathl0n
