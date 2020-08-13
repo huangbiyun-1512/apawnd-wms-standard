@@ -9,7 +9,7 @@ spring:
   cloud:
     kubernetes:
       config:
-        enabled: true
+        enabled: false
         sources:
           - name: poc-domain-config
             namespace: default
