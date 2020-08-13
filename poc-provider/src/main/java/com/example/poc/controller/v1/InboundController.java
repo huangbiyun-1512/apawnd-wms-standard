@@ -5,7 +5,9 @@ import com.common.poc.components.dto.BaseResponseDto;
 import com.example.poc.api.InboundApi;
 import com.example.poc.dto.AsnDto;
 import com.example.poc.dto.PoDto;
+import com.example.poc.model.EsbRcptModel;
 import com.example.poc.service.AsnService;
+import com.github.pagehelper.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -40,7 +42,7 @@ public class InboundController implements InboundApi {
   public ResponseEntity queryPurchaseOrder(
       @RequestParam("po_number") String poNumber,
       @RequestParam("wh_id") String whId) {
-    return ResponseEntity.badRequest().body(BaseResponseDto.ok(env));
+    return ResponseEntity.ok().body(BaseResponseDto.ok(env));
   }
 
   @Override
@@ -51,6 +53,16 @@ public class InboundController implements InboundApi {
     return ResponseEntity
         .created(null)
         .body(BaseResponseDto.ok());
+  }
+
+  @Override
+  @GetMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
+  @AutoLogging
+  public ResponseEntity findAsnByPage(
+      @RequestParam("page_no") int pageNo,
+      @RequestParam("page_size") int pageSize) {
+    Page<EsbRcptModel> data = asnService.findAsnByPage(pageNo, pageSize);
+    return ResponseEntity.ok().body(BaseResponseDto.ok(data));
   }
 
   @Value("${env}")

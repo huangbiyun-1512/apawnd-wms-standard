@@ -76,4 +76,25 @@ public interface InboundApi {
       @Parameter(
           required = true,
           schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);
+
+  @Operation(summary = "Query ASN by page.", tags = {"inbound"})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "OK",
+          content = {@Content(
+              schema = @Schema(implementation = BaseResponseDto.class))}),
+      @ApiResponse(responseCode = "400", description = "Bad Request",
+          content = {@Content(
+              schema = @Schema(implementation = BaseResponseDto.class))}),
+      @ApiResponse(responseCode = "401", description = "Unauthorized",
+          content = {@Content(
+              schema = @Schema(implementation = BaseResponseDto.class))}),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error",
+          content = @Content(
+              schema = @Schema(implementation = BaseResponseDto.class)))
+  })
+  ResponseEntity findAsnByPage(
+      @Parameter(
+          required = true) int pageNo,
+      @Parameter(
+          required = true) int pageSize);
 }
