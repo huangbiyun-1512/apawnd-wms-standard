@@ -6,11 +6,25 @@ metadata:
 data:
   application.yml: |-
     spring:
-      profiles: development
+      profiles: local
       messages:
         basename: static/i18n/messages
       datasource:
         url: jdbc:sqlserver://localhost:1433;DatabaseName=Test
+        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+        username: sa
+        password: Decathl0n
+    server:
+      port: 18080
+    env: local
+
+    ---
+    spring:
+      profiles: development
+      messages:
+        basename: static/i18n/messages
+      datasource:
+        url: jdbc:sqlserver://192.168.99.1:1433;DatabaseName=Test
         driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
         username: sa
         password: Decathl0n
