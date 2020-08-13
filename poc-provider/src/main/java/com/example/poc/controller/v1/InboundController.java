@@ -5,6 +5,7 @@ import com.common.poc.components.dto.BaseResponseDto;
 import com.example.poc.api.InboundApi;
 import com.example.poc.dto.AsnDto;
 import com.example.poc.dto.PoDto;
+import com.example.poc.service.AsnService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
@@ -18,16 +19,16 @@ import javax.validation.Valid;
 @RequestMapping("api/v1/inbound")
 public class InboundController implements InboundApi {
 
+  private final AsnService asnService;
+
+  public InboundController(AsnService asnService) {
+    this.asnService = asnService;
+  }
+
   @Override
   @PostMapping(value = "/po", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity createPurchaseOrder(@Valid @RequestBody PoDto poDto) {
-//    log.info("po_number: {}", poDto.getPoNumber());
-//    log.info("create_date: {}", poDto.getCreateDate());
-//    log.info("order_pcs: {}", poDto.getOrderPcs());
-//    log.info("lp_sequence: {}", poDto.getLpSequence());
-//    log.info("generic_field1: {}", poDto.getGenericField1());
-
     return ResponseEntity
         .created(null)
         .body(BaseResponseDto.ok());
@@ -39,9 +40,6 @@ public class InboundController implements InboundApi {
   public ResponseEntity queryPurchaseOrder(
       @RequestParam("po_number") String poNumber,
       @RequestParam("wh_id") String whId) {
-//    log.info("po_number: {}", poNumber);
-//    log.info("wh_id: {}", whId);
-    log.info("env:{}", env);
     return ResponseEntity.badRequest().body(BaseResponseDto.ok(env));
   }
 
@@ -49,6 +47,7 @@ public class InboundController implements InboundApi {
   @PostMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity createAsn(@Valid @RequestBody AsnDto asnDto) {
+    asnService.createAsn(asnDto);
     return ResponseEntity
         .created(null)
         .body(BaseResponseDto.ok());
