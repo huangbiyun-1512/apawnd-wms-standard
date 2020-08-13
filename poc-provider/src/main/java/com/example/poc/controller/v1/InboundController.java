@@ -3,6 +3,7 @@ package com.example.poc.controller.v1;
 import com.common.poc.components.annotation.AutoLogging;
 import com.common.poc.components.dto.BaseResponseDto;
 import com.example.poc.api.InboundApi;
+import com.example.poc.dto.AsnDto;
 import com.example.poc.dto.PoDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +43,15 @@ public class InboundController implements InboundApi {
 //    log.info("wh_id: {}", whId);
     log.info("env:{}", env);
     return ResponseEntity.badRequest().body(BaseResponseDto.ok(env));
+  }
+
+  @Override
+  @PostMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
+  @AutoLogging
+  public ResponseEntity createAsn(@Valid @RequestBody AsnDto asnDto) {
+    return ResponseEntity
+        .created(null)
+        .body(BaseResponseDto.ok());
   }
 
   @Value("${env}")

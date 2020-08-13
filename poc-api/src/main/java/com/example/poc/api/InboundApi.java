@@ -1,6 +1,7 @@
 package com.example.poc.api;
 
 import com.common.poc.components.dto.BaseResponseDto;
+import com.example.poc.dto.AsnDto;
 import com.example.poc.dto.PoDto;
 import com.example.poc.dto.TPoDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -32,7 +33,6 @@ public interface InboundApi {
   })
   ResponseEntity createPurchaseOrder(
       @Parameter(
-          description = "Purchase order info DTO.",
           required = true,
           schema = @Schema(implementation = PoDto.class)) PoDto poDto);
 
@@ -53,10 +53,27 @@ public interface InboundApi {
   })
   ResponseEntity<BaseResponseDto<TPoDto>> queryPurchaseOrder(
       @Parameter(
-          description = "PO Number",
           required = true) String poNumber,
       @Parameter(
-          description = "Warehouse Id",
           required = true) String whId);
 
+  @Operation(summary = "Create a new ASN.", tags = {"inbound"})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "OK",
+          content = {@Content(
+              schema = @Schema(implementation = BaseResponseDto.class))}),
+      @ApiResponse(responseCode = "400", description = "Bad Request",
+          content = {@Content(
+              schema = @Schema(implementation = BaseResponseDto.class))}),
+      @ApiResponse(responseCode = "401", description = "Unauthorized",
+          content = {@Content(
+              schema = @Schema(implementation = BaseResponseDto.class))}),
+      @ApiResponse(responseCode = "500", description = "Server Internal Error",
+          content = @Content(
+              schema = @Schema(implementation = BaseResponseDto.class)))
+  })
+  ResponseEntity createAsn(
+      @Parameter(
+          required = true,
+          schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);
 }
