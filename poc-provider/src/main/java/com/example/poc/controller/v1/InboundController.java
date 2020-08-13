@@ -5,6 +5,7 @@ import com.common.poc.components.dto.BaseResponseDto;
 import com.example.poc.api.InboundApi;
 import com.example.poc.dto.PoDto;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -39,6 +40,10 @@ public class InboundController implements InboundApi {
       @RequestParam("wh_id") String whId) {
 //    log.info("po_number: {}", poNumber);
 //    log.info("wh_id: {}", whId);
-    return ResponseEntity.badRequest().body(BaseResponseDto.fail());
+    log.info("env:{}", env);
+    return ResponseEntity.badRequest().body(BaseResponseDto.ok(env));
   }
+
+  @Value("${env}")
+  private String env;
 }

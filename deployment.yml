@@ -6,6 +6,7 @@ metadata:
 data:
   application.yml: |-
     spring:
+      profiles: development
       messages:
         basename: static/i18n/messages
       datasource:
@@ -15,6 +16,7 @@ data:
         password: Decathl0n
     server:
       port: 18080
+    env: development
 
 ---
 apiVersion: apps/v1
@@ -40,8 +42,8 @@ spec:
       containers:
         - name: poc-domain
           image: 192.168.99.1:8083/poc-domain
-#          command: ["java"]
-#          args: ["-Dfile.encoding=UTF-8", "-jar", "app.jar", "--spring.profiles.active=development"]
+          command: ["java"]
+          args: ["-Dfile.encoding=UTF-8", "-jar", "app.jar", "--spring.profiles.active=development"]
           imagePullPolicy: Always
           ports:
             - containerPort: 18080
