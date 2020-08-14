@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.poc.mapper.EsbRcptMainMapper">
+    <resultMap id="esbRcptModel" type="com.example.poc.model.EsbRcptMainModel">
+        <result column="hjs_parent_id" property="hjsParentId"/>
+        <result column="hjs_node_id" property="hjsNodeId"/>
+        <result column="hjs_sequence" property="hjsSequence"/>
+        <result column="hjs_error_number" property="hjsErrorNumber"/>
+        <result column="hjs_error_message" property="hjsErrorMessage"/>
+        <result column="receipt_id" property="receiptId"/>
+        <result column="po_number" property="poNumber"/>
+        <result column="display_po_number" property="displayPoNumber"/>
+        <result column="receipt_date" property="receiptDate"/>
+        <result column="carrier_scac_code" property="carrierScacCode"/>
+        <result column="status" property="status"/>
+        <result column="item_number" property="itemNumber"/>
+        <result column="displayItemNumber" property="displayItemNumber"/>
+        <result column="lotNumber" property="lotNumber"/>
+        <result column="scheduleNumber" property="scheduleNumber"/>
+        <result column="qtyReceived" property="qtyReceived"/>
+        <result column="qtyDamaged" property="qtyDamaged"/>
+        <result column="huId" property="huId"/>
+        <result column="packingSlipNo" property="packingSlipNo"/>
+        <result column="forkId" property="forkId"/>
+        <result column="uom" property="uom"/>
+        <result column="shipmentNumber" property="shipmentNumber"/>
+        <result column="whId" property="whId"/>
+        <result column="clientCode" property="clientCode"/>
+        <result column="genericAttribute1" property="genericAttribute1"/>
+        <result column="genericAttribute2" property="genericAttribute2"/>
+        <result column="genericAttribute3" property="genericAttribute3"/>
+        <result column="genericAttribute4" property="genericAttribute4"/>
+        <result column="genericAttribute5" property="genericAttribute5"/>
+        <result column="genericAttribute6" property="genericAttribute6"/>
+        <result column="genericAttribute7" property="genericAttribute7"/>
+        <result column="genericAttribute8" property="genericAttribute8"/>
+        <result column="genericAttribute9" property="genericAttribute9"/>
+        <result column="genericAttribute10" property="genericAttribute10"/>
+        <result column="genericAttribute11" property="genericAttribute11"/>
+        <result column="vendorCode" property="vendorCode"/>
+        <result column="cartonReceived" property="cartonReceived"/>
+        <result column="volumeReceived" property="volumeReceived"/>
+        <result column="weightReceived" property="weightReceived"/>
+        <result column="shipmentLineNumber" property="shipmentLineNumber"/>
+        <result column="altItemNumber" property="altItemNumber"/>
+        <result column="subInventory" property="subInventory"/>
+        <result column="scannedUpc" property="scannedUpc"/>
+        <result column="pomType" property="pomType"/>
+        <result column="pomMode" property="pomMode"/>
+        <result column="genericField1" property="genericField1"/>
+        <result column="genericField2" property="genericField2"/>
+        <result column="genericField3" property="genericField3"/>
+        <result column="qtyExpected" property="qtyExpected"/>
+        <result column="proNumber" property="proNumber"/>
+        <result column="genericField4" property="genericField4"/>
+        <result column="genericField5" property="genericField5"/>
+        <result column="genericField6" property="genericField6"/>
+        <result column="genericField7" property="genericField7"/>
+        <result column="genericField8" property="genericField8"/>
+        <result column="genericField9" property="genericField9"/>
+        <result column="genericField10" property="genericField10"/>
+        <result column="genericField11" property="genericField11"/>
+        <result column="genericField12" property="genericField12"/>
+        <result column="genericField13" property="genericField13"/>
+        <result column="genericField14" property="genericField14"/>
+        <result column="genericField15" property="genericField15"/>
+        <result column="trailerNumber" property="trailerNumber"/>
+        <result column="prePackQty" property="prePackQty"/>
+        <result column="itemDescription" property="itemDescription"/>
+        <result column="clientOrderNumber" property="clientOrderNumber"/>
+        <result column="fileSeq" property="fileSeq"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.poc.model.EsbRcptMainModel">
+        <selectKey keyProperty="hjsNodeId" order="BEFORE" resultType="java.lang.String">
+            SELECT newId()
+        </selectKey>
+        INSERT INTO tbl_ESB_RCPT (hjs_node_id, hjs_sequence, hjs_error_number, hjs_error_message)
+        VALUES (#{hjsNodeId}, #{hjsSequence}, #{hjsErrorNumber}, #{hjsErrorMessage})
+    </insert>
+</mapper>
