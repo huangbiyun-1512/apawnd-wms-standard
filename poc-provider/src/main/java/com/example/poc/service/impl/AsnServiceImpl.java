@@ -1,11 +1,9 @@
 package com.example.poc.service.impl;
 
 import com.example.poc.dto.AsnDto;
+import com.example.poc.mapper.AsnMapper;
 import com.example.poc.model.EsbRcptModel;
-import com.example.poc.repository.AsnRepository;
 import com.example.poc.service.AsnService;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +11,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class AsnServiceImpl implements AsnService {
 
-  private final AsnRepository asnRepository;
+  private final AsnMapper asnMapper;
 
   public AsnServiceImpl(
-      AsnRepository asnRepository) {
-    this.asnRepository = asnRepository;
+      AsnMapper asnMapper) {
+    this.asnMapper = asnMapper;
   }
 
   @Override
@@ -25,12 +23,14 @@ public class AsnServiceImpl implements AsnService {
     EsbRcptModel esbRcptModel = new EsbRcptModel();
     esbRcptModel.setHjsSequence(1);
     esbRcptModel.setHjsErrorNumber(-1);
-    asnRepository.insert(esbRcptModel);
+    asnMapper.insert(esbRcptModel);
   }
 
-  @Override
-  public Page<EsbRcptModel> findAsnByPage(int pageNo, int pageSize) {
-    PageHelper.startPage(pageNo, pageSize);
-    return asnRepository.findByPage();
-  }
+//  @Override
+//  public IPage<EsbRcptModel> findAsnByPage(int pageNo, int pageSize) {
+//    Page page = new Page();
+//    page.setCurrent(pageNo);
+//    page.setSize(pageSize);
+//    return asnMapper.findByPage(page);
+//  }
 }

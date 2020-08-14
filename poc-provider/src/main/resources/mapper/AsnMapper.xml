@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.example.poc.repository.AsnRepository">
+<mapper namespace="com.example.poc.mapper.AsnMapper">
     <resultMap id="esbRcptModel" type="com.example.poc.model.EsbRcptModel">
         <id column="hjs_node_id" property="hjsNodeId"/>
         <result column="hjs_sequence" property="hjsSequence"/>
