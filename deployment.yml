@@ -16,7 +16,6 @@ data:
         password: Decathl0n
     server:
       port: 18080
-    env: local
 
     ---
     spring:
@@ -30,7 +29,6 @@ data:
         password: Decathl0n
     server:
       port: 18080
-    env: development
 
 ---
 apiVersion: apps/v1
