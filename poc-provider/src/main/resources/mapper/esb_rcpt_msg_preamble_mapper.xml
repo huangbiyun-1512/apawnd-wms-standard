@@ -17,9 +17,6 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.example.poc.model.EsbRcptMsgPreambleModel">
-        <selectKey keyProperty="hjsParentId" order="BEFORE" resultType="java.lang.String">
-            SELECT newId()
-        </selectKey>
         <selectKey keyProperty="hjsNodeId" order="BEFORE" resultType="java.lang.String">
             SELECT newId()
         </selectKey>
