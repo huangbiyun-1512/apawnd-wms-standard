@@ -16,7 +16,7 @@ public interface InboundApi {
 
   @Operation(summary = "Create a new ASN.", tags = {"inbound"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Created.",
+      @ApiResponse(responseCode = "201", description = "Created",
           content = {@Content(
               schema = @Schema(implementation = BaseResponseDto.class))})
   })
