@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
@@ -14,6 +15,7 @@ public class AsnDto implements Serializable {
 
   @Schema(name = "po_list")
   private List<RcptShipPoDto> poList;
+  @NotEmpty
   @Schema(name = "wh_id")
   private String whId;
   @Schema(name = "client_code")
