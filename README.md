@@ -1,13 +1,10 @@
 # POC APIs
 
-## Table of Contents
+## API Specification
 
-### API Specification
+### API Standard
 
-#### API Standard
-
-Follow the RESTful API standard.
-eg:
+Follow the RESTful API standard. Eg:
 1. GET /wms/api/v1/inbound/asn/{asnId}
 --> 200 OK.
 2. GET /wms/api/v1/inbound/asn?wh_id={whId}&page_no={pageNo}&page_size={pageSize}
@@ -19,50 +16,44 @@ eg:
 5. DELETE /wms/api/v1/inbound/asn/{asnId}
 --> 204 No Content.
 
-#### Version Control
+### Version Control
 
-By mixing the version number into the URL.
-eg:
+By mixing the version number into the URL. Eg:
 1. GET /wms/api/v1/inbound/asn/{asnId}
 2. GET /wms/api/v2/inbound/asn/{asnId}
 
-#### Domain Name Management
+### Domain Name Management
 
-eg:
 1. dev.xxx.com.cn
 2. test.xxx.com.cn
 3. uat.xxx.com.cn
 4. prod.xxx.com.cn
 
-#### Documentation
+### Documentation
 
 Swagger via OpenAPI 3
 
-#### API Management
+### API Management
 
 Follow the global standard and integrate into the global uniform API management platform.
-eg:
-1. gravitee.io
 
-### APM
+## APM
 
-#### Logging
+### Logging
 
-eg:
 1. ELK
 
-#### Monitoring
+### Monitoring
 
-eg:
-1. Prometheus & Grafana
+1. Prometheus 
+2. Grafana
 
-#### Service Chain Tracing
+### Service Chain Tracing
 
-eg:
 1. Zipkin
 2. Jaeger
 
-### Coding Guideline
+## Coding Guideline
 
 Style Guide
 1. Google Java Style Guide
@@ -71,7 +62,7 @@ https://google.github.io/styleguide/javaguide.html
 Java Coding Guideline
 1. Alibaba Java Coding Guideline
 
-#### Project Structure
+### Project Structure
 
 root
  |--- xxx-api           API of the business service.
@@ -87,32 +78,32 @@ root
  |--- pom.xml           Maven related configuration.
  |--- README.md         Description of the project.
 
-#### Parameter Validation
+### Parameter Validation
 
 Follow the Spring Boot Validation Guideline.
 
-#### Exception Handling
+### Exception Handling
 
 GlobalExceptionHandler via controller advice.
 
-#### i18n
+### i18n
 
 Follow the Spring Boot i18n Guideline.
 
-### CICD
+## CICD
 
 1. Maven
 2. Sonar
 3. Nexus
 4. Jenkins
 
-### Deployment
+## Containerization
 
-#### Docker
+### Docker
 
 1. Dockerfile
 
-#### K8s
+### K8s
 
 1. ConfigMap
 2. Deployment
