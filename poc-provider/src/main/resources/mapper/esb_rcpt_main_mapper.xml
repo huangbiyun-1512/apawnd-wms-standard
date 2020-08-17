@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.poc.mapper.EsbRcptMainMapper">
-    <resultMap id="esbRcptModel" type="com.example.poc.model.EsbRcptMainModel">
+    <resultMap id="esbRcptMainModel" type="com.example.poc.model.EsbRcptMainModel">
         <result column="hjs_parent_id" property="hjsParentId"/>
         <result column="hjs_node_id" property="hjsNodeId"/>
         <result column="hjs_sequence" property="hjsSequence"/>
@@ -72,10 +72,37 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.example.poc.model.EsbRcptMainModel">
+        <selectKey keyProperty="hjsParentId" order="BEFORE" resultType="java.lang.String">
+            SELECT newId()
+        </selectKey>
         <selectKey keyProperty="hjsNodeId" order="BEFORE" resultType="java.lang.String">
             SELECT newId()
         </selectKey>
-        INSERT INTO tbl_ESB_RCPT (hjs_node_id, hjs_sequence, hjs_error_number, hjs_error_message)
-        VALUES (#{hjsNodeId}, #{hjsSequence}, #{hjsErrorNumber}, #{hjsErrorMessage})
+        INSERT INTO tbl_ESB_RCPT_MAIN (
+        hjs_parent_id, hjs_node_id, hjs_sequence, hjs_error_number, hjs_error_message,
+        receipt_id, po_number, display_po_number, receipt_date, carrier_scac_code, status,
+        item_number, display_item_number, lot_number, schedule_number, qty_received, qty_damaged,
+        hu_id, packing_slip_no, fork_id, uom, shipment_number, wh_id, client_code, generic_attribute_1,
+        generic_attribute_2, generic_attribute_3, generic_attribute_4, generic_attribute_5,
+        generic_attribute_6, generic_attribute_7, generic_attribute_8, generic_attribute_9,
+        generic_attribute_10, generic_attribute_11, vendor_code, carton_received, volume_received,
+        weight_received, shipment_line_number, alt_item_number, sub_inventory, scanned_upc,
+        pom_type, pom_mode, generic_field_1, generic_field_2, generic_field_3, qty_expected, pro_number,
+        generic_field_4, generic_field_5, generic_field_6, generic_field_7, generic_field_8, generic_field_9,
+        generic_field_10, generic_field_11, generic_field_12, generic_field_13, generic_field_14,
+        generic_field_15, trailer_number, pre_pack_qty, item_description, client_order_number, file_seq
+        ) VALUES (
+        #{hjsParentId}, #{hjsNodeId}, #{hjsSequence}, #{hjsErrorNumber}, #{hjsErrorMessage},
+        #{receiptId}, #{poNumber}, #{displayPoNumber}, #{receiptDate}, #{carrierScacCode}, #{status},
+        #{itemNumber}, #{displayItemNumber}, #{lotNumber}, #{scheduleNumber}, #{qtyReceived}, #{qtyDamaged},
+        #{huId}, #{packingSlipNo}, #{forkId}, #{uom}, #{shipmentNumber}, #{whId}, #{clientCode}, #{genericAttribute1},
+        #{genericAttribute2}, #{genericAttribute3}, #{genericAttribute4}, #{genericAttribute5},
+        #{genericAttribute6}, #{genericAttribute7}, #{genericAttribute8}, #{genericAttribute9},
+        #{genericAttribute10}, #{genericAttribute11}, #{vendorCode}, #{cartonReceived}, #{volumeReceived},
+        #{weightReceived}, #{shipmentLineNumber}, #{altItemNumber}, #{subInventory}, #{scannedUpc},
+        #{pomType}, #{pomMode}, #{genericField1}, #{genericField2}, #{genericField3}, #{qtyExpected}, #{proNumber},
+        #{genericField4}, #{genericField5}, #{genericField6}, #{genericField7}, #{genericField8}, #{genericField9},
+        #{genericField10}, #{genericField11}, #{genericField12}, #{genericField13}, #{genericField14},
+        #{genericField15}, #{trailerNumber}, #{prePackQty}, #{itemDescription}, #{clientOrderNumber}, #{fileSeq})
     </insert>
 </mapper>
