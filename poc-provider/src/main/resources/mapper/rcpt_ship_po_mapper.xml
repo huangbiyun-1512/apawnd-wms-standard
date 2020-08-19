@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.poc.mapper.RcptShipPoMapper">
+    <resultMap id="rcptShipPoModel" type="com.example.poc.model.RcptShipPoModel">
+        <result column="wh_id" property="whId"/>
+        <result column="shipment_number" property="shipmentNumber"/>
+        <result column="po_number" property="poNumber"/>
+        <result column="cases_expected" property="casesExpected"/>
+        <result column="cases_received" property="casesReceived"/>
+        <result column="open_to_buy_date" property="openToBuyDate"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.poc.model.RcptShipPoModel">
+        INSERT INTO t_rcpt_ship (
+        wh_id, shipment_number, po_number, cases_expected, cases_received,
+        open_to_buy_date
+        ) VALUES (
+        #{whId}, #{shipmentNumber}, #{poNumber}, #{casesExpected}, #{casesReceived},
+        #{openToBuyDate}
+        )
+    </insert>
+</mapper>

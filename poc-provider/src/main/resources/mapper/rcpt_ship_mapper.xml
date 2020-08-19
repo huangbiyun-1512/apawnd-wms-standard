@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.poc.mapper.RcptShipMapper">
+    <resultMap id="rcptShipModel" type="com.example.poc.model.RcptShipModel">
+        <result column="wh_id" property="whId"/>
+        <result column="shipment_number" property="shipmentNumber"/>
+        <result column="carrier_id" property="carrierId"/>
+        <result column="trailer_number" property="trailerNumber"/>
+        <result column="date_expected" property="dateExpected"/>
+        <result column="date_received" property="dateReceived"/>
+        <result column="date_shipped" property="dateShipped"/>
+        <result column="status" property="status"/>
+        <result column="comments" property="comments"/>
+        <result column="workers_assigned" property="workersAssigned"/>
+        <result column="pro_number" property="proNumber"/>
+        <result column="arrival_sign" property="arrivalSign"/>
+        <result column="arrival_date" property="arrivalDate"/>
+        <result column="grn_send_sign" property="grnSendSign"/>
+        <result column="grn_send_date" property="grnSendDate"/>
+        <result column="shipment_receipt_date" property="shipmentReceiptDate"/>
+        <result column="asn_type" property="asnType"/>
+        <result column="wip_number" property="wipNumber"/>
+        <result column="file_seq" property="fileSeq"/>
+        <result column="tallysheet_is_printed" property="tallysheetIsPrinted"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.example.poc.model.RcptShipModel">
+        INSERT INTO t_rcpt_ship (
+        wh_id, shipment_number, carrier_id, trailer_number, date_expected,
+        date_received, date_shipped, status, comments, workers_assigned,
+        pro_number, arrival_sign, arrival_date, grn_send_sign, grn_send_date,
+        shipment_receipt_date, asn_type, wip_number, file_seq, tallysheet_is_printed
+        ) VALUES (
+        #{whId}, #{shipmentNumber}, #{carrierId}, #{trailerNumber}, #{dateExpected},
+        #{dateReceived}, #{dateShipped}, #{status}, #{comments}, #{workersAssigned},
+        #{proNumber}, #{arrivalSign}, #{arrivalDate}, #{grnSendSign}, #{grnSendDate},
+        #{shipmentReceiptDate}, #{asnType}, #{wipNumber}, #{fileSeq}, #{tallysheetIsPrinted}
+        )
+    </insert>
+</mapper>
