@@ -6,9 +6,13 @@ import com.example.poc.mapper.RcptShipMapper;
 import com.example.poc.mapper.RcptShipPoDetailMapper;
 import com.example.poc.mapper.RcptShipPoMapper;
 import com.example.poc.model.RcptShipModel;
+import com.example.poc.model.RcptShipPoModel;
 import com.example.poc.service.AsnService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -31,6 +35,7 @@ public class AsnServiceImpl implements AsnService {
   }
 
   @Override
+  @Transactional
   public void createAsn(AsnDto asnDto) {
     RcptShipModel rcptShipModel = new RcptShipModel();
     rcptShipModel.setWhId(asnDto.getWhId());
@@ -48,8 +53,21 @@ public class AsnServiceImpl implements AsnService {
     rcptShipModel.setArrivalDate(asnDto.getArrivalDate());
     rcptShipModel.setGrnSendSign(asnDto.getGrnSendSign());
     rcptShipModel.setGrnSendDate(asnDto.getGrnSendDate());
-
     rcptShipMapper.insert(rcptShipModel);
+
+    if (Objects.nonNull(asnDto.getPoList())) {
+      asnDto.getPoList().stream().forEach(
+          rcptShipPoDto -> {
+            RcptShipPoModel rcptShipPoModel = new RcptShipPoModel();
+            rcptShipPoModel.setWhId(asnDto.getWhId());
+            rcptShipPoModel.setShipmentNumber(asnDto.getShipmentNumber());
+            rcptShipPoModel.setPoNumber(rcptShipPoDto.getPoNumber());
+            rcptShipPoModel.setCasesExpected(rcptShipPoDto.getCasesExpected());
+            rcptShipPoModel.setCasesReceived(rcptShipPoDto.getCasesReceived());
+            rcptShipPoModel.setOpenToBuyDate(rcptShipPoDto.getOpenToBuyDate());
+            rcptShipPoMapper.insert(rcptShipPoModel);
+          });
+    }
   }
 
 }

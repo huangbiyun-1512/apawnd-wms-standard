@@ -44,7 +44,7 @@
     </resultMap>
 
     <insert id="insert" parameterType="com.example.poc.model.RcptShipCartonDetailModel">
-        INSERT INTO t_rcpt_ship (
+        INSERT INTO t_rcpt_ship_carton_detail (
         wh_id, po_number, item_number, shipment_number, line_number,
         expect_qty, ucc, reference1, reference2, reference3,
         reference4, reference5, status, fork_id, dimension,
