@@ -12,6 +12,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Slf4j
@@ -56,6 +58,7 @@ public class AsnServiceImpl implements AsnService {
     rcptShipMapper.insert(rcptShipModel);
 
     if (Objects.nonNull(asnDto.getPoList())) {
+      List<RcptShipPoModel> rcptShipPoModelList = new ArrayList<>();
       asnDto.getPoList().stream().forEach(
           rcptShipPoDto -> {
             RcptShipPoModel rcptShipPoModel = new RcptShipPoModel();
@@ -65,8 +68,9 @@ public class AsnServiceImpl implements AsnService {
             rcptShipPoModel.setCasesExpected(rcptShipPoDto.getCasesExpected());
             rcptShipPoModel.setCasesReceived(rcptShipPoDto.getCasesReceived());
             rcptShipPoModel.setOpenToBuyDate(rcptShipPoDto.getOpenToBuyDate());
-            rcptShipPoMapper.insert(rcptShipPoModel);
+            rcptShipPoModelList.add(rcptShipPoModel);
           });
+      rcptShipPoMapper.insertBatch(rcptShipPoModelList);
     }
   }
 
