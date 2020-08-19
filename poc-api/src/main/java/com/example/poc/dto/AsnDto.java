@@ -44,10 +44,10 @@ public class AsnDto implements Serializable {
   private String arrivalSign;
   @Schema(name = "arrival_date")
   private Instant arrivalDate;
-  @Schema(name = "gm_send_sign")
-  private String gmSendSign;
-  @Schema(name = "gm_send_date")
-  private Instant gmSendDate;
+  @Schema(name = "grn_send_sign")
+  private String grnSendSign;
+  @Schema(name = "grn_send_date")
+  private Instant grnSendDate;
   @Schema(name = "shipment_receipt_date")
   private Instant shipmentReceiptDate;
   @Schema(name = "asn_type")
