@@ -56,8 +56,7 @@ Follow the global standard and integrate into the global uniform API management 
 ## Coding Guideline
 
 Style Guide
-1. Google Java Style Guide
-https://google.github.io/styleguide/javaguide.html
+1. [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html)
 
 Java Coding Guideline
 1. Alibaba Java Coding Guideline
