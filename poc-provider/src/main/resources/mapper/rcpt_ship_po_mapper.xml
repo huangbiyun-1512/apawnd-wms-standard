@@ -26,8 +26,10 @@
       open_to_buy_date
     ) VALUES
     <foreach collection="list" item="item" separator=",">
-      (#{item.whId}, #{item.shipmentNumber}, #{item.poNumber}, #{item.casesExpected}, #{item.casesReceived},
-      #{item.openToBuyDate})
+    (
+      #{item.whId}, #{item.shipmentNumber}, #{item.poNumber}, #{item.casesExpected}, #{item.casesReceived},
+      #{item.openToBuyDate}
+    )
     </foreach>
   </insert>
 </mapper>

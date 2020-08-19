@@ -69,10 +69,10 @@ public class RcptShipPoDetailDto implements Serializable {
   private String genericField14;
   @Schema(name = "generic_field15")
   private String genericField15;
-  @Schema(name = "gm_send_sign")
-  private String gmSendSign;
-  @Schema(name = "gm_send_date")
-  private Instant gmSendDate;
+  @Schema(name = "grn_send_sign")
+  private String grnSendSign;
+  @Schema(name = "grn_send_date")
+  private Instant grnSendDate;
   @Schema(name = "customs_is_approved")
   private String customsIsApproved;
   @Schema(name = "bonded_qty")

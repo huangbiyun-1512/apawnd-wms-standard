@@ -1,67 +1,94 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.poc.mapper.RcptShipPoDetailMapper">
-    <resultMap id="rcptShipPoDetailModel" type="com.example.poc.model.RcptShipPoDetailModel">
-        <result column="wh_id" property="whId"/>
-        <result column="shipment_number" property="shipmentNumber"/>
-        <result column="po_number" property="poNumber"/>
-        <result column="line_number" property="lineNumber"/>
-        <result column="item_number" property="itemNumber"/>
-        <result column="schedule_number" property="scheduleNumber"/>
-        <result column="expected_qty" property="expectedQty"/>
-        <result column="received_qty" property="receivedQty"/>
-        <result column="reconciled_date" property="reconciledDate"/>
-        <result column="status" property="status"/>
-        <result column="shipment_line_number" property="shipmentLineNumber"/>
-        <result column="weight" property="weight"/>
-        <result column="calculation_uom" property="calculationUom"/>
-        <result column="property_mark" property="propertyMark"/>
-        <result column="generic_field_1" property="genericField1"/>
-        <result column="generic_field_2" property="genericField2"/>
-        <result column="generic_field_3" property="genericField3"/>
-        <result column="generic_field_4" property="genericField4"/>
-        <result column="generic_field_5" property="genericField5"/>
-        <result column="generic_field_6" property="genericField6"/>
-        <result column="generic_field_7" property="genericField7"/>
-        <result column="generic_field_8" property="genericField8"/>
-        <result column="generic_field_9" property="genericField9"/>
-        <result column="generic_field_10" property="genericField10"/>
-        <result column="generic_field_11" property="genericField11"/>
-        <result column="generic_field_12" property="genericField12"/>
-        <result column="generic_field_13" property="genericField13"/>
-        <result column="generic_field_14" property="genericField14"/>
-        <result column="generic_field_15" property="genericField15"/>
-        <result column="grn_send_sign" property="grnSendSign"/>
-        <result column="grn_send_date" property="grnSendDate"/>
-        <result column="customs_is_approved" property="customsIsApproved"/>
-        <result column="bonded_qty" property="bondedQty"/>
-        <result column="free_qty" property="freeQty"/>
-        <result column="confirm_bounded" property="confirmBounded"/>
-        <result column="confirm_free" property="confirmFree"/>
-        <result column="confirm_kit" property="confirmKit"/>
-        <result column="received_bonded_qty" property="receivedBondedQty"/>
-        <result column="received_free_qty" property="receivedFreeQty"/>
-    </resultMap>
+  <resultMap id="rcptShipPoDetailModel" type="com.example.poc.model.RcptShipPoDetailModel">
+    <result column="wh_id" property="whId"/>
+    <result column="shipment_number" property="shipmentNumber"/>
+    <result column="po_number" property="poNumber"/>
+    <result column="line_number" property="lineNumber"/>
+    <result column="item_number" property="itemNumber"/>
+    <result column="schedule_number" property="scheduleNumber"/>
+    <result column="expected_qty" property="expectedQty"/>
+    <result column="received_qty" property="receivedQty"/>
+    <result column="reconciled_date" property="reconciledDate"/>
+    <result column="status" property="status"/>
+    <result column="shipment_line_number" property="shipmentLineNumber"/>
+    <result column="weight" property="weight"/>
+    <result column="calculation_uom" property="calculationUom"/>
+    <result column="property_mark" property="propertyMark"/>
+    <result column="generic_field_1" property="genericField1"/>
+    <result column="generic_field_2" property="genericField2"/>
+    <result column="generic_field_3" property="genericField3"/>
+    <result column="generic_field_4" property="genericField4"/>
+    <result column="generic_field_5" property="genericField5"/>
+    <result column="generic_field_6" property="genericField6"/>
+    <result column="generic_field_7" property="genericField7"/>
+    <result column="generic_field_8" property="genericField8"/>
+    <result column="generic_field_9" property="genericField9"/>
+    <result column="generic_field_10" property="genericField10"/>
+    <result column="generic_field_11" property="genericField11"/>
+    <result column="generic_field_12" property="genericField12"/>
+    <result column="generic_field_13" property="genericField13"/>
+    <result column="generic_field_14" property="genericField14"/>
+    <result column="generic_field_15" property="genericField15"/>
+    <result column="grn_send_sign" property="grnSendSign"/>
+    <result column="grn_send_date" property="grnSendDate"/>
+    <result column="customs_is_approved" property="customsIsApproved"/>
+    <result column="bonded_qty" property="bondedQty"/>
+    <result column="free_qty" property="freeQty"/>
+    <result column="confirm_bounded" property="confirmBounded"/>
+    <result column="confirm_free" property="confirmFree"/>
+    <result column="confirm_kit" property="confirmKit"/>
+    <result column="received_bonded_qty" property="receivedBondedQty"/>
+    <result column="received_free_qty" property="receivedFreeQty"/>
+  </resultMap>
 
-    <insert id="insert" parameterType="com.example.poc.model.RcptShipPoDetailModel">
-        INSERT INTO t_rcpt_ship_po_detail (
-        wh_id, shipment_number, po_number, line_number, item_number,
-        schedule_number, expected_qty, received_qty, reconciled_date, status,
-        shipment_line_number, weight, calculation_uom, property_mark, generic_field_1,
-        generic_field_2, generic_field_3, generic_field_4, generic_field_5, generic_field_6,
-        generic_field_7, generic_field_8, generic_field_9, generic_field_10, generic_field_11,
-        generic_field_12, generic_field_13, generic_field_14, generic_field_15, grn_send_sign,
-        grn_send_date, customs_is_approved, bonded_qty, free_qty, confirm_bounded,
-        confirm_free, confirm_kit, received_bonded_qty, received_free_qty
-        ) VALUES (
-        #{whId}, #{shipmentNumber}, #{poNumber}, #{lineNumber}, #{itemNumber},
-        #{scheduleNumber}, #{expectedQty}, #{receivedQty}, #{reconciledDate}, #{status},
-        #{shipmentLineNumber}, #{weight}, #{calculationUom}, #{propertyMark}, #{genericField1},
-        #{genericField2}, #{genericField3}, #{genericField4}, #{genericField5}, #{genericField6},
-        #{genericField7}, #{genericField8}, #{genericField9}, #{genericField10}, #{genericField11},
-        #{genericField12}, #{genericField13}, #{genericField14}, #{genericField15}, #{grnSendSign},
-        #{grnSendDate}, #{customsIsApproved}, #{bondedQty}, #{freeQty}, #{confirmBounded},
-        #{confirmFree}, #{confirmKit}, #{receivedBondedQty}, #{receivedFreeQty}
-        )
-    </insert>
+  <insert id="insert" parameterType="com.example.poc.model.RcptShipPoDetailModel">
+    INSERT INTO t_rcpt_ship_po_detail (
+      wh_id, shipment_number, po_number, line_number, item_number,
+      schedule_number, expected_qty, received_qty, reconciled_date, status,
+      shipment_line_number, weight, calculation_uom, property_mark, generic_field_1,
+      generic_field_2, generic_field_3, generic_field_4, generic_field_5, generic_field_6,
+      generic_field_7, generic_field_8, generic_field_9, generic_field_10, generic_field_11,
+      generic_field_12, generic_field_13, generic_field_14, generic_field_15, grn_send_sign,
+      grn_send_date, customs_is_approved, bonded_qty, free_qty, confirm_bounded,
+      confirm_free, confirm_kit, received_bonded_qty, received_free_qty
+    ) VALUES (
+      #{whId}, #{shipmentNumber}, #{poNumber}, #{lineNumber}, #{itemNumber},
+      #{scheduleNumber}, #{expectedQty}, #{receivedQty}, #{reconciledDate}, #{status},
+      #{shipmentLineNumber}, #{weight}, #{calculationUom}, #{propertyMark}, #{genericField1},
+      #{genericField2}, #{genericField3}, #{genericField4}, #{genericField5}, #{genericField6},
+      #{genericField7}, #{genericField8}, #{genericField9}, #{genericField10}, #{genericField11},
+      #{genericField12}, #{genericField13}, #{genericField14}, #{genericField15}, #{grnSendSign},
+      #{grnSendDate}, #{customsIsApproved}, #{bondedQty}, #{freeQty}, #{confirmBounded},
+      #{confirmFree}, #{confirmKit}, #{receivedBondedQty}, #{receivedFreeQty}
+    )
+  </insert>
+
+  <insert id="insertBatch" parameterType="java.util.List">
+    INSERT INTO t_rcpt_ship_po_detail (
+      wh_id, shipment_number, po_number, line_number, item_number,
+      schedule_number, expected_qty, received_qty, reconciled_date, status,
+      shipment_line_number, weight, calculation_uom, property_mark, generic_field_1,
+      generic_field_2, generic_field_3, generic_field_4, generic_field_5, generic_field_6,
+      generic_field_7, generic_field_8, generic_field_9, generic_field_10, generic_field_11,
+      generic_field_12, generic_field_13, generic_field_14, generic_field_15, grn_send_sign,
+      grn_send_date, customs_is_approved, bonded_qty, free_qty, confirm_bounded,
+      confirm_free, confirm_kit, received_bonded_qty, received_free_qty
+    ) VALUES
+    <foreach collection="list" item="item" separator=",">
+    (
+      #{item.whId}, #{item.shipmentNumber}, #{item.poNumber}, #{item.lineNumber}, #{item.itemNumber},
+      #{item.scheduleNumber}, #{item.expectedQty}, #{item.receivedQty}, #{item.reconciledDate}, #{item.status},
+      #{item.shipmentLineNumber}, #{item.weight}, #{item.calculationUom}, #{item.propertyMark}, #{item.genericField1},
+      #{item.genericField2}, #{item.genericField3}, #{item.genericField4}, #{item.genericField5}, #{item.genericField6},
+      #{item.genericField7}, #{item.genericField8}, #{item.genericField9}, #{item.genericField10},
+      #{item.genericField11},
+      #{item.genericField12}, #{item.genericField13}, #{item.genericField14}, #{item.genericField15},
+      #{item.grnSendSign},
+      #{item.grnSendDate}, #{item.customsIsApproved}, #{item.bondedQty}, #{item.freeQty}, #{item.confirmBounded},
+      #{item.confirmFree}, #{item.confirmKit}, #{item.receivedBondedQty}, #{item.receivedFreeQty}
+    )
+    </foreach>
+  </insert>
 </mapper>
