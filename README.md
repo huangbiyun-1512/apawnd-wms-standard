@@ -50,8 +50,7 @@ Follow the global standard and integrate into the global uniform API management 
 
 ### Service Chain Tracing
 
-1. Zipkin
-2. Jaeger
+1. Jaeger
 
 ## Coding Guideline
 

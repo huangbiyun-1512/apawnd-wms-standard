@@ -35,6 +35,7 @@
         <spring.cloud.starter.openfeign.version>2.2.4.RELEASE</spring.cloud.starter.openfeign.version>
         <spring.cloud.starter.kubernetes.version>1.1.5.RELEASE</spring.cloud.starter.kubernetes.version>
         <spring.cloud.starter.kubernetes.config.version>1.1.5.RELEASE</spring.cloud.starter.kubernetes.config.version>
+        <opentracing.spring.jaeger.web.starter.version>3.1.2</opentracing.spring.jaeger.web.starter.version>
     </properties>
 
     <dependencyManagement>
@@ -91,6 +92,12 @@
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
                 <version>${spring.cloud.starter.kubernetes.config.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.opentracing.contrib</groupId>
+                <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
+                <version>${opentracing.spring.jaeger.web.starter.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -186,6 +193,11 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
         </dependency>
     </dependencies>
 
