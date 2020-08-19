@@ -64,19 +64,19 @@ Java Coding Guideline
 
 ### Project Structure
 
-root
- |--- xxx-api           API of the business service.
-        |--- src/main
+    root
+        |--- xxx-api           Interface module.
+            |--- src/main
                 |--- java
- |--- xxx-provider      Implementation of the business service.
-        |--- src/main
+        |--- xxx-provider      Implementation module.
+            |--- src/main
                 |--- java
                 |--- resources
- |--- .gitignore        Git management configuration.
- |--- deployment.yml    K8s deployment yaml.
- |--- Dockerfile        Docker related configuration.
- |--- pom.xml           Maven related configuration.
- |--- README.md         Description of the project.
+        |--- .gitignore        Git management configuration.
+        |--- deployment.yml    K8s deployment yaml.
+        |--- Dockerfile        Docker related configuration.
+        |--- pom.xml           Maven related configuration.
+        |--- README.md         Description of the project.
 
 ### Parameter Validation
 
