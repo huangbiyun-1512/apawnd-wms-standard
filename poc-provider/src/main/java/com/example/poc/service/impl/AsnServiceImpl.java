@@ -1,12 +1,14 @@
 package com.example.poc.service.impl;
 
 import com.example.poc.dto.AsnDto;
+import com.example.poc.dto.RcptShipPoDetailCartonDto;
 import com.example.poc.dto.RcptShipPoDetailDto;
 import com.example.poc.dto.RcptShipPoDto;
 import com.example.poc.mapper.RcptShipCartonDetailMapper;
 import com.example.poc.mapper.RcptShipMapper;
 import com.example.poc.mapper.RcptShipPoDetailMapper;
 import com.example.poc.mapper.RcptShipPoMapper;
+import com.example.poc.model.RcptShipCartonDetailModel;
 import com.example.poc.model.RcptShipModel;
 import com.example.poc.model.RcptShipPoDetailModel;
 import com.example.poc.model.RcptShipPoModel;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -48,6 +51,7 @@ public class AsnServiceImpl implements AsnService {
 
     List<RcptShipPoModel> rcptShipPoModelList = new ArrayList<>();
     List<RcptShipPoDetailModel> rcptShipPoDetailModelList = new ArrayList<>();
+    List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList = new ArrayList<>();
 
     if (Objects.nonNull(asnDto.getPoList()) &&
         asnDto.getPoList().size() > 0) {
@@ -63,12 +67,21 @@ public class AsnServiceImpl implements AsnService {
                 RcptShipPoDetailModel rcptShipPoDetailModel =
                     composeRcptShipPoDetailModel(asnDto, rcptShipPoDto, rcptShipPoDetailDto);
                 rcptShipPoDetailModelList.add(rcptShipPoDetailModel);
-              });
 
-              rcptShipPoDetailMapper.insertBatch(rcptShipPoDetailModelList);
+                if (Objects.nonNull(rcptShipPoDetailDto.getCartonList()) &&
+                    rcptShipPoDetailDto.getCartonList().size() > 0) {
+                  rcptShipPoDetailDto.getCartonList().stream().forEach(rcptShipPoDetailCartonDto -> {
+                    RcptShipCartonDetailModel rcptShipCartonDetailModel =
+                        composeRcptShipCartonDetailModel(asnDto, rcptShipPoDto, rcptShipPoDetailDto, rcptShipPoDetailCartonDto);
+                    rcptShipCartonDetailModelList.add(rcptShipCartonDetailModel);
+                  });
+                }
+              });
             }
           });
       rcptShipPoMapper.insertBatch(rcptShipPoModelList);
+      rcptShipPoDetailMapper.insertBatch(rcptShipPoDetailModelList);
+      rcptShipCartonDetailMapper.insertBatch(rcptShipCartonDetailModelList);
     }
   }
 
@@ -138,7 +151,54 @@ public class AsnServiceImpl implements AsnService {
     rcptShipPoDetailModel.setGenericField13(rcptShipPoDetailDto.getGenericField13());
     rcptShipPoDetailModel.setGenericField14(rcptShipPoDetailDto.getGenericField14());
     rcptShipPoDetailModel.setGenericField15(rcptShipPoDetailDto.getGenericField15());
+    rcptShipPoDetailModel.setConfirmBounded(BigDecimal.ZERO);
+    rcptShipPoDetailModel.setConfirmFree(BigDecimal.ZERO);
+    rcptShipPoDetailModel.setConfirmKit(BigDecimal.ZERO);
 
     return rcptShipPoDetailModel;
+  }
+
+  private RcptShipCartonDetailModel composeRcptShipCartonDetailModel(
+      AsnDto asnDto,
+      RcptShipPoDto rcptShipPoDto,
+      RcptShipPoDetailDto rcptShipPoDetailDto,
+      RcptShipPoDetailCartonDto rcptShipPoDetailCartonDto) {
+    RcptShipCartonDetailModel rcptShipCartonDetailModel = new RcptShipCartonDetailModel();
+    rcptShipCartonDetailModel.setWhId(asnDto.getWhId());
+    rcptShipCartonDetailModel.setShipmentNumber(asnDto.getShipmentNumber());
+    rcptShipCartonDetailModel.setPoNumber(rcptShipPoDto.getPoNumber());
+    rcptShipCartonDetailModel.setLineNumber(rcptShipPoDetailDto.getLineNumber());
+    rcptShipCartonDetailModel.setItemNumber(rcptShipPoDetailDto.getItemNumber());
+    rcptShipCartonDetailModel.setExpectQty(rcptShipPoDetailCartonDto.getExpectQty());
+    rcptShipCartonDetailModel.setScheduleNumber(1);
+    rcptShipCartonDetailModel.setUcc(rcptShipPoDetailCartonDto.getUcc());
+    rcptShipCartonDetailModel.setReference1(rcptShipPoDetailCartonDto.getReference1());
+    rcptShipCartonDetailModel.setReference2(rcptShipPoDetailCartonDto.getReference2());
+    rcptShipCartonDetailModel.setReference3(rcptShipPoDetailCartonDto.getReference3());
+    rcptShipCartonDetailModel.setReference4(rcptShipPoDetailCartonDto.getReference4());
+    rcptShipCartonDetailModel.setReference5(rcptShipPoDetailCartonDto.getReference5());
+    rcptShipCartonDetailModel.setStatus(rcptShipPoDetailCartonDto.getStatus());
+    rcptShipCartonDetailModel.setForkId(rcptShipPoDetailCartonDto.getForkId());
+    rcptShipCartonDetailModel.setDimension(rcptShipPoDetailCartonDto.getDimension());
+    rcptShipCartonDetailModel.setHuId(rcptShipPoDetailCartonDto.getHuId());
+    rcptShipCartonDetailModel.setGenericField1(rcptShipPoDetailCartonDto.getGenericField1());
+    rcptShipCartonDetailModel.setGenericField2(rcptShipPoDetailCartonDto.getGenericField2());
+    rcptShipCartonDetailModel.setGenericField3(rcptShipPoDetailCartonDto.getGenericField3());
+    rcptShipCartonDetailModel.setGenericField4(rcptShipPoDetailCartonDto.getGenericField4());
+    rcptShipCartonDetailModel.setGenericField5(rcptShipPoDetailCartonDto.getGenericField5());
+    rcptShipCartonDetailModel.setGenericField6(rcptShipPoDetailCartonDto.getGenericField6());
+    rcptShipCartonDetailModel.setGenericField7(rcptShipPoDetailCartonDto.getGenericField7());
+    rcptShipCartonDetailModel.setGenericField8(rcptShipPoDetailCartonDto.getGenericField8());
+    rcptShipCartonDetailModel.setGenericField9(rcptShipPoDetailCartonDto.getGenericField9());
+    rcptShipCartonDetailModel.setGenericField10(rcptShipPoDetailCartonDto.getGenericField10());
+    rcptShipCartonDetailModel.setGenericField11(rcptShipPoDetailCartonDto.getGenericField11());
+    rcptShipCartonDetailModel.setGenericField12(rcptShipPoDetailCartonDto.getGenericField12());
+    rcptShipCartonDetailModel.setGenericField13(rcptShipPoDetailCartonDto.getGenericField13());
+    rcptShipCartonDetailModel.setGenericField14(rcptShipPoDetailCartonDto.getGenericField14());
+    rcptShipCartonDetailModel.setGenericField15(rcptShipPoDetailCartonDto.getGenericField15());
+    rcptShipCartonDetailModel.setSendToLocalDb(0);
+    rcptShipCartonDetailModel.setScanFlag(0);
+
+    return rcptShipCartonDetailModel;
   }
 }

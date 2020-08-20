@@ -12,7 +12,7 @@ import java.time.Instant;
 public class RcptShipPoDetailCartonDto implements Serializable {
 
   @Schema(name = "expect_qty")
-  private Integer ExpectQty;
+  private Integer expectQty;
   @Schema(name = "ucc")
   private String ucc;
   @Schema(name = "reference1")

@@ -55,13 +55,13 @@
       confirm_free, confirm_kit, received_bonded_qty, received_free_qty
     ) VALUES (
       #{whId}, #{shipmentNumber}, #{poNumber}, #{lineNumber}, #{itemNumber},
-      #{scheduleNumber}, #{expectedQty}, #{receivedQty}, #{reconciledDate}, #{status},
-      #{shipmentLineNumber}, #{weight}, #{calculationUom}, #{propertyMark}, #{genericField1},
+      #{scheduleNumber}, #{expectedQty, jdbcType=FLOAT}, #{receivedQty, jdbcType=FLOAT}, #{reconciledDate}, #{status},
+      #{shipmentLineNumber}, #{weight, jdbcType=FLOAT}, #{calculationUom}, #{propertyMark}, #{genericField1},
       #{genericField2}, #{genericField3}, #{genericField4}, #{genericField5}, #{genericField6},
       #{genericField7}, #{genericField8}, #{genericField9}, #{genericField10}, #{genericField11},
       #{genericField12}, #{genericField13}, #{genericField14}, #{genericField15}, #{grnSendSign},
-      #{grnSendDate}, #{customsIsApproved}, #{bondedQty}, #{freeQty}, #{confirmBounded},
-      #{confirmFree}, #{confirmKit}, #{receivedBondedQty}, #{receivedFreeQty}
+      #{grnSendDate}, #{customsIsApproved}, #{bondedQty, jdbcType=FLOAT}, #{freeQty, jdbcType=FLOAT}, #{confirmBounded, jdbcType=FLOAT},
+      #{confirmFree, jdbcType=FLOAT}, #{confirmKit, jdbcType=FLOAT}, #{receivedBondedQty, jdbcType=FLOAT}, #{receivedFreeQty, jdbcType=FLOAT}
     )
   </insert>
 
@@ -79,15 +79,15 @@
     <foreach collection="list" item="item" separator=",">
     (
       #{item.whId}, #{item.shipmentNumber}, #{item.poNumber}, #{item.lineNumber}, #{item.itemNumber},
-      #{item.scheduleNumber}, #{item.expectedQty}, #{item.receivedQty}, #{item.reconciledDate}, #{item.status},
-      #{item.shipmentLineNumber}, #{item.weight}, #{item.calculationUom}, #{item.propertyMark}, #{item.genericField1},
+      #{item.scheduleNumber}, #{item.expectedQty, jdbcType=FLOAT}, #{item.receivedQty, jdbcType=FLOAT}, #{item.reconciledDate}, #{item.status},
+      #{item.shipmentLineNumber}, #{item.weight, jdbcType=FLOAT}, #{item.calculationUom}, #{item.propertyMark}, #{item.genericField1},
       #{item.genericField2}, #{item.genericField3}, #{item.genericField4}, #{item.genericField5}, #{item.genericField6},
       #{item.genericField7}, #{item.genericField8}, #{item.genericField9}, #{item.genericField10},
       #{item.genericField11},
       #{item.genericField12}, #{item.genericField13}, #{item.genericField14}, #{item.genericField15},
       #{item.grnSendSign},
-      #{item.grnSendDate}, #{item.customsIsApproved}, #{item.bondedQty}, #{item.freeQty}, #{item.confirmBounded},
-      #{item.confirmFree}, #{item.confirmKit}, #{item.receivedBondedQty}, #{item.receivedFreeQty}
+      #{item.grnSendDate}, #{item.customsIsApproved}, #{item.bondedQty, jdbcType=FLOAT}, #{item.freeQty, jdbcType=FLOAT}, #{item.confirmBounded, jdbcType=FLOAT},
+      #{item.confirmFree, jdbcType=FLOAT}, #{item.confirmKit, jdbcType=FLOAT}, #{item.receivedBondedQty, jdbcType=FLOAT}, #{item.receivedFreeQty, jdbcType=FLOAT}
     )
     </foreach>
   </insert>

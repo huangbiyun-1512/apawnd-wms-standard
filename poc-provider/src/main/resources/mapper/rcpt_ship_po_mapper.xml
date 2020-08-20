@@ -15,7 +15,7 @@
       wh_id, shipment_number, po_number, cases_expected, cases_received,
       open_to_buy_date
     ) VALUES (
-      #{whId}, #{shipmentNumber}, #{poNumber}, #{casesExpected}, #{casesReceived},
+      #{whId}, #{shipmentNumber}, #{poNumber}, #{casesExpected, jdbcType=FLOAT}, #{casesReceived, jdbcType=FLOAT},
       #{openToBuyDate}
     )
   </insert>
@@ -27,7 +27,7 @@
     ) VALUES
     <foreach collection="list" item="item" separator=",">
     (
-      #{item.whId}, #{item.shipmentNumber}, #{item.poNumber}, #{item.casesExpected}, #{item.casesReceived},
+      #{item.whId}, #{item.shipmentNumber}, #{item.poNumber}, #{item.casesExpected, jdbcType=FLOAT}, #{item.casesReceived, jdbcType=FLOAT},
       #{item.openToBuyDate}
     )
     </foreach>
