@@ -53,11 +53,12 @@ spec:
         app: poc-domain
     spec:
       serviceAccountName: config-reader
-      imagePullSecrets:
-        - name: regcred
+#      imagePullSecrets:
+#        - name: regcred
       containers:
         - name: poc-domain
-          image: 192.168.99.1:8083/poc-domain
+#          image: 192.168.99.1:8083/poc-domain
+          image: huangbiyun1512/poc-domain
           command: ["java"]
           args: ["-Dfile.encoding=UTF-8", "-jar", "app.jar", "--spring.profiles.active=development"]
           imagePullPolicy: Always
