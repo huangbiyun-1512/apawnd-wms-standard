@@ -63,18 +63,34 @@ Java Coding Guideline
 ### Project Structure
 
     root
-        |--- xxx-api           Interface module.
+        |--- xxx-api                            Interface module.
             |--- src/main
                 |--- java
-        |--- xxx-provider      Implementation module.
+                    |--- api                    Interface.
+                    |--- dto                    Data transfer objects.
+        |--- xxx-provider                       Implementation module.
             |--- src/main
                 |--- java
+                    |--- component              Java components.
+                    |--- config                 Spring boot configuration.
+                    |--- controller
+                        |--- v1                 Controllers for V1.
+                        |--- v2                 Controllers for V2.
+                    |--- mapper                 DAOs.
+                    |--- model                  Data entities.
+                    |--- service                Business Services.
                 |--- resources
-        |--- .gitignore        Git management configuration.
-        |--- deployment.yml    K8s deployment yaml.
-        |--- Dockerfile        Docker related configuration.
-        |--- pom.xml           Maven related configuration.
-        |--- README.md         Description of the project.
+                    |--- mapper                 Mybatis configuration.
+                    |--- static
+                        |--- i18n               Message properties for i18n.
+                    |--- application.yml        Spring boot config yaml.
+                    |--- bootstrap.yml          Spring boot bootstrap config yml.
+                    |--- logback-spring.xml     Logback config xml.
+        |--- .gitignore                         Git management configuration.
+        |--- deployment.yml                     K8s deployment configuration.
+        |--- Dockerfile                         Docker related configuration.
+        |--- pom.xml                            Maven related configuration.
+        |--- README.md                          Description of the project.
 
 ### Parameter Validation
 
