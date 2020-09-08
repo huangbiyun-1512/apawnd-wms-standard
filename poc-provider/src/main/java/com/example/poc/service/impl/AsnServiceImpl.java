@@ -1,5 +1,6 @@
 package com.example.poc.service.impl;
 
+import com.common.poc.components.exception.BusinessException;
 import com.example.poc.dto.AsnDto;
 import com.example.poc.dto.RcptShipPoDetailCartonDto;
 import com.example.poc.dto.RcptShipPoDetailDto;
@@ -200,5 +201,10 @@ public class AsnServiceImpl implements AsnService {
     rcptShipCartonDetailModel.setScanFlag(0);
 
     return rcptShipCartonDetailModel;
+  }
+
+  @Override
+  public void deleteAsn(String criteria) throws BusinessException {
+    // do business operation here
   }
 }
