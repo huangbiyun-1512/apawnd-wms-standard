@@ -78,7 +78,7 @@ spec:
       targetPort: 18080
   selector:
     app: poc-domain
-  type: LoadBalancer
+  type: ClusterIP
 
 ---
 #apiVersion: networking.k8s.io/v1beta1
