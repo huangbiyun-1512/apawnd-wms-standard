@@ -18,6 +18,10 @@ public class OutboundServiceImpl implements OutboundService {
   @Override
   public void scaLoadedAck() {
     log.info("SCA loaded ack executing...");
+    log.warn("This is a waring log.");
+    log.error("This is a error log.");
+    log.debug("This is a debug log.");
+    log.trace("This is a trace log.");
 
     // Retrieve value of I01-0001.code
     messageUtil.getCode("I01-0001");
