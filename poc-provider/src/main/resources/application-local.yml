@@ -6,6 +6,16 @@ spring:
     driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
     username: sa
     password: Decathl0n
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    timeout: 2000
+    jedis:
+      pool:
+        max-active: 32
+        max-idle: 8
+        min-idle: 8
+        max-wait: -1
 mybatis:
   mapper-locations: classpath:mapper/*.xml
 server:
