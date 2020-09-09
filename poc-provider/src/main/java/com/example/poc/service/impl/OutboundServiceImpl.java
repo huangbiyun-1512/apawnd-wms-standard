@@ -3,6 +3,9 @@ package com.example.poc.service.impl;
 import com.example.poc.component.util.MessageUtil;
 import com.example.poc.service.OutboundService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -29,6 +32,24 @@ public class OutboundServiceImpl implements OutboundService {
     messageUtil.getTitle("I01-0001");
     // Retrieve value of I01-0001.detail
     messageUtil.getDetail("I01-0001");
+
+  }
+
+  @Cacheable(key = "#key")
+  @Override
+  public Object retrieveDataFromCacheIfExisted(String key) {
+    return "cache value";
+  }
+
+  @CachePut(key = "#key")
+  @Override
+  public void updateCache(String key) {
+
+  }
+
+  @CacheEvict(key = "#key")
+  @Override
+  public void removeCache(String key) {
 
   }
 }
