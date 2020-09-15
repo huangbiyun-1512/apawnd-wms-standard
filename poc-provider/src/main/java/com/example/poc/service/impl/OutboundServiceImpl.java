@@ -1,6 +1,6 @@
 package com.example.poc.service.impl;
 
-import com.example.poc.component.util.MessageUtil;
+import com.common.poc.components.util.MessageUtil;
 import com.example.poc.service.OutboundService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
