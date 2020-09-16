@@ -10,17 +10,17 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.example</groupId>
-    <artifactId>poc-domain</artifactId>
+    <groupId>com.maersk.highjump</groupId>
+    <artifactId>highjump-generics</artifactId>
     <version>1.${revision}</version>
     <packaging>pom</packaging>
 
-    <name>poc-domain</name>
+    <name>highjump-generics</name>
     <description>Demo project for Spring Boot</description>
 
     <modules>
-        <module>poc-api</module>
-        <module>poc-provider</module>
+        <module>highjump-generics-api</module>
+        <module>highjump-generics-provider</module>
     </modules>
 
     <properties>
@@ -31,7 +31,7 @@
         <mssql.jdbc.version>8.4.0.jre11</mssql.jdbc.version>
         <springdoc.openapi.ui.version>1.4.3</springdoc.openapi.ui.version>
         <logstash.logback.encoder.version>6.2</logstash.logback.encoder.version>
-        <poc.components.version>1.0.1-RELEASE</poc.components.version>
+        <wnd.commons.component.version>1.0.1-RELEASE</wnd.commons.component.version>
         <spring.cloud.starter.openfeign.version>2.2.4.RELEASE</spring.cloud.starter.openfeign.version>
         <spring.cloud.starter.kubernetes.version>1.1.5.RELEASE</spring.cloud.starter.kubernetes.version>
         <spring.cloud.starter.kubernetes.config.version>1.1.5.RELEASE</spring.cloud.starter.kubernetes.config.version>
@@ -40,6 +40,41 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- Spring Cloud Starter START -->
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${spring.cloud.starter.openfeign.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-kubernetes</artifactId>
+                <version>${spring.cloud.starter.kubernetes.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
+                <version>${spring.cloud.starter.kubernetes.config.version}</version>
+            </dependency>
+            <!-- Spring Cloud Starter END -->
+
+            <!-- Internal Dependency START -->
+            <dependency>
+                <groupId>com.maersk.highjump</groupId>
+                <artifactId>highjump-generics-api</artifactId>
+                <version>1.${revision}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.maersk.wnd</groupId>
+                <artifactId>wnd-commons-component</artifactId>
+                <version>${wnd.commons.component.version}</version>
+            </dependency>
+            <!-- Internal Dependency END -->
+
+            <!-- External Dependency START -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
@@ -65,40 +100,11 @@
             </dependency>
 
             <dependency>
-                <groupId>com.example</groupId>
-                <artifactId>poc-api</artifactId>
-                <version>1.${revision}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.example</groupId>
-                <artifactId>poc-components</artifactId>
-                <version>${poc.components.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-openfeign</artifactId>
-                <version>${spring.cloud.starter.openfeign.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-kubernetes</artifactId>
-                <version>${spring.cloud.starter.kubernetes.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
-                <version>${spring.cloud.starter.kubernetes.config.version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>io.opentracing.contrib</groupId>
                 <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
                 <version>${opentracing.spring.jaeger.web.starter.version}</version>
             </dependency>
+            <!-- External Dependency END -->
         </dependencies>
     </dependencyManagement>
 
@@ -127,84 +133,6 @@
             <url>http://localhost:8081/repository/maven-central/</url>
         </repository>
     </repositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>mssql-jdbc</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-validation</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>com.example</groupId>
-            <artifactId>poc-components</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-kubernetes</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-kubernetes-config</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.opentracing.contrib</groupId>
-            <artifactId>opentracing-spring-jaeger-web-starter</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <plugins>
