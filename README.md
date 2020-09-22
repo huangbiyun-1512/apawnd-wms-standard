@@ -76,11 +76,12 @@ Java Coding Guideline
                     |--- controller
                         |--- v1                 Controllers for V1.
                         |--- v2                 Controllers for V2.
-                    |--- mapper                 DAOs.
+                    |--- mapper                 DAOs.(if use Mybatis)
+                    |--- repository             DAOs.(if use JPA)
                     |--- model                  Data entities.
                     |--- service                Business Services.
                 |--- resources
-                    |--- mapper                 Mybatis configuration.
+                    |--- mapper                 Mybatis configuration.(if use Mybatis)
                     |--- static
                         |--- i18n               Message properties for i18n.
                     |--- application.yml        Spring boot config yaml.
