@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -17,7 +16,7 @@ import java.util.List;
 public class RcptShipPoDto implements Serializable {
 
   @Schema(name = "detail_list")
-  @NotNull
+  @NotEmpty
   private List<RcptShipPoDetailDto> detailList;
 
   @Schema(name = "action_code")
