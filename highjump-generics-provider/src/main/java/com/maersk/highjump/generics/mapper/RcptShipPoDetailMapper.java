@@ -2,12 +2,16 @@ package com.maersk.highjump.generics.mapper;
 
 import com.maersk.highjump.generics.model.RcptShipPoDetailModel;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
 @Mapper
 public interface RcptShipPoDetailMapper {
 
-  int insert(RcptShipPoDetailModel rcptShipPoDetailModel);
-  int insertBatch(List<RcptShipPoDetailModel> rcptShipPoDetailModelList);
+  void insert(RcptShipPoDetailModel rcptShipPoDetailModel);
+  void insertBatch(List<RcptShipPoDetailModel> rcptShipPoDetailModelList);
+  int deleteByWhIdAndShipmentNumber(
+      @Param("whId") String whId,
+      @Param("shipmentNumber") String shipmentNumber);
 }

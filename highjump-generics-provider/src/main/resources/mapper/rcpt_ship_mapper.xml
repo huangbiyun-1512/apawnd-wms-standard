@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.maersk.highjump.generics.mapper.RcptShipMapper">
-    <resultMap id="rcptShipModel" type="com.maersk.highjump.generics.model.RcptShipModel">
+    <resultMap id="rcptShipModel" type="RcptShipModel">
         <result column="wh_id" property="whId"/>
         <result column="shipment_number" property="shipmentNumber"/>
         <result column="carrier_id" property="carrierId"/>
@@ -24,7 +24,7 @@
         <result column="tallysheet_is_printed" property="tallysheetIsPrinted"/>
     </resultMap>
 
-    <insert id="insert" parameterType="com.maersk.highjump.generics.model.RcptShipModel">
+    <insert id="insert" parameterType="RcptShipModel">
         INSERT INTO t_rcpt_ship (
         wh_id, shipment_number, carrier_id, trailer_number, date_expected,
         date_received, date_shipped, status, comments, workers_assigned,
@@ -37,4 +37,16 @@
         #{shipmentReceiptDate}, #{asnType}, #{wipNumber}, #{fileSeq}, #{tallysheetIsPrinted}
         )
     </insert>
+
+    <select id="selectCountByWhIdAndShipmentNumber" resultType="java.lang.Integer">
+        SELECT COUNT(*) FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
+    </select>
+
+    <select id="selectByWhIdAndShipmentNumber" resultType="RcptShipModel">
+        SELECT * FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
+    </select>
+
+    <delete id="deleteByWhIdAndShipmentNumber">
+        DELETE FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
+    </delete>
 </mapper>

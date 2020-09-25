@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.maersk.highjump.generics.mapper.RcptShipCartonDetailMapper">
-  <resultMap id="rcptShipCartonDetailModel" type="com.maersk.highjump.generics.model.RcptShipCartonDetailModel">
+  <resultMap id="rcptShipCartonDetailModel" type="RcptShipCartonDetailModel">
     <result column="wh_id" property="whId"/>
     <result column="po_number" property="poNumber"/>
     <result column="item_number" property="itemNumber"/>
@@ -43,7 +43,7 @@
     <result column="qty_received" property="qtyReceived"/>
   </resultMap>
 
-  <insert id="insert" parameterType="com.maersk.highjump.generics.model.RcptShipCartonDetailModel">
+  <insert id="insert" parameterType="RcptShipCartonDetailModel">
     INSERT INTO t_rcpt_ship_carton_detail (
       wh_id, po_number, item_number, shipment_number, line_number,
       expect_qty, ucc, reference1, reference2, reference3,
@@ -65,7 +65,7 @@
     )
   </insert>
 
-  <insert id="insertBatch" parameterType="com.maersk.highjump.generics.model.RcptShipCartonDetailModel">
+  <insert id="insertBatch" parameterType="RcptShipCartonDetailModel">
     INSERT INTO t_rcpt_ship_carton_detail (
       wh_id, po_number, item_number, shipment_number, line_number,
       expect_qty, ucc, reference1, reference2, reference3,
@@ -89,4 +89,8 @@
     )
     </foreach>
   </insert>
+
+  <delete id="deleteByWhIdAndShipmentNumber">
+    DELETE FROM t_rcpt_ship_carton_detail t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
+  </delete>
 </mapper>

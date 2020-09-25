@@ -1,51 +1,101 @@
 package com.maersk.highjump.generics.service.impl;
 
 import com.maersk.commons.component.exception.BusinessException;
+import com.maersk.commons.component.util.ErrorUtil;
+import com.maersk.highjump.generics.component.constant.MessageConstant;
 import com.maersk.highjump.generics.dto.AsnDto;
 import com.maersk.highjump.generics.dto.RcptShipPoDetailCartonDto;
 import com.maersk.highjump.generics.dto.RcptShipPoDetailDto;
 import com.maersk.highjump.generics.dto.RcptShipPoDto;
-import com.maersk.highjump.generics.mapper.RcptShipCartonDetailMapper;
-import com.maersk.highjump.generics.mapper.RcptShipMapper;
-import com.maersk.highjump.generics.mapper.RcptShipPoDetailMapper;
-import com.maersk.highjump.generics.mapper.RcptShipPoMapper;
-import com.maersk.highjump.generics.model.RcptShipCartonDetailModel;
-import com.maersk.highjump.generics.model.RcptShipModel;
-import com.maersk.highjump.generics.model.RcptShipPoDetailModel;
-import com.maersk.highjump.generics.model.RcptShipPoModel;
-import com.maersk.highjump.generics.service.AsnService;
+import com.maersk.highjump.generics.component.enums.*;
+import com.maersk.highjump.generics.mapper.*;
+import com.maersk.highjump.generics.model.*;
+import com.maersk.highjump.generics.service.ShipmentService;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Slf4j
 @Service
-public class AsnServiceImpl implements AsnService {
+public class ShipmentServiceImpl implements ShipmentService {
 
   private final RcptShipMapper rcptShipMapper;
   private final RcptShipPoMapper rcptShipPoMapper;
   private final RcptShipPoDetailMapper rcptShipPoDetailMapper;
   private final RcptShipCartonDetailMapper rcptShipCartonDetailMapper;
+  private final ReceiptMapper receiptMapper;
+  private final CarrierMapper carrierMapper;
+  private final ErrorUtil errorUtil;
 
-  public AsnServiceImpl(
+  public ShipmentServiceImpl(
       RcptShipMapper rcptShipMapper,
       RcptShipPoMapper rcptShipPoMapper,
       RcptShipPoDetailMapper rcptShipPoDetailMapper,
-      RcptShipCartonDetailMapper rcptShipCartonDetailMapper) {
+      RcptShipCartonDetailMapper rcptShipCartonDetailMapper,
+      ReceiptMapper receiptMapper,
+      CarrierMapper carrierMapper,
+      ErrorUtil errorUtil) {
     this.rcptShipMapper = rcptShipMapper;
     this.rcptShipPoMapper = rcptShipPoMapper;
     this.rcptShipPoDetailMapper = rcptShipPoDetailMapper;
     this.rcptShipCartonDetailMapper = rcptShipCartonDetailMapper;
+    this.receiptMapper = receiptMapper;
+    this.carrierMapper = carrierMapper;
+    this.errorUtil = errorUtil;
   }
 
   @Override
   @Transactional
   public void createAsn(AsnDto asnDto) {
+    deleteExistedAsn(asnDto);
+    insertAsn(asnDto);
+  }
+
+  private void deleteExistedAsn(AsnDto asnDto) {
+    List<RcptShipModel> rcptShipModels =
+        rcptShipMapper.selectByWhIdAndShipmentNumber(
+            asnDto.getWhId(),
+            asnDto.getShipmentNumber());
+
+    if (Objects.isNull(rcptShipModels) || rcptShipModels.size() == 0) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
+    }
+
+    String asnStatus = rcptShipModels.get(0).getStatus();
+    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_CLOSED.getCode().equals(asnStatus)) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
+    }
+
+    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_RECONCILED.getCode().equals(asnStatus)) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
+    }
+
+    int count =
+        receiptMapper.selectCountByWhIdAndShipmentNumberAndStatus(
+            asnDto.getWhId(),
+            asnDto.getShipmentNumber(),
+            ReceiptStatusEnum.RECEIPT_STATUS_CODE_OPEN.getCode());
+    if (count == 0) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
+    }
+
+    rcptShipMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
+    rcptShipPoMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
+    rcptShipPoDetailMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
+    rcptShipCartonDetailMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
+  }
+
+  private void insertAsn(AsnDto asnDto) {
     RcptShipModel rcptShipModel =
         composeRcptShipPoModel(asnDto);
     rcptShipMapper.insert(rcptShipModel);
@@ -90,11 +140,29 @@ public class AsnServiceImpl implements AsnService {
     RcptShipModel rcptShipModel = new RcptShipModel();
     rcptShipModel.setWhId(asnDto.getWhId());
     rcptShipModel.setShipmentNumber(asnDto.getShipmentNumber());
-    rcptShipModel.setCarrierId(83);
+    List<CarrierModel> carrierModels =
+        carrierMapper.selectByCarrierName(asnDto.getCarrierName());
+    if (Objects.isNull(carrierModels) || carrierModels.size() == 0) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0008));
+    }
+    rcptShipModel.setCarrierId(carrierModels.get(0).getCarrierId());
     rcptShipModel.setTrailerNumber(asnDto.getTrailerNumber());
+    if (Objects.isNull(asnDto.getDateExpected())) {
+      asnDto.setDateExpected(Instant.now());
+    }
     rcptShipModel.setDateExpected(asnDto.getDateExpected());
+    if (Objects.isNull(asnDto.getDateReceived())) {
+      asnDto.setDateReceived(Instant.now());
+    }
     rcptShipModel.setDateReceived(asnDto.getDateReceived());
+    if (Objects.isNull(asnDto.getDateShipped())) {
+      asnDto.setDateShipped(Instant.now());
+    }
     rcptShipModel.setDateShipped(asnDto.getDateShipped());
+    if (StringUtils.isEmpty(asnDto.getStatus())) {
+      asnDto.setStatus(ShipmentStatusEnum.SHIPMENT_STATUS_CODE_OPEN.getCode());
+    }
     rcptShipModel.setStatus(asnDto.getStatus());
     rcptShipModel.setComments(asnDto.getComments());
     rcptShipModel.setWorkersAssigned(asnDto.getWorkersAssigned());
@@ -103,12 +171,18 @@ public class AsnServiceImpl implements AsnService {
     rcptShipModel.setArrivalDate(asnDto.getArrivalDate());
     rcptShipModel.setGrnSendSign(asnDto.getGrnSendSign());
     rcptShipModel.setGrnSendDate(asnDto.getGrnSendDate());
+    rcptShipModel.setShipmentReceiptDate(asnDto.getShipmentReceiptDate());
+    rcptShipModel.setAsnType(asnDto.getAsnType());
+    rcptShipModel.setWipNumber(asnDto.getWipNumber());
+    rcptShipModel.setFileSeq(asnDto.getFileSeq());
+    rcptShipModel.setTallysheetIsPrinted(asnDto.getTallysheetIsPrinted());
 
     return rcptShipModel;
   }
 
   private RcptShipPoModel composeRcptShipPoModel(
-      AsnDto asnDto, RcptShipPoDto rcptShipPoDto) {
+      AsnDto asnDto,
+      RcptShipPoDto rcptShipPoDto) {
     RcptShipPoModel rcptShipPoModel = new RcptShipPoModel();
     rcptShipPoModel.setWhId(asnDto.getWhId());
     rcptShipPoModel.setShipmentNumber(asnDto.getShipmentNumber());
@@ -121,13 +195,18 @@ public class AsnServiceImpl implements AsnService {
   }
 
   private RcptShipPoDetailModel composeRcptShipPoDetailModel(
-      AsnDto asnDto, RcptShipPoDto rcptShipPoDto, RcptShipPoDetailDto rcptShipPoDetailDto) {
+      AsnDto asnDto,
+      RcptShipPoDto rcptShipPoDto,
+      RcptShipPoDetailDto rcptShipPoDetailDto) {
     RcptShipPoDetailModel rcptShipPoDetailModel = new RcptShipPoDetailModel();
     rcptShipPoDetailModel.setWhId(asnDto.getWhId());
     rcptShipPoDetailModel.setShipmentNumber(asnDto.getShipmentNumber());
     rcptShipPoDetailModel.setPoNumber(rcptShipPoDto.getPoNumber());
     rcptShipPoDetailModel.setLineNumber(rcptShipPoDetailDto.getLineNumber());
     rcptShipPoDetailModel.setItemNumber(rcptShipPoDetailDto.getItemNumber());
+    if (Objects.isNull(rcptShipPoDetailDto.getScheduleNumber())) {
+      rcptShipPoDetailDto.setScheduleNumber(1);
+    }
     rcptShipPoDetailModel.setScheduleNumber(rcptShipPoDetailDto.getScheduleNumber());
     rcptShipPoDetailModel.setExpectedQty(rcptShipPoDetailDto.getExpectedQty());
     rcptShipPoDetailModel.setReceivedQty(rcptShipPoDetailDto.getReceivedQty());
@@ -152,9 +231,16 @@ public class AsnServiceImpl implements AsnService {
     rcptShipPoDetailModel.setGenericField13(rcptShipPoDetailDto.getGenericField13());
     rcptShipPoDetailModel.setGenericField14(rcptShipPoDetailDto.getGenericField14());
     rcptShipPoDetailModel.setGenericField15(rcptShipPoDetailDto.getGenericField15());
-    rcptShipPoDetailModel.setConfirmBounded(BigDecimal.ZERO);
-    rcptShipPoDetailModel.setConfirmFree(BigDecimal.ZERO);
-    rcptShipPoDetailModel.setConfirmKit(BigDecimal.ZERO);
+    rcptShipPoDetailModel.setGrnSendSign(rcptShipPoDetailDto.getGrnSendSign());
+    rcptShipPoDetailModel.setGrnSendDate(rcptShipPoDetailDto.getGrnSendDate());
+    rcptShipPoDetailModel.setCustomsIsApproved(rcptShipPoDetailDto.getCustomsIsApproved());
+    rcptShipPoDetailModel.setBondedQty(rcptShipPoDetailDto.getBondedQty());
+    rcptShipPoDetailModel.setFreeQty(rcptShipPoDetailDto.getFreeQty());
+    rcptShipPoDetailModel.setConfirmBounded(rcptShipPoDetailDto.getConfirmBounded());
+    rcptShipPoDetailModel.setConfirmFree(rcptShipPoDetailDto.getConfirmFree());
+    rcptShipPoDetailModel.setConfirmKit(rcptShipPoDetailDto.getConfirmKit());
+    rcptShipPoDetailModel.setReceivedBondedQty(rcptShipPoDetailDto.getReceivedBondedQty());
+    rcptShipPoDetailModel.setReceivedFreeQty(rcptShipPoDetailDto.getReceivedFreeQty());
 
     return rcptShipPoDetailModel;
   }
@@ -170,8 +256,8 @@ public class AsnServiceImpl implements AsnService {
     rcptShipCartonDetailModel.setPoNumber(rcptShipPoDto.getPoNumber());
     rcptShipCartonDetailModel.setLineNumber(rcptShipPoDetailDto.getLineNumber());
     rcptShipCartonDetailModel.setItemNumber(rcptShipPoDetailDto.getItemNumber());
+    rcptShipCartonDetailModel.setScheduleNumber(rcptShipPoDetailDto.getScheduleNumber());
     rcptShipCartonDetailModel.setExpectQty(rcptShipPoDetailCartonDto.getExpectQty());
-    rcptShipCartonDetailModel.setScheduleNumber(1);
     rcptShipCartonDetailModel.setUcc(rcptShipPoDetailCartonDto.getUcc());
     rcptShipCartonDetailModel.setReference1(rcptShipPoDetailCartonDto.getReference1());
     rcptShipCartonDetailModel.setReference2(rcptShipPoDetailCartonDto.getReference2());
@@ -197,14 +283,13 @@ public class AsnServiceImpl implements AsnService {
     rcptShipCartonDetailModel.setGenericField13(rcptShipPoDetailCartonDto.getGenericField13());
     rcptShipCartonDetailModel.setGenericField14(rcptShipPoDetailCartonDto.getGenericField14());
     rcptShipCartonDetailModel.setGenericField15(rcptShipPoDetailCartonDto.getGenericField15());
-    rcptShipCartonDetailModel.setSendToLocalDb(0);
-    rcptShipCartonDetailModel.setScanFlag(0);
+    rcptShipCartonDetailModel.setSendToLocalDb(rcptShipPoDetailCartonDto.getSendToLocalDb());
+    rcptShipCartonDetailModel.setSendDate(rcptShipPoDetailCartonDto.getSendDate());
+    rcptShipCartonDetailModel.setContainerLabel(rcptShipPoDetailCartonDto.getContainerLabel());
+    rcptShipCartonDetailModel.setPickingListId(rcptShipPoDetailCartonDto.getPickingListId());
+    rcptShipCartonDetailModel.setScanFlag(rcptShipPoDetailCartonDto.getScanFlag());
+    rcptShipCartonDetailModel.setQtyReceived(rcptShipPoDetailCartonDto.getQtyReceived());
 
     return rcptShipCartonDetailModel;
-  }
-
-  @Override
-  public void deleteAsn(String criteria) throws BusinessException {
-    // do business operation here
   }
 }

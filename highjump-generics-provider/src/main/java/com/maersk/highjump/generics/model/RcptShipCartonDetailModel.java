@@ -2,11 +2,13 @@ package com.maersk.highjump.generics.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.Alias;
 
 import java.time.Instant;
 
 @Data
 @NoArgsConstructor
+@Alias("RcptShipCartonDetailModel")
 public class RcptShipCartonDetailModel {
 
   private String whId;
