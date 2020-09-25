@@ -41,7 +41,7 @@
     <result column="broker_flag" property="brokerFlag"/>
   </resultMap>
 
-  <select id="selectByCarrierName" resultType="CarrierModel">
+  <select id="selectByCarrierName" resultMap="carrierModel">
     SELECT * FROM t_carrier t WHERE t.carrier_name = #{carrierName}
   </select>
 </mapper>

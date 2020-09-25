@@ -42,11 +42,11 @@
         SELECT COUNT(*) FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
     </select>
 
-    <select id="selectByWhIdAndShipmentNumber" resultType="RcptShipModel">
+    <select id="selectByWhIdAndShipmentNumber" resultMap="rcptShipModel">
         SELECT * FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
     </select>
 
     <delete id="deleteByWhIdAndShipmentNumber">
-        DELETE FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
+        DELETE FROM t_rcpt_ship WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber}
     </delete>
 </mapper>

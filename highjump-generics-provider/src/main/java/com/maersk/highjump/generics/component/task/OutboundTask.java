@@ -14,8 +14,8 @@ public class OutboundTask {
     this.outboundService = outboundService;
   }
 
-  @Scheduled(cron = "0/5 * * * * *")
-  public void execute() {
-    outboundService.scaLoadedAck();
-  }
+//  @Scheduled(cron = "0/5 * * * * *")
+//  public void execute() {
+//    outboundService.scaLoadedAck();
+//  }
 }

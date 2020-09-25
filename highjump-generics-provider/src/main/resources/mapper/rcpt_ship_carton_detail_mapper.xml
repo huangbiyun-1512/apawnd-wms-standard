@@ -91,6 +91,6 @@
   </insert>
 
   <delete id="deleteByWhIdAndShipmentNumber">
-    DELETE FROM t_rcpt_ship_carton_detail t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
+    DELETE FROM t_rcpt_ship_carton_detail WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber}
   </delete>
 </mapper>
