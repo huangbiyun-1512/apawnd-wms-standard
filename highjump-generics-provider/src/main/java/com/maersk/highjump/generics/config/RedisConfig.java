@@ -34,7 +34,7 @@ public class RedisConfig {
     RedisCacheConfiguration highjumpGenericsTtl2hConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
             .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(stringRedisSerializer()))
+                RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer()))
             .computePrefixWith(
                 CacheKeyPrefix.prefixed(CacheConstant.CACHE_KEY_PREFIX_HIGHJUMP_GENERICS))
             .entryTtl(Duration.ofHours(2));
