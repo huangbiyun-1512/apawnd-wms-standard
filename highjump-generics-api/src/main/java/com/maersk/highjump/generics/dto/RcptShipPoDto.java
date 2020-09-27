@@ -19,9 +19,6 @@ public class RcptShipPoDto implements Serializable {
   @NotEmpty
   private List<RcptShipPoDetailDto> detailList;
 
-  @Schema(name = "action_code")
-  private String actionCode;
-
   @Schema(name = "po_number")
   @NotEmpty
   @Size(max = 30)
