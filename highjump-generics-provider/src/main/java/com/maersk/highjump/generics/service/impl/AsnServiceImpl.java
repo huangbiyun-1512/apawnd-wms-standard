@@ -133,6 +133,17 @@ public class AsnServiceImpl implements AsnService {
     return result;
   }
 
+  @Override
+  @Transactional
+  public void renew(AsnDto asnDto) {
+    deleteByWhIdAndShipmentNumberAndClientCode(
+        asnDto.getWhId(),
+        asnDto.getShipmentNumber(),
+        asnDto.getClientCode());
+
+    create(asnDto);
+  }
+
   private RcptShipModel composeRcptShipPoModel(AsnDto asnDto) {
     RcptShipModel rcptShipModel = new RcptShipModel();
     rcptShipModel.setWhId(asnDto.getWhId());

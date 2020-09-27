@@ -6,7 +6,6 @@ import com.maersk.highjump.generics.api.GenericApi;
 import com.maersk.highjump.generics.dto.AsnDto;
 import com.maersk.highjump.generics.service.AsnService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.NotImplementedException;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,6 +50,10 @@ public class GenericApiController implements GenericApi {
   @PostMapping(value = "/asn/renew", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity renewAsn(@Valid @RequestBody AsnDto asnDto) {
-    throw new NotImplementedException();
+    asnService.renew(asnDto);
+
+    return ResponseEntity
+        .created(null)
+        .body(BaseResponseDto.ok());
   }
 }
