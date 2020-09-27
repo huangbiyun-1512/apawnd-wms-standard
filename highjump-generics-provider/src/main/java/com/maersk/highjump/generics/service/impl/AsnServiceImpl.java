@@ -116,8 +116,7 @@ public class AsnServiceImpl implements AsnService {
 
   @Override
   @Transactional
-  public int deleteByWhIdAndShipmentNumberAndClientCode(
-      String whId, String shipmentNumber, String clientCode) {
+  public int delete(String whId, String shipmentNumber, String clientCode) {
     List<RcptShipModel> rcptShipModels =
         retrieveShipmentByWhIdAndShipmentNumber(whId, shipmentNumber);
 
@@ -152,11 +151,7 @@ public class AsnServiceImpl implements AsnService {
   @Override
   @Transactional
   public void replace(AsnDto asnDto) {
-    deleteByWhIdAndShipmentNumberAndClientCode(
-        asnDto.getWhId(),
-        asnDto.getShipmentNumber(),
-        asnDto.getClientCode());
-
+    delete(asnDto.getWhId(), asnDto.getShipmentNumber(), asnDto.getClientCode());
     create(asnDto);
   }
 

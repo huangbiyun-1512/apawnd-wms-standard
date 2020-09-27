@@ -6,6 +6,6 @@ public interface AsnService {
 
   AsnDto retrieve(String whId, String shipmentNumber);
   void create(AsnDto asnDto);
-  int deleteByWhIdAndShipmentNumberAndClientCode(String whId, String shipmentNumber, String clientCode);
+  int delete(String whId, String shipmentNumber, String clientCode);
   void replace(AsnDto asnDto);
 }
