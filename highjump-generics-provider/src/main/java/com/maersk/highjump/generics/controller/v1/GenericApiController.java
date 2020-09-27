@@ -51,9 +51,7 @@ public class GenericApiController implements GenericApi {
   public ResponseEntity<BaseResponseDto> replaceAsn(@Valid @RequestBody AsnDto asnDto) {
     asnService.replace(asnDto);
 
-    return ResponseEntity
-        .created(null)
-        .body(BaseResponseDto.ok());
+    return ResponseEntity.ok(BaseResponseDto.ok());
   }
 
   @Override
