@@ -7,5 +7,5 @@ public interface AsnService {
   void create(AsnDto asnDto);
   int deleteByWhIdAndShipmentNumberAndClientCode(
       String whId, String shipmentNumber, String clientCode);
-  void renew(AsnDto asnDto);
+  void replace(AsnDto asnDto);
 }

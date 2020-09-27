@@ -35,6 +35,17 @@ public class GenericApiController implements GenericApi {
   }
 
   @Override
+  @PutMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
+  @AutoLogging
+  public ResponseEntity putAsn(@Valid @RequestBody AsnDto asnDto) {
+    asnService.replace(asnDto);
+
+    return ResponseEntity
+        .created(null)
+        .body(BaseResponseDto.ok());
+  }
+
+  @Override
   @DeleteMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity deleteAsn(
@@ -44,16 +55,5 @@ public class GenericApiController implements GenericApi {
     asnService.deleteByWhIdAndShipmentNumberAndClientCode(whId, shipmentNumber, clientCode);
 
     return ResponseEntity.noContent().build();
-  }
-
-  @Override
-  @PostMapping(value = "/asn/renew", produces = MediaType.APPLICATION_JSON_VALUE)
-  @AutoLogging
-  public ResponseEntity renewAsn(@Valid @RequestBody AsnDto asnDto) {
-    asnService.renew(asnDto);
-
-    return ResponseEntity
-        .created(null)
-        .body(BaseResponseDto.ok());
   }
 }
