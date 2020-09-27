@@ -54,6 +54,11 @@ public class AsnServiceImpl implements AsnService {
   @Override
   @Transactional
   public void create(AsnDto asnDto) {
+    if (isShipmentExisted(asnDto.getWhId(), asnDto.getShipmentNumber())) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0009));
+    }
+
     RcptShipModel rcptShipModel =
         composeRcptShipPoModel(asnDto);
     rcptShipMapper.insert(rcptShipModel);
@@ -99,28 +104,24 @@ public class AsnServiceImpl implements AsnService {
   public int deleteByWhIdAndShipmentNumberAndClientCode(
       String whId, String shipmentNumber, String clientCode) {
     List<RcptShipModel> rcptShipModels =
-        rcptShipMapper.selectByWhIdAndShipmentNumber(whId, shipmentNumber);
+        retrieveShipmentByWhIdAndShipmentNumber(whId, shipmentNumber);
 
-    if (Objects.isNull(rcptShipModels) || rcptShipModels.size() == 0) {
+    if (!isShipmentExisted(rcptShipModels)) {
       throw new BusinessException(
           errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
     }
 
-    String asnStatus = rcptShipModels.get(0).getStatus();
-    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_CLOSED.getCode().equals(asnStatus)) {
+    if (isShipmentClosed(rcptShipModels.get(0))) {
       throw new BusinessException(
           errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
     }
 
-    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_RECONCILED.getCode().equals(asnStatus)) {
+    if (isShipmentReconciled(rcptShipModels.get(0))) {
       throw new BusinessException(
           errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
     }
 
-    int count =
-        receiptMapper.selectCountByWhIdAndShipmentNumberAndStatus(
-            whId, shipmentNumber, ReceiptStatusEnum.RECEIPT_STATUS_CODE_OPEN.getCode());
-    if (count == 0) {
+    if (!isReceiptOpen(whId, shipmentNumber)) {
       throw new BusinessException(
           errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
     }
@@ -299,5 +300,52 @@ public class AsnServiceImpl implements AsnService {
     rcptShipCartonDetailModel.setQtyReceived(rcptShipPoDetailCartonDto.getQtyReceived());
 
     return rcptShipCartonDetailModel;
+  }
+
+  private boolean isShipmentExisted(String whId, String shipmentNumber) {
+    List<RcptShipModel> rcptShipModels =
+        rcptShipMapper.selectByWhIdAndShipmentNumber(whId, shipmentNumber);
+
+    return isShipmentExisted(rcptShipModels);
+  }
+
+  private boolean isShipmentExisted(List<RcptShipModel> rcptShipModels) {
+    if (Objects.isNull(rcptShipModels) || rcptShipModels.size() == 0) {
+      return false;
+    }
+    return true;
+  }
+
+  private boolean isShipmentClosed(RcptShipModel rcptShipModel) {
+    if (ShipmentStatusEnum
+        .SHIPMENT_STATUS_CODE_CLOSED
+        .getCode().equals(rcptShipModel.getStatus())) {
+      return true;
+    }
+    return false;
+  }
+
+  private boolean isShipmentReconciled(RcptShipModel rcptShipModel) {
+    if (ShipmentStatusEnum
+        .SHIPMENT_STATUS_CODE_RECONCILED
+        .getCode().equals(rcptShipModel.getStatus())) {
+      return true;
+    }
+    return false;
+  }
+
+  private boolean isReceiptOpen(String whId, String shipmentNumber) {
+    int count =
+        receiptMapper.selectCountByWhIdAndShipmentNumberAndStatus(
+            whId, shipmentNumber, ReceiptStatusEnum.RECEIPT_STATUS_CODE_OPEN.getCode());
+    if (count == 0) {
+      return false;
+    }
+    return true;
+  }
+
+  private List<RcptShipModel> retrieveShipmentByWhIdAndShipmentNumber(
+      String whId, String shipmentNumber) {
+    return rcptShipMapper.selectByWhIdAndShipmentNumber(whId, shipmentNumber);
   }
 }
