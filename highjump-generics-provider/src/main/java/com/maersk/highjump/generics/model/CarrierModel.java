@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @NoArgsConstructor
 @Alias("CarrierModel")
-public class CarrierModel {
+public class CarrierModel implements Serializable {
 
   private Integer carrierId;
   private String carrierCode;

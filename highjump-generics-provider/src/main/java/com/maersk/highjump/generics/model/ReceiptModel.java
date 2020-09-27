@@ -4,13 +4,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
 @Data
 @NoArgsConstructor
 @Alias("ReceiptModel")
-public class ReceiptModel {
+public class ReceiptModel implements Serializable {
 
   private String receiptId;
   private String vendorCode;

@@ -21,12 +21,14 @@ public class CarrierServiceImpl implements CarrierService {
   }
 
   @Cacheable(
-      cacheNames = CacheConstant.CACHE_CONFIGURATION_KEY_HIGHJUMP_GENERICS_TTL_2H,
-      key = "#root.targetClass.name + #root.method.name + #carrierName",
+      cacheNames = CacheConstant.CACHE_CONFIGURATION_KEY_GENERICS_2H,
+      key = "#root.targetClass.name + '.' + #root.method.name + '.' + #carrierName",
       unless = "#result == null || #result.size() == 0")
   @Override
   public List<CarrierModel> retrieveByCarrierName(String carrierName) {
-    return carrierMapper.selectByCarrierName(carrierName);
+    List<CarrierModel> carrierModels = carrierMapper.selectByCarrierName(carrierName);
+
+    return carrierModels;
   }
 
 }

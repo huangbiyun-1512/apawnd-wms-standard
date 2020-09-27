@@ -1,5 +1,6 @@
 package com.maersk.highjump.generics.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maersk.highjump.generics.component.constant.CacheConstant;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,6 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
-import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 import java.time.Duration;
@@ -21,6 +21,12 @@ import java.util.Map;
 
 @Configuration
 public class RedisConfig {
+
+    private final ObjectMapper objectMapper;
+
+    public RedisConfig(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
 
     @Bean
     public CacheManager cacheManager(RedisConnectionFactory factory) {
@@ -33,10 +39,8 @@ public class RedisConfig {
     @Bean
     RedisCacheConfiguration highjumpGenericsTtl2hConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
-            .serializeValuesWith(
-                RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer()))
             .computePrefixWith(
-                CacheKeyPrefix.prefixed(CacheConstant.CACHE_KEY_PREFIX_HIGHJUMP_GENERICS))
+                CacheKeyPrefix.prefixed(CacheConstant.CACHE_KEY_PREFIX_HIGHJUMP))
             .entryTtl(Duration.ofHours(2));
     }
 
@@ -61,6 +65,8 @@ public class RedisConfig {
     public Jackson2JsonRedisSerializer jackson2JsonRedisSerializer() {
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer =
             new Jackson2JsonRedisSerializer<>(Object.class);
+        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+
         return jackson2JsonRedisSerializer;
     }
 
@@ -72,7 +78,7 @@ public class RedisConfig {
     private Map<String, RedisCacheConfiguration> BuildRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> map = new HashMap<>();
         map.put(
-            CacheConstant.CACHE_CONFIGURATION_KEY_HIGHJUMP_GENERICS_TTL_2H,
+            CacheConstant.CACHE_CONFIGURATION_KEY_GENERICS_2H,
             highjumpGenericsTtl2hConfiguration());
 
         return map;

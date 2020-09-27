@@ -4,12 +4,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
+import java.io.Serializable;
 import java.time.Instant;
 
 @Data
 @NoArgsConstructor
 @Alias("RcptShipModel")
-public class RcptShipModel {
+public class RcptShipModel implements Serializable {
 
   private String whId;
 	private String shipmentNumber;

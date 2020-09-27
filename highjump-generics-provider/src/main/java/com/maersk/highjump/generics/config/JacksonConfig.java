@@ -13,10 +13,12 @@ public class JacksonConfig {
 
   @Bean
   public ObjectMapper objectMapper() {
-    return new ObjectMapper()
-        .setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
-        .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
-        .registerModule(new JavaTimeModule());
+    ObjectMapper objectMapper = new ObjectMapper();
+    objectMapper.setPropertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE);
+    objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+    objectMapper.registerModule(new JavaTimeModule());
+
+    return objectMapper;
   }
 }
