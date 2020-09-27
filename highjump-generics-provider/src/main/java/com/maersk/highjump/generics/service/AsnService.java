@@ -5,4 +5,6 @@ import com.maersk.highjump.generics.dto.AsnDto;
 public interface AsnService {
 
   void create(AsnDto asnDto);
+  int deleteByWhIdAndShipmentNumberAndClientCode(
+      String whId, String shipmentNumber, String clientCode);
 }

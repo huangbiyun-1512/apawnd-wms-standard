@@ -54,49 +54,6 @@ public class AsnServiceImpl implements AsnService {
   @Override
   @Transactional
   public void create(AsnDto asnDto) {
-    deleteExistedAsn(asnDto);
-    insertAsn(asnDto);
-  }
-
-  private void deleteExistedAsn(AsnDto asnDto) {
-    List<RcptShipModel> rcptShipModels =
-        rcptShipMapper.selectByWhIdAndShipmentNumber(
-            asnDto.getWhId(),
-            asnDto.getShipmentNumber());
-
-    if (Objects.isNull(rcptShipModels) || rcptShipModels.size() == 0) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
-    }
-
-    String asnStatus = rcptShipModels.get(0).getStatus();
-    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_CLOSED.getCode().equals(asnStatus)) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
-    }
-
-    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_RECONCILED.getCode().equals(asnStatus)) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
-    }
-
-    int count =
-        receiptMapper.selectCountByWhIdAndShipmentNumberAndStatus(
-            asnDto.getWhId(),
-            asnDto.getShipmentNumber(),
-            ReceiptStatusEnum.RECEIPT_STATUS_CODE_OPEN.getCode());
-    if (count == 0) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
-    }
-
-    rcptShipMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
-    rcptShipPoMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
-    rcptShipPoDetailMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
-    rcptShipCartonDetailMapper.deleteByWhIdAndShipmentNumber(asnDto.getWhId(), asnDto.getShipmentNumber());
-  }
-
-  private void insertAsn(AsnDto asnDto) {
     RcptShipModel rcptShipModel =
         composeRcptShipPoModel(asnDto);
     rcptShipMapper.insert(rcptShipModel);
@@ -135,6 +92,45 @@ public class AsnServiceImpl implements AsnService {
       rcptShipPoDetailMapper.insertBatch(rcptShipPoDetailModelList);
       rcptShipCartonDetailMapper.insertBatch(rcptShipCartonDetailModelList);
     }
+  }
+
+  @Override
+  @Transactional
+  public int deleteByWhIdAndShipmentNumberAndClientCode(
+      String whId, String shipmentNumber, String clientCode) {
+    List<RcptShipModel> rcptShipModels =
+        rcptShipMapper.selectByWhIdAndShipmentNumber(whId, shipmentNumber);
+
+    if (Objects.isNull(rcptShipModels) || rcptShipModels.size() == 0) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
+    }
+
+    String asnStatus = rcptShipModels.get(0).getStatus();
+    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_CLOSED.getCode().equals(asnStatus)) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
+    }
+
+    if (ShipmentStatusEnum.SHIPMENT_STATUS_CODE_RECONCILED.getCode().equals(asnStatus)) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
+    }
+
+    int count =
+        receiptMapper.selectCountByWhIdAndShipmentNumberAndStatus(
+            whId, shipmentNumber, ReceiptStatusEnum.RECEIPT_STATUS_CODE_OPEN.getCode());
+    if (count == 0) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
+    }
+
+    int result = rcptShipMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+    rcptShipPoMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+    rcptShipPoDetailMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+    rcptShipCartonDetailMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+
+    return result;
   }
 
   private RcptShipModel composeRcptShipPoModel(AsnDto asnDto) {
