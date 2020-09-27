@@ -10,7 +10,8 @@ import com.maersk.highjump.generics.dto.RcptShipPoDto;
 import com.maersk.highjump.generics.component.enums.*;
 import com.maersk.highjump.generics.mapper.*;
 import com.maersk.highjump.generics.model.*;
-import com.maersk.highjump.generics.service.ShipmentService;
+import com.maersk.highjump.generics.service.CarrierService;
+import com.maersk.highjump.generics.service.AsnService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -23,36 +24,36 @@ import java.util.Objects;
 
 @Slf4j
 @Service
-public class ShipmentServiceImpl implements ShipmentService {
+public class AsnServiceImpl implements AsnService {
 
+  private final CarrierService carrierService;
   private final RcptShipMapper rcptShipMapper;
   private final RcptShipPoMapper rcptShipPoMapper;
   private final RcptShipPoDetailMapper rcptShipPoDetailMapper;
   private final RcptShipCartonDetailMapper rcptShipCartonDetailMapper;
   private final ReceiptMapper receiptMapper;
-  private final CarrierMapper carrierMapper;
   private final ErrorUtil errorUtil;
 
-  public ShipmentServiceImpl(
+  public AsnServiceImpl(
+      CarrierService carrierService,
       RcptShipMapper rcptShipMapper,
       RcptShipPoMapper rcptShipPoMapper,
       RcptShipPoDetailMapper rcptShipPoDetailMapper,
       RcptShipCartonDetailMapper rcptShipCartonDetailMapper,
       ReceiptMapper receiptMapper,
-      CarrierMapper carrierMapper,
       ErrorUtil errorUtil) {
+    this.carrierService = carrierService;
     this.rcptShipMapper = rcptShipMapper;
     this.rcptShipPoMapper = rcptShipPoMapper;
     this.rcptShipPoDetailMapper = rcptShipPoDetailMapper;
     this.rcptShipCartonDetailMapper = rcptShipCartonDetailMapper;
     this.receiptMapper = receiptMapper;
-    this.carrierMapper = carrierMapper;
     this.errorUtil = errorUtil;
   }
 
   @Override
   @Transactional
-  public void createAsn(AsnDto asnDto) {
+  public void create(AsnDto asnDto) {
     deleteExistedAsn(asnDto);
     insertAsn(asnDto);
   }
@@ -141,7 +142,7 @@ public class ShipmentServiceImpl implements ShipmentService {
     rcptShipModel.setWhId(asnDto.getWhId());
     rcptShipModel.setShipmentNumber(asnDto.getShipmentNumber());
     List<CarrierModel> carrierModels =
-        carrierMapper.selectByCarrierName(asnDto.getCarrierName());
+        carrierService.retrieveByCarrierName(asnDto.getCarrierName());
     if (Objects.isNull(carrierModels) || carrierModels.size() == 0) {
       throw new BusinessException(
           errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0008));

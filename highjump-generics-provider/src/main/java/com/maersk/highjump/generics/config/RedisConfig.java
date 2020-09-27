@@ -1,10 +1,10 @@
 package com.maersk.highjump.generics.config;
 
-import lombok.Setter;
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import com.maersk.highjump.generics.component.constant.CacheConstant;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.redis.cache.CacheKeyPrefix;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.cache.RedisCacheWriter;
@@ -15,12 +15,11 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
-@Setter
 @Configuration
-@ConfigurationProperties(prefix = "biz.data.redis")
 public class RedisConfig {
 
     @Bean
@@ -32,9 +31,13 @@ public class RedisConfig {
     }
 
     @Bean
-    RedisCacheConfiguration redisCacheConfiguration() {
+    RedisCacheConfiguration highjumpGenericsTtl2hConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
-                .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(stringRedisSerializer()));
+            .serializeValuesWith(
+                RedisSerializationContext.SerializationPair.fromSerializer(stringRedisSerializer()))
+            .computePrefixWith(
+                CacheKeyPrefix.prefixed(CacheConstant.CACHE_KEY_PREFIX_HIGHJUMP_GENERICS))
+            .entryTtl(Duration.ofHours(2));
     }
 
     @Bean
@@ -68,6 +71,10 @@ public class RedisConfig {
 
     private Map<String, RedisCacheConfiguration> BuildRedisCacheConfigurationMap() {
         Map<String, RedisCacheConfiguration> map = new HashMap<>();
+        map.put(
+            CacheConstant.CACHE_CONFIGURATION_KEY_HIGHJUMP_GENERICS_TTL_2H,
+            highjumpGenericsTtl2hConfiguration());
+
         return map;
     }
 }

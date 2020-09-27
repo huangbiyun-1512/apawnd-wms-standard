@@ -4,7 +4,7 @@ import com.maersk.commons.component.annotation.AutoLogging;
 import com.maersk.commons.component.dto.BaseResponseDto;
 import com.maersk.highjump.generics.api.GenericApi;
 import com.maersk.highjump.generics.dto.AsnDto;
-import com.maersk.highjump.generics.service.ShipmentService;
+import com.maersk.highjump.generics.service.AsnService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,19 +18,20 @@ import javax.validation.Valid;
 @Slf4j
 @RestController
 @RequestMapping("api/v1/generic")
-public class GenericController implements GenericApi {
+public class GenericApiController implements GenericApi {
 
-  private final ShipmentService shipmentService;
+  private final AsnService asnService;
 
-  public GenericController(ShipmentService shipmentService) {
-    this.shipmentService = shipmentService;
+  public GenericApiController(AsnService asnService) {
+    this.asnService = asnService;
   }
 
   @Override
   @PostMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity createAsn(@Valid @RequestBody AsnDto asnDto) {
-    shipmentService.createAsn(asnDto);
+    asnService.create(asnDto);
+
     return ResponseEntity
         .created(null)
         .body(BaseResponseDto.ok());
