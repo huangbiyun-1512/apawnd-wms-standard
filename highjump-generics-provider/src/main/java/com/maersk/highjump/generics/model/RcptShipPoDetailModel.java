@@ -7,6 +7,7 @@ import org.apache.ibatis.type.Alias;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -52,5 +53,5 @@ public class RcptShipPoDetailModel implements Serializable {
   private BigDecimal confirmKit;
   private BigDecimal receivedBondedQty;
   private BigDecimal receivedFreeQty;
-
+  private List<RcptShipCartonDetailModel> rcptShipCartonDetailList;
 }

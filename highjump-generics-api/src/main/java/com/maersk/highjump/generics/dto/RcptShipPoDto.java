@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 public class RcptShipPoDto implements Serializable {
 
-  @Schema(name = "detail_list")
+  @Schema(name = "rcpt_ship_po_detail_list")
   @NotEmpty
-  private List<RcptShipPoDetailDto> detailList;
+  private List<RcptShipPoDetailDto> rcptShipPoDetailList;
 
   @Schema(name = "po_number")
   @NotEmpty

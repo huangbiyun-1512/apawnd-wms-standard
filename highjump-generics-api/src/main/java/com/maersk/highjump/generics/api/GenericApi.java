@@ -14,6 +14,16 @@ import org.springframework.http.ResponseEntity;
 @FeignClient(name = "highjump-generics")
 public interface GenericApi {
 
+  @Operation(summary = "Retrieve the ASN info.", tags = {"Generic APIs"})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "OK",
+          content = {@Content(
+              schema = @Schema(implementation = BaseResponseDto.class))})
+  })
+  ResponseEntity retrieveAsn(
+      @Parameter(required = true) String whId,
+      @Parameter(required = true) String shipmentNumber);
+
   @Operation(summary = "Create a new ASN.", tags = {"Generic APIs"})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Created",
@@ -31,7 +41,7 @@ public interface GenericApi {
           content = {@Content(
               schema = @Schema(implementation = BaseResponseDto.class))})
   })
-  ResponseEntity putAsn(
+  ResponseEntity replaceAsn(
       @Parameter(
           required = true,
           schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);

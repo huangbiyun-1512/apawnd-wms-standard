@@ -6,6 +6,7 @@ import org.apache.ibatis.type.Alias;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -32,5 +33,6 @@ public class RcptShipModel implements Serializable {
   private String wipNumber;
   private String fileSeq;
   private String tallysheetIsPrinted;
+  private List<RcptShipPoModel> rcptShipPoList;
 
 }

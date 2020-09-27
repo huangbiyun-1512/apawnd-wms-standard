@@ -8,6 +8,7 @@
     <result column="cases_expected" property="casesExpected"/>
     <result column="cases_received" property="casesReceived"/>
     <result column="open_to_buy_date" property="openToBuyDate"/>
+    <collection property="rcptShipPoDetailList" resultMap="com.maersk.highjump.generics.mapper.RcptShipPoDetailMapper.rcptShipPoDetailModel"/>
   </resultMap>
 
   <insert id="insert" parameterType="RcptShipPoModel">

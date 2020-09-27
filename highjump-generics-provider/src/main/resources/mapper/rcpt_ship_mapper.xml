@@ -22,6 +22,7 @@
         <result column="wip_number" property="wipNumber"/>
         <result column="file_seq" property="fileSeq"/>
         <result column="tallysheet_is_printed" property="tallysheetIsPrinted"/>
+        <collection property="rcptShipPoList" resultMap="com.maersk.highjump.generics.mapper.RcptShipPoMapper.rcptShipPoModel"/>
     </resultMap>
 
     <insert id="insert" parameterType="RcptShipModel">
@@ -44,6 +45,14 @@
 
     <select id="selectByWhIdAndShipmentNumber" resultMap="rcptShipModel">
         SELECT * FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
+    </select>
+
+    <select id="selectDetailByWhIdAndShipmentNumber" resultMap="rcptShipModel">
+        SELECT * FROM t_rcpt_ship t
+        LEFT JOIN t_rcpt_ship_po l1 ON t.wh_id = l1.wh_id AND t.shipment_number = l1.shipment_number
+        LEFT JOIN t_rcpt_ship_po_detail l2 ON l1.wh_id = l2.wh_id AND l1.shipment_number = l2.shipment_number AND l1.po_number = l2.po_number
+        LEFT JOIN t_rcpt_ship_carton_detail l3 ON l2.wh_id = l3.wh_id AND l2.shipment_number = l3.shipment_number AND l2.po_number = l3.po_number AND l2.line_number = l3.line_number AND l2.item_number = l3.item_number
+        WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
     </select>
 
     <delete id="deleteByWhIdAndShipmentNumber">

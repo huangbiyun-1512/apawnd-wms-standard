@@ -41,6 +41,7 @@
     <result column="confirm_kit" property="confirmKit"/>
     <result column="received_bonded_qty" property="receivedBondedQty"/>
     <result column="received_free_qty" property="receivedFreeQty"/>
+    <collection property="rcptShipCartonDetailList" resultMap="com.maersk.highjump.generics.mapper.RcptShipCartonDetailMapper.rcptShipCartonDetailModel"/>
   </resultMap>
 
   <insert id="insert" parameterType="RcptShipPoDetailModel">

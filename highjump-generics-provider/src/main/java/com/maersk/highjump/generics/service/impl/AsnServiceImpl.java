@@ -14,6 +14,7 @@ import com.maersk.highjump.generics.service.CarrierService;
 import com.maersk.highjump.generics.service.AsnService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +54,20 @@ public class AsnServiceImpl implements AsnService {
 
   @Override
   @Transactional
+  public AsnDto retrieve(String whId, String shipmentNumber) {
+    List<RcptShipModel> rcptShipModels =
+        rcptShipMapper.selectDetailByWhIdAndShipmentNumber(whId, shipmentNumber);
+
+    AsnDto asnDto = new AsnDto();
+    if (Objects.isNull(rcptShipModels) || rcptShipModels.size() == 0) {
+      return asnDto;
+    }
+    BeanUtils.copyProperties(rcptShipModels.get(0), asnDto);
+    return asnDto;
+  }
+
+  @Override
+  @Transactional
   public void create(AsnDto asnDto) {
     if (isShipmentExisted(asnDto.getWhId(), asnDto.getShipmentNumber())) {
       throw new BusinessException(
@@ -67,24 +82,24 @@ public class AsnServiceImpl implements AsnService {
     List<RcptShipPoDetailModel> rcptShipPoDetailModelList = new ArrayList<>();
     List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList = new ArrayList<>();
 
-    if (Objects.nonNull(asnDto.getPoList()) &&
-        asnDto.getPoList().size() > 0) {
-      asnDto.getPoList().stream().forEach(
+    if (Objects.nonNull(asnDto.getRcptShipPoList()) &&
+        asnDto.getRcptShipPoList().size() > 0) {
+      asnDto.getRcptShipPoList().stream().forEach(
           rcptShipPoDto -> {
             RcptShipPoModel rcptShipPoModel =
                 composeRcptShipPoModel(asnDto, rcptShipPoDto);
             rcptShipPoModelList.add(rcptShipPoModel);
 
-            if (Objects.nonNull(rcptShipPoDto.getDetailList()) &&
-                rcptShipPoDto.getDetailList().size() > 0) {
-              rcptShipPoDto.getDetailList().stream().forEach(rcptShipPoDetailDto -> {
+            if (Objects.nonNull(rcptShipPoDto.getRcptShipPoDetailList()) &&
+                rcptShipPoDto.getRcptShipPoDetailList().size() > 0) {
+              rcptShipPoDto.getRcptShipPoDetailList().stream().forEach(rcptShipPoDetailDto -> {
                 RcptShipPoDetailModel rcptShipPoDetailModel =
                     composeRcptShipPoDetailModel(asnDto, rcptShipPoDto, rcptShipPoDetailDto);
                 rcptShipPoDetailModelList.add(rcptShipPoDetailModel);
 
-                if (Objects.nonNull(rcptShipPoDetailDto.getCartonList()) &&
-                    rcptShipPoDetailDto.getCartonList().size() > 0) {
-                  rcptShipPoDetailDto.getCartonList().stream().forEach(rcptShipPoDetailCartonDto -> {
+                if (Objects.nonNull(rcptShipPoDetailDto.getRcptShipPoDetailCartonList()) &&
+                    rcptShipPoDetailDto.getRcptShipPoDetailCartonList().size() > 0) {
+                  rcptShipPoDetailDto.getRcptShipPoDetailCartonList().stream().forEach(rcptShipPoDetailCartonDto -> {
                     RcptShipCartonDetailModel rcptShipCartonDetailModel =
                         composeRcptShipCartonDetailModel(asnDto, rcptShipPoDto, rcptShipPoDetailDto, rcptShipPoDetailCartonDto);
                     rcptShipCartonDetailModelList.add(rcptShipCartonDetailModel);

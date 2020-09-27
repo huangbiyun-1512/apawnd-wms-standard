@@ -19,6 +19,10 @@ public interface RcptShipMapper {
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);
 
+  List<RcptShipModel> selectDetailByWhIdAndShipmentNumber(
+      @Param("whId") String whId,
+      @Param("shipmentNumber") String shipmentNumber);
+
   int deleteByWhIdAndShipmentNumber(
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);
