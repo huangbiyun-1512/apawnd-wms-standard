@@ -61,7 +61,7 @@ public class GenericApiController implements GenericApi {
       @RequestParam(name = "whId") String whId,
       @RequestParam(name = "shipmentNumber") String shipmentNumber,
       @RequestParam(name = "clientCode") String clientCode) {
-    asnService.deleteByWhIdAndShipmentNumberAndClientCode(whId, shipmentNumber, clientCode);
+    asnService.delete(whId, shipmentNumber, clientCode);
 
     return ResponseEntity.noContent().build();
   }
