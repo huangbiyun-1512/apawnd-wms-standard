@@ -2,7 +2,7 @@ package com.maersk.highjump.generics.controller.v1;
 
 import com.maersk.commons.component.annotation.AutoLogging;
 import com.maersk.commons.component.dto.BaseResponseDto;
-import com.maersk.highjump.generics.api.InboundApi;
+import com.maersk.highjump.generics.api.GenericApi;
 import com.maersk.highjump.generics.dto.AsnDto;
 import com.maersk.highjump.generics.service.ShipmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +17,12 @@ import javax.validation.Valid;
 
 @Slf4j
 @RestController
-@RequestMapping("api/v1/inbound")
-public class InboundController implements InboundApi {
+@RequestMapping("api/v1/generic")
+public class GenericController implements GenericApi {
 
   private final ShipmentService shipmentService;
 
-  public InboundController(ShipmentService shipmentService) {
+  public GenericController(ShipmentService shipmentService) {
     this.shipmentService = shipmentService;
   }
 

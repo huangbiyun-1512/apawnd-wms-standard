@@ -11,10 +11,10 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 
-@FeignClient(name = "poc-domain")
-public interface InboundApi {
+@FeignClient(name = "highjump-generics")
+public interface GenericApi {
 
-  @Operation(summary = "Create a new ASN.", tags = {"inbound"})
+  @Operation(summary = "Create a new ASN.", tags = {"Generic APIs"})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Created",
           content = {@Content(
