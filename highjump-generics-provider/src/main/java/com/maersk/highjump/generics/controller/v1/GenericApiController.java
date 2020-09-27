@@ -26,7 +26,7 @@ public class GenericApiController implements GenericApi {
   @Override
   @GetMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity retrieveAsn(
+  public ResponseEntity<BaseResponseDto<AsnDto>> retrieveAsn(
       @RequestParam(name = "whId") String whId,
       @RequestParam(name = "shipmentNumber") String shipmentNumber) {
     AsnDto asnDto = asnService.retrieve(whId, shipmentNumber);
@@ -37,7 +37,7 @@ public class GenericApiController implements GenericApi {
   @Override
   @PostMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity createAsn(@Valid @RequestBody AsnDto asnDto) {
+  public ResponseEntity<BaseResponseDto> createAsn(@Valid @RequestBody AsnDto asnDto) {
     asnService.create(asnDto);
 
     return ResponseEntity
@@ -48,7 +48,7 @@ public class GenericApiController implements GenericApi {
   @Override
   @PutMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity replaceAsn(@Valid @RequestBody AsnDto asnDto) {
+  public ResponseEntity<BaseResponseDto> replaceAsn(@Valid @RequestBody AsnDto asnDto) {
     asnService.replace(asnDto);
 
     return ResponseEntity
@@ -59,7 +59,7 @@ public class GenericApiController implements GenericApi {
   @Override
   @DeleteMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity deleteAsn(
+  public ResponseEntity<BaseResponseDto> deleteAsn(
       @RequestParam(name = "whId") String whId,
       @RequestParam(name = "shipmentNumber") String shipmentNumber,
       @RequestParam(name = "clientCode") String clientCode) {

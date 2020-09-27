@@ -16,9 +16,7 @@ public interface GenericApi {
 
   @Operation(summary = "Retrieve the ASN info.", tags = {"Generic APIs"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "OK",
-          content = {@Content(
-              schema = @Schema(implementation = BaseResponseDto.class))})
+      @ApiResponse(responseCode = "200", description = "OK")
   })
   ResponseEntity retrieveAsn(
       @Parameter(required = true) String whId,
@@ -26,9 +24,7 @@ public interface GenericApi {
 
   @Operation(summary = "Create a new ASN.", tags = {"Generic APIs"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "201", description = "Created",
-          content = {@Content(
-              schema = @Schema(implementation = BaseResponseDto.class))})
+      @ApiResponse(responseCode = "201", description = "Created")
   })
   ResponseEntity createAsn(
       @Parameter(
@@ -37,9 +33,7 @@ public interface GenericApi {
 
   @Operation(summary = "Replace the existed ASN with a new one.", tags = {"Generic APIs"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "OK",
-          content = {@Content(
-              schema = @Schema(implementation = BaseResponseDto.class))})
+      @ApiResponse(responseCode = "200", description = "OK")
   })
   ResponseEntity replaceAsn(
       @Parameter(
@@ -48,9 +42,7 @@ public interface GenericApi {
 
   @Operation(summary = "Delete the existed ASN.", tags = {"Generic APIs"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "204", description = "No Content",
-          content = {@Content(
-              schema = @Schema(implementation = BaseResponseDto.class))})
+      @ApiResponse(responseCode = "204", description = "No Content")
   })
   ResponseEntity deleteAsn(
       @Parameter(required = true) String whId,
