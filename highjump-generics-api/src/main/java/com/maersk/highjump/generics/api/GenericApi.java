@@ -1,10 +1,8 @@
 package com.maersk.highjump.generics.api;
 
-import com.maersk.commons.component.dto.BaseResponseDto;
 import com.maersk.highjump.generics.dto.AsnDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
