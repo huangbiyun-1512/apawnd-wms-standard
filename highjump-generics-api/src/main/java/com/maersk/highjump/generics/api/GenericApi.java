@@ -38,11 +38,11 @@ public interface GenericApi {
           required = true,
           schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);
 
-  @Operation(summary = "Replace the existed ASN with a new one.", tags = {"Generic APIs"})
+  @Operation(summary = "Update the ASN if existed, otherwise create a new one.", tags = {"Generic APIs"})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "OK")
   })
-  ResponseEntity replaceAsn(
+  ResponseEntity mergeAsn(
       @Parameter(
           required = true,
           schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);

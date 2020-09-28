@@ -8,5 +8,6 @@ public interface AsnService {
   void create(AsnDto asnDto);
   int update(AsnDto asnDto);
   int delete(String whId, String shipmentNumber, String clientCode);
+  void merge(AsnDto asnDto);
   void replace(AsnDto asnDto);
 }

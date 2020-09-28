@@ -130,6 +130,16 @@ public class AsnServiceImpl implements AsnService {
 
   @Override
   @Transactional
+  public void merge(AsnDto asnDto) {
+    if (isShipmentExisted(asnDto.getWhId(), asnDto.getShipmentNumber())) {
+      update(asnDto);
+    } else {
+      create(asnDto);
+    }
+  }
+
+  @Override
+  @Transactional
   public void replace(AsnDto asnDto) {
     delete(asnDto.getWhId(), asnDto.getShipmentNumber(), asnDto.getClientCode());
     create(asnDto);

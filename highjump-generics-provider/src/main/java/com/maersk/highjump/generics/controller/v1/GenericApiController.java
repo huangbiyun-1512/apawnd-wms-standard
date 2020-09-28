@@ -30,7 +30,6 @@ public class GenericApiController implements GenericApi {
       @RequestParam(name = "whId") String whId,
       @RequestParam(name = "shipmentNumber") String shipmentNumber) {
     AsnDto asnDto = asnService.retrieve(whId, shipmentNumber);
-
     return ResponseEntity.ok(BaseResponseDto.ok(asnDto));
   }
 
@@ -39,7 +38,6 @@ public class GenericApiController implements GenericApi {
   @AutoLogging
   public ResponseEntity<BaseResponseDto> createAsn(@Valid @RequestBody AsnDto asnDto) {
     asnService.create(asnDto);
-
     return ResponseEntity
         .created(null)
         .body(BaseResponseDto.ok());
@@ -49,19 +47,15 @@ public class GenericApiController implements GenericApi {
   @PatchMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity updateAsn(@Valid @RequestBody AsnDto asnDto) {
-
-
-    return ResponseEntity
-        .created(null)
-        .body(BaseResponseDto.ok());
+    asnService.update(asnDto);
+    return ResponseEntity.ok(BaseResponseDto.ok());
   }
 
   @Override
   @PutMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity<BaseResponseDto> replaceAsn(@Valid @RequestBody AsnDto asnDto) {
-    asnService.replace(asnDto);
-
+  public ResponseEntity<BaseResponseDto> mergeAsn(@Valid @RequestBody AsnDto asnDto) {
+    asnService.merge(asnDto);
     return ResponseEntity.ok(BaseResponseDto.ok());
   }
 
@@ -73,7 +67,6 @@ public class GenericApiController implements GenericApi {
       @RequestParam(name = "shipmentNumber") String shipmentNumber,
       @RequestParam(name = "clientCode") String clientCode) {
     asnService.delete(whId, shipmentNumber, clientCode);
-
     return ResponseEntity.noContent().build();
   }
 }
