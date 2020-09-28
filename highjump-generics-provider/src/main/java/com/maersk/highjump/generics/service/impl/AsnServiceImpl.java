@@ -151,7 +151,7 @@ public class AsnServiceImpl implements AsnService {
       List<RcptShipPoModel> rcptShipPoModelList,
       List<RcptShipPoDetailModel> rcptShipPoDetailModelList,
       List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList) {
-    rcptShipModel = composeRcptShipModel(asnDto);
+    composeRcptShipModel(asnDto, rcptShipModel);
 
     if (Objects.nonNull(asnDto.getRcptShipPoList()) &&
         asnDto.getRcptShipPoList().size() > 0) {
@@ -184,6 +184,13 @@ public class AsnServiceImpl implements AsnService {
 
   private RcptShipModel composeRcptShipModel(AsnDto asnDto) {
     RcptShipModel rcptShipModel = new RcptShipModel();
+    composeRcptShipModel(asnDto, rcptShipModel);
+
+    return rcptShipModel;
+  }
+
+  private void composeRcptShipModel(
+      AsnDto asnDto, RcptShipModel rcptShipModel) {
     rcptShipModel.setWhId(asnDto.getWhId());
     rcptShipModel.setShipmentNumber(asnDto.getShipmentNumber());
     List<CarrierModel> carrierModels =
@@ -222,8 +229,6 @@ public class AsnServiceImpl implements AsnService {
     rcptShipModel.setWipNumber(asnDto.getWipNumber());
     rcptShipModel.setFileSeq(asnDto.getFileSeq());
     rcptShipModel.setTallysheetIsPrinted(asnDto.getTallysheetIsPrinted());
-
-    return rcptShipModel;
   }
 
   private RcptShipPoModel composeRcptShipPoModel(
