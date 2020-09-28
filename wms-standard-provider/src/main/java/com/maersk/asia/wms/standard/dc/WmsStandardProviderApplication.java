@@ -16,10 +16,10 @@ import java.util.TimeZone;
 @EnableDiscoveryClient
 @EnableScheduling
 @EnableCaching
-public class HighjumpGenericsProviderApplication {
+public class WmsStandardProviderApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(HighjumpGenericsProviderApplication.class, args);
+    SpringApplication.run(WmsStandardProviderApplication.class, args);
   }
 
   @PostConstruct
