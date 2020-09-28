@@ -46,6 +46,17 @@ public class GenericApiController implements GenericApi {
   }
 
   @Override
+  @PatchMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
+  @AutoLogging
+  public ResponseEntity updateAsn(@Valid @RequestBody AsnDto asnDto) {
+
+
+    return ResponseEntity
+        .created(null)
+        .body(BaseResponseDto.ok());
+  }
+
+  @Override
   @PutMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity<BaseResponseDto> replaceAsn(@Valid @RequestBody AsnDto asnDto) {

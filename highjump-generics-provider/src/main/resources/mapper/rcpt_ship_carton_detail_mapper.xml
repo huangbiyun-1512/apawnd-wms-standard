@@ -65,7 +65,7 @@
     )
   </insert>
 
-  <insert id="insertBatch" parameterType="RcptShipCartonDetailModel">
+  <insert id="bulkInsert" parameterType="RcptShipCartonDetailModel">
     INSERT INTO t_rcpt_ship_carton_detail (
       wh_id, po_number, item_number, shipment_number, line_number,
       expect_qty, ucc, reference1, reference2, reference3,
@@ -89,6 +89,52 @@
     )
     </foreach>
   </insert>
+
+  <update id="bulkUpdate" parameterType="RcptShipCartonDetailModel">
+    <foreach collection="list" item="item" separator=",">
+    UPDATE t_rcpt_ship_carton_detail
+    SET
+      expect_qty = #{item.expectQty},
+      ucc = #{item.ucc},
+      reference1 = #{item.reference1},
+      reference2 = #{item.reference2},
+      reference3 = #{item.reference3},
+      reference4 = #{item.reference4},
+      reference5 = #{item.reference5},
+      status = #{item.status},
+      fork_id = #{item.forkId},
+      dimension = #{item.dimension},
+      hu_id = #{item.huId},
+      generic_field_1 = #{item.genericField1},
+      generic_field_2 = #{item.genericField2},
+      generic_field_3 = #{item.genericField3},
+      generic_field_4 = #{item.genericField4},
+      generic_field_5 = #{item.genericField5},
+      generic_field_6 = #{item.genericField6},
+      generic_field_7 = #{item.genericField7},
+      generic_field_8 = #{item.genericField8},
+      generic_field_9 = #{item.genericField9},
+      generic_field_10 = #{item.genericField10},
+      generic_field_11 = #{item.genericField11},
+      generic_field_12 = #{item.genericField12},
+      generic_field_13 = #{item.genericField13},
+      generic_field_14 = #{item.genericField14},
+      generic_field_15 = #{item.genericField15},
+      schedule_number = #{item.scheduleNumber},
+      SendToLocalDB = #{item.sendToLocalDb},
+      SendDate = #{item.sendDate},
+      container_label = #{item.containerLabel},
+      picking_list_id = #{item.pickingListId},
+      scan_flag = #{item.scanFlag},
+      qty_received = #{item.qtyReceived}
+    WHERE
+        wh_id = #{item.whId}
+    AND po_number = #{item.poNumber}
+    AND item_number = #{item.itemNumber}
+    AND shipment_number = #{item.shipmentNumber}
+    AND line_number = #{item.lineNumber}
+    </foreach>
+  </update>
 
   <delete id="deleteByWhIdAndShipmentNumber">
     DELETE FROM t_rcpt_ship_carton_detail WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber}

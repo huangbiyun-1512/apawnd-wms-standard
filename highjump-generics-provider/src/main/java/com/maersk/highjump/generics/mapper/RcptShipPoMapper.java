@@ -11,7 +11,9 @@ public interface RcptShipPoMapper {
 
   void insert(RcptShipPoModel rcptShipPoModel);
 
-  void insertBatch(List<RcptShipPoModel> rcptShipPoModelList);
+  void bulkInsert(List<RcptShipPoModel> rcptShipPoModelList);
+
+  int bulkUpdate(List<RcptShipPoModel> rcptShipPoModelList);
 
   int deleteByWhIdAndShipmentNumber(
       @Param("whId") String whId,

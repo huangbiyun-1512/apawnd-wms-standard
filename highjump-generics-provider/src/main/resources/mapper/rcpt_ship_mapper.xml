@@ -39,6 +39,32 @@
         )
     </insert>
 
+    <update id="update" parameterType="RcptShipModel">
+        UPDATE t_rcpt_ship
+        SET
+            carrier_id = #{carrierId},
+            trailer_number = #{trailerNumber},
+            date_expected = #{dateExpected},
+            date_received = #{dateReceived},
+            date_shipped = #{dateShipped},
+            status = #{status},
+            comments = #{comments},
+            workers_assigned = #{workersAssigned},
+            pro_number = #{proNumber},
+            arrival_sign = #{arrivalSign},
+            arrival_date = #{arrivalDate},
+            grn_send_sign = #{grnSendSign},
+            grn_send_date = #{grnSendDate},
+            shipment_receipt_date = #{shipmentReceiptDate},
+            asn_type = #{asnType},
+            wip_number = #{wipNumber},
+            file_seq = #{fileSeq},
+            tallysheet_is_printed = #{tallysheetIsPrinted}
+        WHERE
+            wh_id = #{whId}
+        AND shipment_number = #{shipmentNumber}
+    </update>
+
     <select id="selectCountByWhIdAndShipmentNumber" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM t_rcpt_ship t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber}
     </select>

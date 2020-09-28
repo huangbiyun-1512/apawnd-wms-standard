@@ -29,6 +29,15 @@ public interface GenericApi {
           required = true,
           schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);
 
+  @Operation(summary = "Update the ASN.", tags = {"Generic APIs"})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "OK")
+  })
+  ResponseEntity updateAsn(
+      @Parameter(
+          required = true,
+          schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);
+
   @Operation(summary = "Replace the existed ASN with a new one.", tags = {"Generic APIs"})
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "OK")

@@ -23,6 +23,8 @@ public interface RcptShipMapper {
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);
 
+  int update(RcptShipModel rcptShipModel);
+
   int deleteByWhIdAndShipmentNumber(
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);

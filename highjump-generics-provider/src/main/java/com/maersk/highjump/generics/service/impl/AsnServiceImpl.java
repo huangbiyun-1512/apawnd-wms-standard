@@ -74,13 +74,74 @@ public class AsnServiceImpl implements AsnService {
           errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0009));
     }
 
-    RcptShipModel rcptShipModel =
-        composeRcptShipPoModel(asnDto);
-    rcptShipMapper.insert(rcptShipModel);
-
+    RcptShipModel rcptShipModel = new RcptShipModel();
     List<RcptShipPoModel> rcptShipPoModelList = new ArrayList<>();
     List<RcptShipPoDetailModel> rcptShipPoDetailModelList = new ArrayList<>();
     List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList = new ArrayList<>();
+    composeRcptShipInfo(
+        asnDto,
+        rcptShipModel,
+        rcptShipPoModelList,
+        rcptShipPoDetailModelList,
+        rcptShipCartonDetailModelList);
+
+    rcptShipMapper.insert(rcptShipModel);
+    rcptShipPoMapper.bulkInsert(rcptShipPoModelList);
+    rcptShipPoDetailMapper.bulkInsert(rcptShipPoDetailModelList);
+    rcptShipCartonDetailMapper.bulkInsert(rcptShipCartonDetailModelList);
+  }
+
+  @Override
+  @Transactional
+  public int update(AsnDto asnDto) {
+    validateShipmentAllowed2Modify(asnDto.getWhId(), asnDto.getShipmentNumber());
+
+    RcptShipModel rcptShipModel = new RcptShipModel();
+    List<RcptShipPoModel> rcptShipPoModelList = new ArrayList<>();
+    List<RcptShipPoDetailModel> rcptShipPoDetailModelList = new ArrayList<>();
+    List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList = new ArrayList<>();
+    composeRcptShipInfo(
+        asnDto,
+        rcptShipModel,
+        rcptShipPoModelList,
+        rcptShipPoDetailModelList,
+        rcptShipCartonDetailModelList);
+
+    int result = rcptShipMapper.update(rcptShipModel);
+    rcptShipPoMapper.bulkUpdate(rcptShipPoModelList);
+    rcptShipPoDetailMapper.bulkUpdate(rcptShipPoDetailModelList);
+    rcptShipCartonDetailMapper.bulkUpdate(rcptShipCartonDetailModelList);
+
+    return result;
+  }
+
+  @Override
+  @Transactional
+  public int delete(String whId, String shipmentNumber, String clientCode) {
+    validateShipmentAllowed2Modify(whId, shipmentNumber);
+
+    int result = rcptShipMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+    rcptShipPoMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+    rcptShipPoDetailMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+    rcptShipCartonDetailMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
+
+    return result;
+  }
+
+  @Override
+  @Transactional
+  public void replace(AsnDto asnDto) {
+    delete(asnDto.getWhId(), asnDto.getShipmentNumber(), asnDto.getClientCode());
+    create(asnDto);
+  }
+
+  private void composeRcptShipInfo(
+      AsnDto asnDto,
+      RcptShipModel rcptShipModel,
+      List<RcptShipPoModel> rcptShipPoModelList,
+      List<RcptShipPoDetailModel> rcptShipPoDetailModelList,
+      List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList) {
+    rcptShipModel = composeRcptShipModel(asnDto);
 
     if (Objects.nonNull(asnDto.getRcptShipPoList()) &&
         asnDto.getRcptShipPoList().size() > 0) {
@@ -108,54 +169,10 @@ public class AsnServiceImpl implements AsnService {
               });
             }
           });
-      rcptShipPoMapper.insertBatch(rcptShipPoModelList);
-      rcptShipPoDetailMapper.insertBatch(rcptShipPoDetailModelList);
-      rcptShipCartonDetailMapper.insertBatch(rcptShipCartonDetailModelList);
     }
   }
 
-  @Override
-  @Transactional
-  public int delete(String whId, String shipmentNumber, String clientCode) {
-    List<RcptShipModel> rcptShipModels =
-        retrieveShipmentByWhIdAndShipmentNumber(whId, shipmentNumber);
-
-    if (!isShipmentExisted(rcptShipModels)) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
-    }
-
-    if (isShipmentClosed(rcptShipModels.get(0))) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
-    }
-
-    if (isShipmentReconciled(rcptShipModels.get(0))) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
-    }
-
-    if (!isReceiptOpen(whId, shipmentNumber)) {
-      throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
-    }
-
-    int result = rcptShipMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
-    rcptShipPoMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
-    rcptShipPoDetailMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
-    rcptShipCartonDetailMapper.deleteByWhIdAndShipmentNumber(whId, shipmentNumber);
-
-    return result;
-  }
-
-  @Override
-  @Transactional
-  public void replace(AsnDto asnDto) {
-    delete(asnDto.getWhId(), asnDto.getShipmentNumber(), asnDto.getClientCode());
-    create(asnDto);
-  }
-
-  private RcptShipModel composeRcptShipPoModel(AsnDto asnDto) {
+  private RcptShipModel composeRcptShipModel(AsnDto asnDto) {
     RcptShipModel rcptShipModel = new RcptShipModel();
     rcptShipModel.setWhId(asnDto.getWhId());
     rcptShipModel.setShipmentNumber(asnDto.getShipmentNumber());
@@ -312,6 +329,32 @@ public class AsnServiceImpl implements AsnService {
     return rcptShipCartonDetailModel;
   }
 
+  private void validateShipmentAllowed2Modify(String whId, String shipmentNumber) {
+    List<RcptShipModel> rcptShipModels =
+        retrieveShipmentByWhIdAndShipmentNumber(
+            whId, shipmentNumber);
+
+    if (!isShipmentExisted(rcptShipModels)) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
+    }
+
+    if (isShipmentClosed(rcptShipModels.get(0))) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
+    }
+
+    if (isShipmentReconciled(rcptShipModels.get(0))) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
+    }
+
+    if (isShipmentUnderReceiving(whId, shipmentNumber)) {
+      throw new BusinessException(
+          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
+    }
+  }
+
   private boolean isShipmentExisted(String whId, String shipmentNumber) {
     List<RcptShipModel> rcptShipModels =
         rcptShipMapper.selectByWhIdAndShipmentNumber(whId, shipmentNumber);
@@ -344,7 +387,7 @@ public class AsnServiceImpl implements AsnService {
     return false;
   }
 
-  private boolean isReceiptOpen(String whId, String shipmentNumber) {
+  private boolean isShipmentUnderReceiving(String whId, String shipmentNumber) {
     int count =
         receiptMapper.selectCountByWhIdAndShipmentNumberAndStatus(
             whId, shipmentNumber, ReceiptStatusEnum.RECEIPT_STATUS_CODE_OPEN.getCode());

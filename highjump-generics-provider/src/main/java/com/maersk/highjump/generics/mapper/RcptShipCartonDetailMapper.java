@@ -10,7 +10,11 @@ import java.util.List;
 public interface RcptShipCartonDetailMapper {
 
   void insert(RcptShipCartonDetailModel rcptShipCartonDetailModel);
-  void insertBatch(List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList);
+
+  void bulkInsert(List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList);
+
+  int bulkUpdate(List<RcptShipCartonDetailModel> rcptShipCartonDetailModelList);
+
   int deleteByWhIdAndShipmentNumber(
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);
