@@ -91,7 +91,7 @@
   </insert>
 
   <update id="bulkUpdate" parameterType="RcptShipCartonDetailModel">
-    <foreach collection="list" item="item" separator=",">
+    <foreach collection="list" item="item" separator=";">
     UPDATE t_rcpt_ship_carton_detail
     SET
       expect_qty = #{item.expectQty},

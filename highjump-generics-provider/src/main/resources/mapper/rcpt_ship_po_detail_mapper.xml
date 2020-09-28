@@ -94,7 +94,7 @@
   </insert>
 
   <update id="bulkUpdate" parameterType="java.util.List">
-    <foreach collection="list" item="item" separator=",">
+    <foreach collection="list" item="item" separator=";">
     UPDATE t_rcpt_ship_po_detail
     SET
       schedule_number = #{item.scheduleNumber},
@@ -130,7 +130,7 @@
       confirm_free = #{item.confirmFree, jdbcType=FLOAT},
       confirm_kit = #{item.confirmKit, jdbcType=FLOAT},
       received_bonded_qty = #{item.receivedBondedQty, jdbcType=FLOAT},
-      received_free_qty #{item.receivedFreeQty, jdbcType=FLOAT}
+      received_free_qty = #{item.receivedFreeQty, jdbcType=FLOAT}
     WHERE
       wh_id = #{item.whId}
     AND shipment_number = #{item.shipmentNumber}

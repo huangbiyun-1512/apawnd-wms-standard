@@ -35,7 +35,7 @@
   </insert>
 
   <update id="bulkUpdate" parameterType="java.util.List">
-    <foreach collection="list" item="item" separator=",">
+    <foreach collection="list" item="item" separator=";">
       UPDATE t_rcpt_ship_po
       SET
         cases_expected = #{item.casesExpected, jdbcType=FLOAT},
