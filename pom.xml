@@ -10,17 +10,17 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.maersk.highjump</groupId>
-    <artifactId>highjump-generics</artifactId>
+    <groupId>com.maersk.asia.wms</groupId>
+    <artifactId>wms-standard</artifactId>
     <version>1.${revision}</version>
     <packaging>pom</packaging>
 
-    <name>highjump-generics</name>
-    <description>Demo project for Spring Boot</description>
+    <name>wms-standard</name>
+    <description>WMS Standard API</description>
 
     <modules>
-        <module>highjump-generics-api</module>
-        <module>highjump-generics-provider</module>
+        <module>wms-standard-api</module>
+        <module>wms-standard-provider</module>
     </modules>
 
     <properties>
@@ -62,8 +62,8 @@
 
             <!-- Internal Dependency START -->
             <dependency>
-                <groupId>com.maersk.highjump</groupId>
-                <artifactId>highjump-generics-api</artifactId>
+                <groupId>com.maersk.asia.wms</groupId>
+                <artifactId>wms-standard-api</artifactId>
                 <version>1.${revision}</version>
             </dependency>
 

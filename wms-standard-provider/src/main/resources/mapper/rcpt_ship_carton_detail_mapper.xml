@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maersk.asia.wms.standard.dc.mapper.RcptShipCartonDetailMapper">
+  <resultMap id="rcptShipCartonDetailModel" type="RcptShipCartonDetailModel">
+    <result column="wh_id" property="whId"/>
+    <result column="po_number" property="poNumber"/>
+    <result column="item_number" property="itemNumber"/>
+    <result column="shipment_number" property="shipmentNumber"/>
+    <result column="line_number" property="lineNumber"/>
+    <result column="expect_qty" property="expectQty"/>
+    <result column="ucc" property="ucc"/>
+    <result column="reference1" property="reference1"/>
+    <result column="reference2" property="reference2"/>
+    <result column="reference3" property="reference3"/>
+    <result column="reference4" property="reference4"/>
+    <result column="reference5" property="reference5"/>
+    <result column="status" property="status"/>
+    <result column="fork_id" property="forkId"/>
+    <result column="dimension" property="dimension"/>
+    <result column="hu_id" property="huId"/>
+    <result column="generic_field_1" property="genericField1"/>
+    <result column="generic_field_2" property="genericField2"/>
+    <result column="generic_field_3" property="genericField3"/>
+    <result column="generic_field_4" property="genericField4"/>
+    <result column="generic_field_5" property="genericField5"/>
+    <result column="generic_field_6" property="genericField6"/>
+    <result column="generic_field_7" property="genericField7"/>
+    <result column="generic_field_8" property="genericField8"/>
+    <result column="generic_field_9" property="genericField9"/>
+    <result column="generic_field_10" property="genericField10"/>
+    <result column="generic_field_11" property="genericField11"/>
+    <result column="generic_field_12" property="genericField12"/>
+    <result column="generic_field_13" property="genericField13"/>
+    <result column="generic_field_14" property="genericField14"/>
+    <result column="generic_field_15" property="genericField15"/>
+    <result column="rcpt_ship_carton_detail_id" property="rcptShipCartonDetailId"/>
+    <result column="schedule_number" property="scheduleNumber"/>
+    <result column="SendToLocalDB" property="sendToLocalDb"/>
+    <result column="SendDate" property="sendDate"/>
+    <result column="container_label" property="containerLabel"/>
+    <result column="picking_list_id" property="pickingListId"/>
+    <result column="scan_flag" property="scanFlag"/>
+    <result column="qty_received" property="qtyReceived"/>
+  </resultMap>
+
+  <insert id="insert" parameterType="RcptShipCartonDetailModel">
+    INSERT INTO t_rcpt_ship_carton_detail (
+      wh_id, po_number, item_number, shipment_number, line_number,
+      expect_qty, ucc, reference1, reference2, reference3,
+      reference4, reference5, status, fork_id, dimension,
+      hu_id, generic_field_1, generic_field_2, generic_field_3, generic_field_4,
+      generic_field_5, generic_field_6, generic_field_7, generic_field_8, generic_field_9,
+      generic_field_10, generic_field_11, generic_field_12, generic_field_13, generic_field_14,
+      generic_field_15, schedule_number, SendToLocalDB, SendDate,
+      container_label, picking_list_id, scan_flag, qty_received
+    ) VALUES (
+      #{whId}, #{poNumber}, #{itemNumber}, #{shipmentNumber}, #{lineNumber},
+      #{expectQty}, #{ucc}, #{reference1}, #{reference2}, #{reference3},
+      #{reference4}, #{reference5}, #{status}, #{forkId}, #{dimension},
+      #{huId}, #{genericField1}, #{genericField2}, #{genericField3}, #{genericField4},
+      #{genericField5}, #{genericField6}, #{genericField7}, #{genericField8}, #{genericField9},
+      #{genericField10}, #{genericField11}, #{genericField12}, #{genericField13}, #{genericField14},
+      #{genericField15}, #{scheduleNumber}, #{sendToLocalDb}, #{sendDate},
+      #{containerLabel}, #{pickingListId}, #{scanFlag}, #{qtyReceived}
+    )
+  </insert>
+
+  <insert id="bulkInsert" parameterType="RcptShipCartonDetailModel">
+    INSERT INTO t_rcpt_ship_carton_detail (
+      wh_id, po_number, item_number, shipment_number, line_number,
+      expect_qty, ucc, reference1, reference2, reference3,
+      reference4, reference5, status, fork_id, dimension,
+      hu_id, generic_field_1, generic_field_2, generic_field_3, generic_field_4,
+      generic_field_5, generic_field_6, generic_field_7, generic_field_8, generic_field_9,
+      generic_field_10, generic_field_11, generic_field_12, generic_field_13, generic_field_14,
+      generic_field_15, schedule_number, SendToLocalDB, SendDate,
+      container_label, picking_list_id, scan_flag, qty_received
+    ) VALUES
+    <foreach collection="list" item="item" separator=",">
+    (
+      #{item.whId}, #{item.poNumber}, #{item.itemNumber}, #{item.shipmentNumber}, #{item.lineNumber},
+      #{item.expectQty}, #{item.ucc}, #{item.reference1}, #{item.reference2}, #{item.reference3},
+      #{item.reference4}, #{item.reference5}, #{item.status}, #{item.forkId}, #{item.dimension},
+      #{item.huId}, #{item.genericField1}, #{item.genericField2}, #{item.genericField3}, #{item.genericField4},
+      #{item.genericField5}, #{item.genericField6}, #{item.genericField7}, #{item.genericField8}, #{item.genericField9},
+      #{item.genericField10}, #{item.genericField11}, #{item.genericField12}, #{item.genericField13}, #{item.genericField14},
+      #{item.genericField15}, #{item.scheduleNumber}, #{item.sendToLocalDb}, #{item.sendDate},
+      #{item.containerLabel}, #{item.pickingListId}, #{item.scanFlag}, #{item.qtyReceived}
+    )
+    </foreach>
+  </insert>
+
+  <update id="bulkUpdate" parameterType="RcptShipCartonDetailModel">
+    <foreach collection="list" item="item" separator=";">
+    UPDATE t_rcpt_ship_carton_detail
+    SET
+      expect_qty = #{item.expectQty},
+      ucc = #{item.ucc},
+      reference1 = #{item.reference1},
+      reference2 = #{item.reference2},
+      reference3 = #{item.reference3},
+      reference4 = #{item.reference4},
+      reference5 = #{item.reference5},
+      status = #{item.status},
+      fork_id = #{item.forkId},
+      dimension = #{item.dimension},
+      hu_id = #{item.huId},
+      generic_field_1 = #{item.genericField1},
+      generic_field_2 = #{item.genericField2},
+      generic_field_3 = #{item.genericField3},
+      generic_field_4 = #{item.genericField4},
+      generic_field_5 = #{item.genericField5},
+      generic_field_6 = #{item.genericField6},
+      generic_field_7 = #{item.genericField7},
+      generic_field_8 = #{item.genericField8},
+      generic_field_9 = #{item.genericField9},
+      generic_field_10 = #{item.genericField10},
+      generic_field_11 = #{item.genericField11},
+      generic_field_12 = #{item.genericField12},
+      generic_field_13 = #{item.genericField13},
+      generic_field_14 = #{item.genericField14},
+      generic_field_15 = #{item.genericField15},
+      schedule_number = #{item.scheduleNumber},
+      SendToLocalDB = #{item.sendToLocalDb},
+      SendDate = #{item.sendDate},
+      container_label = #{item.containerLabel},
+      picking_list_id = #{item.pickingListId},
+      scan_flag = #{item.scanFlag},
+      qty_received = #{item.qtyReceived}
+    WHERE
+        wh_id = #{item.whId}
+    AND po_number = #{item.poNumber}
+    AND item_number = #{item.itemNumber}
+    AND shipment_number = #{item.shipmentNumber}
+    AND line_number = #{item.lineNumber}
+    </foreach>
+  </update>
+
+  <delete id="deleteByWhIdAndShipmentNumber">
+    DELETE FROM t_rcpt_ship_carton_detail WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber}
+  </delete>
+</mapper>

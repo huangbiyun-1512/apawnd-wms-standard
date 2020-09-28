@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maersk.asia.wms.standard.dc.mapper.ReceiptMapper">
+  <resultMap id="receiptModel" type="ReceiptModel">
+    <result column="receipt_id" property="receiptId"/>
+    <result column="vendor_code" property="vendorCode"/>
+    <result column="po_number" property="poNumber"/>
+    <result column="receipt_date" property="receiptDate"/>
+    <result column="scac_code" property="scacCode"/>
+    <result column="status" property="status"/>
+    <result column="item_number" property="itemNumber"/>
+    <result column="lot_number" property="lotNumber"/>
+    <result column="line_number" property="lineNumber"/>
+    <result column="schedule_number" property="scheduleNumber"/>
+    <result column="qty_received" property="qtyReceived"/>
+    <result column="qty_damaged" property="qtyDamaged"/>
+    <result column="hu_id" property="huId"/>
+    <result column="pack_slip" property="packSlip"/>
+    <result column="fork_id" property="forkId"/>
+    <result column="tran_status" property="tranStatus"/>
+    <result column="receipt_uom" property="receiptUom"/>
+    <result column="shipment_number" property="shipmentNumber"/>
+    <result column="wh_id" property="whId"/>
+    <result column="stored_attribute_id" property="storedAttributeId"/>
+    <result column="received_cbm" property="receivedCbm"/>
+    <result column="received_wgt" property="receivedWgt"/>
+    <result column="end_receipt_date" property="endReceiptDate"/>
+    <result column="customs_unique_no" property="customsUniqueNo"/>
+    <result column="opentruck" property="opentruck"/>
+    <result column="remark" property="remark"/>
+    <result column="individual" property="individual"/>
+    <result column="serial_key" property="serialKey"/>
+    <result column="truck_number" property="truckNumber"/>
+    <result column="invoice_number" property="invoiceNumber"/>
+    <result column="scanned_upc" property="scannedUpc"/>
+    <result column="invoice_date" property="invoiceDate"/>
+    <result column="customer_code" property="customerCode"/>
+    <result column="manufacture_date" property="manufactureDate"/>
+    <result column="expiration_date" property="expirationDate"/>
+    <result column="grn_send_sign" property="grnSendSign"/>
+    <result column="grn_send_date" property="grnSendDate"/>
+    <result column="damaged_reason_code" property="damagedReasonCode"/>
+    <result column="length" property="length"/>
+    <result column="width" property="width"/>
+    <result column="height" property="height"/>
+    <result column="weight" property="weight"/>
+    <result column="process_attribute_id" property="processAttributeId"/>
+    <result column="updated_date" property="updatedDate"/>
+  </resultMap>
+
+  <select id="selectCountByWhIdAndShipmentNumberAndStatus" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM t_receipt t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber} AND t.status = #{status}
+  </select>
+</mapper>
