@@ -18,6 +18,6 @@ spring:
         max-wait: -1
 mybatis:
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.maersk.highjump.generics.model
+  type-aliases-package: com.maersk.asia.wms.standard.model
 server:
   port: 18080

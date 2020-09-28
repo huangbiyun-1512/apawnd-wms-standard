@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.maersk.asia.wms.standard.dc.mapper.RcptShipPoDetailMapper">
+<mapper namespace="com.maersk.asia.wms.standard.mapper.RcptShipPoDetailMapper">
   <resultMap id="rcptShipPoDetailModel" type="RcptShipPoDetailModel">
     <result column="wh_id" property="whId"/>
     <result column="shipment_number" property="shipmentNumber"/>
@@ -41,7 +41,7 @@
     <result column="confirm_kit" property="confirmKit"/>
     <result column="received_bonded_qty" property="receivedBondedQty"/>
     <result column="received_free_qty" property="receivedFreeQty"/>
-    <collection property="rcptShipCartonDetailList" resultMap="com.maersk.asia.wms.standard.dc.mapper.RcptShipCartonDetailMapper.rcptShipCartonDetailModel"/>
+    <collection property="rcptShipCartonDetailList" resultMap="com.maersk.asia.wms.standard.mapper.RcptShipCartonDetailMapper.rcptShipCartonDetailModel"/>
   </resultMap>
 
   <insert id="insert" parameterType="RcptShipPoDetailModel">

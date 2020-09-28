@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.maersk.asia.wms.standard.dc.mapper.CarrierMapper">
+<mapper namespace="com.maersk.asia.wms.standard.mapper.CarrierMapper">
   <resultMap id="carrierModel" type="CarrierModel">
     <result column="carrier_id" property="carrierId"/>
     <result column="carrier_code" property="carrierCode"/>
