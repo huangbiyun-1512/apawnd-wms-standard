@@ -9,5 +9,5 @@ public interface AsnService {
   int update(AsnDto asnDto);
   int delete(String whId, String shipmentNumber, String clientCode);
   void merge(AsnDto asnDto);
-  void replace(AsnDto asnDto);
+  void renew(AsnDto asnDto);
 }

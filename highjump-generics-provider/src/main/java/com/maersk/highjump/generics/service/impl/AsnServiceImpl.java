@@ -140,7 +140,7 @@ public class AsnServiceImpl implements AsnService {
 
   @Override
   @Transactional
-  public void replace(AsnDto asnDto) {
+  public void renew(AsnDto asnDto) {
     delete(asnDto.getWhId(), asnDto.getShipmentNumber(), asnDto.getClientCode());
     create(asnDto);
   }

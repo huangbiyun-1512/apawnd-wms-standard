@@ -56,4 +56,13 @@ public interface GenericApi {
       @Parameter(required = true) String shipmentNumber,
       @Parameter(required = true) String clientCode);
 
+  @Operation(summary = "Create a new ASN after delete the old one.", tags = {"Generic APIs"})
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "201", description = "Created")
+  })
+  ResponseEntity renewAsn(
+      @Parameter(
+          required = true,
+          schema = @Schema(implementation = AsnDto.class)) AsnDto asnDto);
+
 }

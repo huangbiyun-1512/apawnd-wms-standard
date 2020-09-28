@@ -69,4 +69,14 @@ public class GenericApiController implements GenericApi {
     asnService.delete(whId, shipmentNumber, clientCode);
     return ResponseEntity.noContent().build();
   }
+
+  @Override
+  @PutMapping(value = "/asn/renew", produces = MediaType.APPLICATION_JSON_VALUE)
+  @AutoLogging
+  public ResponseEntity<BaseResponseDto> renewAsn(@Valid @RequestBody AsnDto asnDto) {
+    asnService.renew(asnDto);
+    return ResponseEntity
+        .created(null)
+        .body(BaseResponseDto.ok());
+  }
 }
