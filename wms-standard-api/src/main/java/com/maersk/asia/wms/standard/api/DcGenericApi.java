@@ -50,7 +50,7 @@ public interface DcGenericApi {
 
   @Operation(summary = "Delete the existed ASN.", tags = {"Generic APIs"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "204", description = "No Content")
+      @ApiResponse(responseCode = "200", description = "OK")
   })
   ResponseEntity deleteAsn(
       @Parameter(required = true) String whId,

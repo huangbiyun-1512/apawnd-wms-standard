@@ -71,7 +71,7 @@ public class DcGenericApiController implements DcGenericApi {
       @RequestParam(name = "shipmentNumber") String shipmentNumber,
       @RequestParam(name = "clientCode") String clientCode) {
     asnService.delete(whId, shipmentNumber, clientCode);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(BaseResponseDto.ok());
   }
 
   @Override
