@@ -55,8 +55,12 @@ public class DcGenericApiController implements DcGenericApi {
   @PutMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity<BaseResponseDto> mergeAsn(@Valid @RequestBody AsnDto asnDto) {
-    asnService.merge(asnDto);
-    return ResponseEntity.ok(BaseResponseDto.ok());
+    if (asnService.merge(asnDto)) {
+      return ResponseEntity.ok(BaseResponseDto.ok());
+    }
+    return ResponseEntity
+        .created(null)
+        .body(BaseResponseDto.ok());
   }
 
   @Override
