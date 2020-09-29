@@ -14,7 +14,7 @@ public class OpenApiConfig {
     return new OpenAPI()
         .components(new Components())
         .info(new Info()
-                .title("Highjump Generic APIs")
+                .title("WMS Standard APIs")
                 .description("This is a sample Spring Boot RESTful service using springdoc-openapi and OpenAPI 3."));
   }
 }
