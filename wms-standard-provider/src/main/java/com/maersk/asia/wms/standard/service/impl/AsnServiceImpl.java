@@ -72,7 +72,7 @@ public class AsnServiceImpl implements AsnService {
   public void create(AsnDto asnDto) {
     if (isShipmentExisted(asnDto.getWhId(), asnDto.getShipmentNumber())) {
       throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0009));
+          errorUtil.build409ErrorList(MessageConstant.MESSAGE_KEY_E01_0009));
     }
 
     RcptShipModel rcptShipModel = new RcptShipModel();
@@ -352,22 +352,22 @@ public class AsnServiceImpl implements AsnService {
 
     if (!isShipmentExisted(rcptShipModels)) {
       throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
+          errorUtil.build409ErrorList(MessageConstant.MESSAGE_KEY_E01_0004));
     }
 
     if (isShipmentClosed(rcptShipModels.get(0))) {
       throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
+          errorUtil.build409ErrorList(MessageConstant.MESSAGE_KEY_E01_0005));
     }
 
     if (isShipmentReconciled(rcptShipModels.get(0))) {
       throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
+          errorUtil.build409ErrorList(MessageConstant.MESSAGE_KEY_E01_0006));
     }
 
     if (isShipmentUnderReceiving(whId, shipmentNumber)) {
       throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
+          errorUtil.build409ErrorList(MessageConstant.MESSAGE_KEY_E01_0007));
     }
   }
 
