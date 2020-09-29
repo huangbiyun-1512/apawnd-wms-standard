@@ -40,7 +40,8 @@ public interface DcGenericApi {
 
   @Operation(summary = "Update the ASN if existed, otherwise create a new one.", tags = {"Generic APIs"})
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "OK")
+      @ApiResponse(responseCode = "200", description = "OK"),
+      @ApiResponse(responseCode = "201", description = "Created")
   })
   ResponseEntity mergeAsn(
       @Parameter(
