@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.maersk.asia.wnd.wms</groupId>
+        <groupId>com.maersk.apawnd.wms</groupId>
         <artifactId>wms-standard</artifactId>
         <version>1.${revision}</version>
     </parent>
@@ -30,7 +30,7 @@
 
         <!-- Internal Dependency START -->
         <dependency>
-            <groupId>com.maersk.asia.wnd</groupId>
+            <groupId>com.maersk.apawnd</groupId>
             <artifactId>wnd-commons-component</artifactId>
         </dependency>
         <!-- External Dependency END -->

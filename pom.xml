@@ -10,7 +10,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.maersk.asia.wnd.wms</groupId>
+    <groupId>com.maersk.apawnd.wms</groupId>
     <artifactId>wms-standard</artifactId>
     <version>1.${revision}</version>
     <packaging>pom</packaging>
@@ -62,13 +62,13 @@
 
             <!-- Internal Dependency START -->
             <dependency>
-                <groupId>com.maersk.asia.wnd.wms</groupId>
+                <groupId>com.maersk.apawnd.wms</groupId>
                 <artifactId>wms-standard-api</artifactId>
                 <version>1.${revision}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.maersk.asia.wnd</groupId>
+                <groupId>com.maersk.apawnd</groupId>
                 <artifactId>wnd-commons-component</artifactId>
                 <version>${wnd.commons.component.version}</version>
             </dependency>
