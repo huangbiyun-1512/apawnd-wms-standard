@@ -65,7 +65,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.maersk.apawnd</groupId>
+            <groupId>com.maersk.apawnd.commons</groupId>
             <artifactId>apawnd-commons-component</artifactId>
         </dependency>
         <!-- External Dependency END -->
