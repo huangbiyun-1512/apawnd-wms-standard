@@ -11,16 +11,16 @@
     </parent>
 
     <groupId>com.maersk.apawnd.wms</groupId>
-    <artifactId>wms-standard</artifactId>
+    <artifactId>apawnd-wms-standard</artifactId>
     <version>1.${revision}</version>
     <packaging>pom</packaging>
 
-    <name>wms-standard</name>
-    <description>WMS Standard API</description>
+    <name>apawnd-wms-standard</name>
+    <description>APAWnD WMS Standard API</description>
 
     <modules>
-        <module>wms-standard-api</module>
-        <module>wms-standard-provider</module>
+        <module>apawnd-wms-standard-api</module>
+        <module>apawnd-wms-standard-provider</module>
     </modules>
 
     <properties>
@@ -63,13 +63,13 @@
             <!-- Internal Dependency START -->
             <dependency>
                 <groupId>com.maersk.apawnd.wms</groupId>
-                <artifactId>wms-standard-api</artifactId>
+                <artifactId>apawnd-wms-standard-api</artifactId>
                 <version>1.${revision}</version>
             </dependency>
 
             <dependency>
                 <groupId>com.maersk.apawnd</groupId>
-                <artifactId>wnd-commons-component</artifactId>
+                <artifactId>apawnd-commons-component</artifactId>
                 <version>${wnd.commons.component.version}</version>
             </dependency>
             <!-- Internal Dependency END -->
