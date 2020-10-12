@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 
-@FeignClient(name = "highjump-generics")
+@FeignClient(name = "dc-generics")
 public interface DcGenericApi {
 
   @Operation(summary = "Retrieve the ASN info.", tags = {"DC Generic APIs"})
