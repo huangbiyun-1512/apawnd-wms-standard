@@ -27,8 +27,8 @@ public class DcGenericApiController implements DcGenericApi {
   @GetMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity<BaseResponseDto<AsnDto>> retrieveAsn(
-      @RequestParam(name = "whId") String whId,
-      @RequestParam(name = "shipmentNumber") String shipmentNumber) {
+      @RequestParam(name = "wh_id") String whId,
+      @RequestParam(name = "shipment_number") String shipmentNumber) {
     AsnDto asnDto = asnService.retrieve(whId, shipmentNumber);
     return ResponseEntity.ok(BaseResponseDto.ok(asnDto));
   }
@@ -67,9 +67,9 @@ public class DcGenericApiController implements DcGenericApi {
   @DeleteMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
   public ResponseEntity<BaseResponseDto> deleteAsn(
-      @RequestParam(name = "whId") String whId,
-      @RequestParam(name = "shipmentNumber") String shipmentNumber,
-      @RequestParam(name = "clientCode") String clientCode) {
+      @RequestParam(name = "wh_id") String whId,
+      @RequestParam(name = "shipment_number") String shipmentNumber,
+      @RequestParam(name = "client_code") String clientCode) {
     asnService.delete(whId, shipmentNumber, clientCode);
     return ResponseEntity.ok(BaseResponseDto.ok());
   }
