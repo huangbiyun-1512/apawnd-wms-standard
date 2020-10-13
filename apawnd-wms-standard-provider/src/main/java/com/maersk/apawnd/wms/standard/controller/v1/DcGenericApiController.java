@@ -75,10 +75,10 @@ public class DcGenericApiController implements DcGenericApi {
   }
 
   @Override
-  @PutMapping(value = "/asn/renew", produces = MediaType.APPLICATION_JSON_VALUE)
+  @PutMapping(value = "/asn/replace", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity<BaseResponseDto> renewAsn(@Valid @RequestBody AsnDto asnDto) {
-    asnService.renew(asnDto);
+  public ResponseEntity<BaseResponseDto> replaceAsn(@Valid @RequestBody AsnDto asnDto) {
+    asnService.replace(asnDto);
     return ResponseEntity
         .created(null)
         .body(BaseResponseDto.ok());

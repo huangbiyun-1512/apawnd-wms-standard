@@ -21,3 +21,11 @@ mybatis:
   type-aliases-package: com.maersk.apawnd.wms.standard.model
 server:
   port: 18080
+
+biz:
+  event-queue-service:
+    config:
+      batch-queue-count: 500
+      event-type: WS
+      retry-count: 3
+      timeout-retry-minute: 5

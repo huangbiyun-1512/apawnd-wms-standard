@@ -7,6 +7,7 @@ import com.maersk.apawnd.wms.standard.service.CarrierService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class CarrierServiceImpl implements CarrierService {
       key = "#root.targetClass.name + '.' + #root.method.name + '.' + #carrierName",
       unless = "#result == null || #result.size() == 0")
   @Override
+  @Transactional
   public List<CarrierModel> retrieveByCarrierName(String carrierName) {
     List<CarrierModel> carrierModels = carrierMapper.selectByCarrierName(carrierName);
 
