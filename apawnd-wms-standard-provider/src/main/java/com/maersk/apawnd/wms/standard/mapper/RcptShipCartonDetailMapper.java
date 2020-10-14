@@ -18,4 +18,17 @@ public interface RcptShipCartonDetailMapper {
   int deleteByWhIdAndShipmentNumber(
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);
+
+  int deleteByWhIdAndShipmentNumberAndPoNumber(
+      @Param("whId") String whId,
+      @Param("shipmentNumber") String shipmentNumber,
+      @Param("poNumber") String poNumber);
+
+  int deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber(
+      @Param("whId") String whId,
+      @Param("shipmentNumber") String shipmentNumber,
+      @Param("poNumber") String poNumber,
+      @Param("lineNumber") String lineNumber,
+      @Param("itemNumber") String itemNumber,
+      @Param("scheduleNumber") Integer scheduleNumber);
 }

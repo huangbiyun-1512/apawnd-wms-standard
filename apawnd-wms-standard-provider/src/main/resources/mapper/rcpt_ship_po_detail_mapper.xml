@@ -96,46 +96,47 @@
   <update id="update" parameterType="RcptShipPoDetailModel">
     UPDATE t_rcpt_ship_po_detail
     SET
-    schedule_number = #{item.scheduleNumber},
-    expected_qty = #{item.expectedQty, jdbcType=FLOAT},
-    received_qty = #{item.receivedQty, jdbcType=FLOAT},
-    reconciled_date = #{item.reconciledDate},
-    status = #{item.status},
-    shipment_line_number = #{item.shipmentLineNumber},
-    weight = #{item.weight, jdbcType=FLOAT},
-    calculation_uom = #{item.calculationUom},
-    property_mark = #{item.propertyMark},
-    generic_field_1 = #{item.genericField1},
-    generic_field_2 = #{item.genericField2},
-    generic_field_3 = #{item.genericField3},
-    generic_field_4 = #{item.genericField4},
-    generic_field_5 = #{item.genericField5},
-    generic_field_6 = #{item.genericField6},
-    generic_field_7 = #{item.genericField7},
-    generic_field_8 = #{item.genericField8},
-    generic_field_9 = #{item.genericField9},
-    generic_field_10 = #{item.genericField10},
-    generic_field_11 = #{item.genericField11},
-    generic_field_12 = #{item.genericField12},
-    generic_field_13 = #{item.genericField13},
-    generic_field_14 = #{item.genericField14},
-    generic_field_15 = #{item.genericField15},
-    grn_send_sign = #{item.grnSendSign},
-    grn_send_date = #{item.grnSendDate},
-    customs_is_approved = #{item.customsIsApproved},
-    bonded_qty = #{item.bondedQty, jdbcType=FLOAT},
-    free_qty = #{item.freeQty, jdbcType=FLOAT},
-    confirm_bounded = #{item.confirmBounded, jdbcType=FLOAT},
-    confirm_free = #{item.confirmFree, jdbcType=FLOAT},
-    confirm_kit = #{item.confirmKit, jdbcType=FLOAT},
-    received_bonded_qty = #{item.receivedBondedQty, jdbcType=FLOAT},
-    received_free_qty = #{item.receivedFreeQty, jdbcType=FLOAT}
+    schedule_number = #{scheduleNumber},
+    expected_qty = #{expectedQty, jdbcType=FLOAT},
+    received_qty = #{receivedQty, jdbcType=FLOAT},
+    reconciled_date = #{reconciledDate},
+    status = #{status},
+    shipment_line_number = #{shipmentLineNumber},
+    weight = #{weight, jdbcType=FLOAT},
+    calculation_uom = #{calculationUom},
+    property_mark = #{propertyMark},
+    generic_field_1 = #{genericField1},
+    generic_field_2 = #{genericField2},
+    generic_field_3 = #{genericField3},
+    generic_field_4 = #{genericField4},
+    generic_field_5 = #{genericField5},
+    generic_field_6 = #{genericField6},
+    generic_field_7 = #{genericField7},
+    generic_field_8 = #{genericField8},
+    generic_field_9 = #{genericField9},
+    generic_field_10 = #{genericField10},
+    generic_field_11 = #{genericField11},
+    generic_field_12 = #{genericField12},
+    generic_field_13 = #{genericField13},
+    generic_field_14 = #{genericField14},
+    generic_field_15 = #{genericField15},
+    grn_send_sign = #{grnSendSign},
+    grn_send_date = #{grnSendDate},
+    customs_is_approved = #{customsIsApproved},
+    bonded_qty = #{bondedQty, jdbcType=FLOAT},
+    free_qty = #{freeQty, jdbcType=FLOAT},
+    confirm_bounded = #{confirmBounded, jdbcType=FLOAT},
+    confirm_free = #{confirmFree, jdbcType=FLOAT},
+    confirm_kit = #{confirmKit, jdbcType=FLOAT},
+    received_bonded_qty = #{receivedBondedQty, jdbcType=FLOAT},
+    received_free_qty = #{receivedFreeQty, jdbcType=FLOAT}
     WHERE
-    wh_id = #{item.whId}
-    AND shipment_number = #{item.shipmentNumber}
-    AND po_number = #{item.poNumber}
-    AND line_number = #{item.lineNumber}
-    AND item_number = #{item.itemNumber}
+    wh_id = #{whId}
+    AND shipment_number = #{shipmentNumber}
+    AND po_number = #{poNumber}
+    AND line_number = #{lineNumber}
+    AND item_number = #{itemNumber}
+    AND schedule_number = #{scheduleNumber}
   </update>
 
   <update id="bulkUpdate" parameterType="java.util.List">
@@ -182,6 +183,7 @@
     AND po_number = #{item.poNumber}
     AND line_number = #{item.lineNumber}
     AND item_number = #{item.itemNumber}
+    AND schedule_number = #{item.scheduleNumber}
     </foreach>
   </update>
 
@@ -189,21 +191,30 @@
     DELETE FROM t_rcpt_ship_po_detail WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber}
   </delete>
 
-  <delete id="deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber">
+  <delete id="deleteByWhIdAndShipmentNumberAndPoNumber">
+    DELETE FROM t_rcpt_ship_po_detail
+    WHERE wh_id = #{whId}
+    AND shipment_number = #{shipmentNumber}
+    AND po_number = #{poNumber}
+  </delete>
+
+  <delete id="deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber">
     DELETE FROM t_rcpt_ship_po_detail
     WHERE wh_id = #{whId}
     AND shipment_number = #{shipmentNumber}
     AND po_number = #{poNumber}
     AND line_number = #{lineNumber}
     AND item_number = #{itemNumber}
+    AND schedule_number = #{scheduleNumber}
   </delete>
 
-  <select id="selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM t_rcpt_ship_po_detail t
-    WHERE t.wh_id = #{whId}
-    AND t.shipment_number = #{shipmentNumber}
-    AND t.po_number = #{poNumber}
-    AND t.line_number = #{lineNumber}
-    AND t.item_number = #{itemNumber}
+  <select id="selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber" resultType="java.lang.Integer">
+    DELETE FROM t_rcpt_ship_carton_detail
+    WHERE wh_id = #{whId}
+    AND shipment_number = #{shipmentNumber}
+    AND po_number = #{poNumber}
+    AND line_number = #{lineNumber}
+    AND item_number = #{itemNumber}
+    AND schedule_number = #{scheduleNumber}
   </select>
 </mapper>

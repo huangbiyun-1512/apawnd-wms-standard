@@ -37,13 +37,13 @@
   <update id="update" parameterType="RcptShipPoModel">
     UPDATE t_rcpt_ship_po
     SET
-    cases_expected = #{item.casesExpected, jdbcType=FLOAT},
-    cases_received = #{item.casesReceived, jdbcType=FLOAT},
-    open_to_buy_date = #{item.openToBuyDate}
+    cases_expected = #{casesExpected, jdbcType=FLOAT},
+    cases_received = #{casesReceived, jdbcType=FLOAT},
+    open_to_buy_date = #{openToBuyDate}
     WHERE
-    wh_id = #{item.whId}
-    AND shipment_number = #{item.shipmentNumber}
-    AND po_number = #{item.poNumber}
+    wh_id = #{whId}
+    AND shipment_number = #{shipmentNumber}
+    AND po_number = #{poNumber}
   </update>
 
   <update id="bulkUpdate" parameterType="java.util.List">

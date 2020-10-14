@@ -21,17 +21,24 @@ public interface RcptShipPoDetailMapper {
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);
 
-  int deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber(
+  int deleteByWhIdAndShipmentNumberAndPoNumber(
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber,
-      @Param("poNumber") String poNumber,
-      @Param("lineNumber") String lineNumber,
-      @Param("itemNumber") String itemNumber);
+      @Param("poNumber") String poNumber);
 
-  int selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber(
+  int deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber(
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber,
       @Param("poNumber") String poNumber,
       @Param("lineNumber") String lineNumber,
-      @Param("itemNumber") String itemNumber);
+      @Param("itemNumber") String itemNumber,
+      @Param("scheduleNumber") Integer scheduleNumber);
+
+  int selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber(
+      @Param("whId") String whId,
+      @Param("shipmentNumber") String shipmentNumber,
+      @Param("poNumber") String poNumber,
+      @Param("lineNumber") String lineNumber,
+      @Param("itemNumber") String itemNumber,
+      @Param("scheduleNumber") Integer scheduleNumber);
 }

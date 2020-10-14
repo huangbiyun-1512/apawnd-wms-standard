@@ -139,4 +139,21 @@
   <delete id="deleteByWhIdAndShipmentNumber">
     DELETE FROM t_rcpt_ship_carton_detail WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber}
   </delete>
+
+  <delete id="deleteByWhIdAndShipmentNumberAndPoNumber">
+    DELETE FROM t_rcpt_ship_carton_detail
+    WHERE wh_id = #{whId}
+    AND shipment_number = #{shipmentNumber}
+    AND po_number = #{poNumber}
+  </delete>
+
+  <delete id="deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber">
+    DELETE FROM t_rcpt_ship_carton_detail
+    WHERE wh_id = #{whId}
+    AND shipment_number = #{shipmentNumber}
+    AND po_number = #{poNumber}
+    AND line_number = #{lineNumber}
+    AND item_number = #{itemNumber}
+    AND schedule_number = #{scheduleNumber}
+  </delete>
 </mapper>

@@ -31,7 +31,7 @@ public class PoServiceImpl implements PoService {
   @Override
   public boolean isPoDetailExisted(
       String whId, String poNumber,
-      String lineNumber, String itemNumber, String scheduleNumber) {
+      String lineNumber, String itemNumber, Integer scheduleNumber) {
     if (poDetailMapper.selectCountByWhIdAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber(
         whId, poNumber, lineNumber, itemNumber, scheduleNumber) > 0) {
       return true;

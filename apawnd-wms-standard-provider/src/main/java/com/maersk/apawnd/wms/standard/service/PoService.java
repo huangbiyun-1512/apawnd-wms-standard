@@ -6,5 +6,5 @@ public interface PoService {
 
   boolean isPoDetailExisted(
       String whId, String poNumber,
-      String lineNumber, String itemNumber, String scheduleNumber);
+      String lineNumber, String itemNumber, Integer scheduleNumber);
 }

@@ -11,5 +11,5 @@ public interface PoDetailMapper {
       @Param("poNumber") String poNumber,
       @Param("lineNumber") String lineNumber,
       @Param("itemNumber") String itemNumber,
-      @Param("scheduleNumber") String scheduleNumber);
+      @Param("scheduleNumber") Integer scheduleNumber);
 }

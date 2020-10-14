@@ -17,7 +17,6 @@ public class RcptShipPoModel implements Serializable {
   private String whId;
 	private String shipmentNumber;
 	private String poNumber;
-	private String actionCode;
 	private BigDecimal casesExpected;
   private BigDecimal casesReceived;
 	private Instant openToBuyDate;
