@@ -14,4 +14,13 @@ public enum ActionCodeEnum {
   ACTION_CODE_ADD_AFTER_DELETE("AddAfterDelete");
 
   private String code;
+
+  public static ActionCodeEnum getByCode(String code){
+    for (ActionCodeEnum value : ActionCodeEnum.values()) {
+      if(value.getCode().equals(code)){
+        return value;
+      }
+    }
+    return null;
+  }
 }

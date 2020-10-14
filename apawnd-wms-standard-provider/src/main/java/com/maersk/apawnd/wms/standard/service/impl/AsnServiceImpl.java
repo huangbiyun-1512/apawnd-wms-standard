@@ -426,7 +426,13 @@ public class AsnServiceImpl implements AsnService {
       AsnDto asnDto) {
     if (Objects.nonNull(asnDto) && Objects.nonNull(asnDto.getRcptShipPoList())) {
       asnDto.getRcptShipPoList().stream().forEach(rcptShipPoDto -> {
-        switch (ActionCodeEnum.valueOf(rcptShipPoDto.getActionCode())) {
+        ActionCodeEnum actionCodeEnum =
+            ActionCodeEnum.getByCode(rcptShipPoDto.getActionCode());
+        if (Objects.isNull(actionCodeEnum)) {
+          throw new BusinessException(
+              errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0010));
+        }
+        switch (actionCodeEnum) {
           case ACTION_CODE_CREATE:
             insertRcptPoRefers(asnDto, rcptShipPoDto);
             break;
@@ -471,7 +477,13 @@ public class AsnServiceImpl implements AsnService {
       RcptShipPoDto rcptShipPoDto) {
     if (Objects.nonNull(rcptShipPoDto) && Objects.nonNull(rcptShipPoDto.getRcptShipPoDetailList())) {
       rcptShipPoDto.getRcptShipPoDetailList().stream().forEach(rcptShipPoDetailDto -> {
-        switch (ActionCodeEnum.valueOf(rcptShipPoDetailDto.getActionCode())) {
+        ActionCodeEnum actionCodeEnum =
+            ActionCodeEnum.getByCode(rcptShipPoDetailDto.getActionCode());
+        if (Objects.isNull(actionCodeEnum)) {
+          throw new BusinessException(
+              errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0010));
+        }
+        switch (actionCodeEnum) {
           case ACTION_CODE_CREATE:
             insertRcptPoDetailRefers(asnDto, rcptShipPoDto, rcptShipPoDetailDto);
             break;
