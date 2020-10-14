@@ -428,6 +428,10 @@ public class AsnServiceImpl implements AsnService {
     return true;
   }
 
+  private boolean isRcptPoExisted(String whId, String poNumber) {
+    return true;
+  }
+
   private List<RcptShipModel> retrieveShipmentByWhIdAndShipmentNumber(
       String whId, String shipmentNumber) {
     return rcptShipMapper.selectByWhIdAndShipmentNumber(whId, shipmentNumber);

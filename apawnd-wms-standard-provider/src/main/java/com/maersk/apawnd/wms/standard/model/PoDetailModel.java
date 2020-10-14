@@ -1,0 +1,108 @@
+package com.maersk.apawnd.wms.standard.model;
+
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.apache.ibatis.type.Alias;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.time.Instant;
+
+@Data
+@NoArgsConstructor
+@Alias("PoDetailModel")
+public class PoDetailModel implements Serializable {
+
+  private String poNumber;
+  private String lineNumber;
+  private String itemNumber;
+  private Integer scheduleNumber;
+  private BigDecimal qty;
+  private String vendorItemNumber;
+  private Instant deliveryDate;
+  private String originator;
+  private String whId;
+  private String orderUom;
+  private String specialProcessing;
+  private String locationId;
+  private String distroProcess;
+  private Integer vasProfileId;
+  private Long storedAttributeId;
+  private BigDecimal orderCbm;
+  private BigDecimal orderWeight;
+  private Integer pcs;
+  private String marks;
+  private String hsCode;
+  private String packingType;
+  private String color;
+  private String size;
+  private BigDecimal pieces;
+  private String customerReferenceNo;
+  private String customerArticleNumber;
+  private String customerCaseNumber;
+  private String newFlag;
+  private String customsSheetNo;
+  private Instant customsSheetNoEnterDt;
+  private Instant earliestDeliveryDate;
+  private Instant earliestShipDate;
+  private Instant latestDeliveryDate;
+  private Instant latestShipDate;
+  private BigDecimal costPrice;
+  private String supplierSo;
+  private String genericField1;
+  private String genericField2;
+  private String genericField3;
+  private BigDecimal edcPrice;
+  private String inspection;
+  private String shipmentFlow;
+  private String productType;
+  private String filler;
+  private String palletDimension;
+  private String maxLoad;
+  private String palletLoad;
+  private String lotNumber;
+  private String customsSheetCode;
+  private String originCustomsCode;
+  private String o5;
+  private String p3;
+  private String l5;
+  private String o4;
+  private String o2;
+  private String l4;
+  private String priceUsd;
+  private String amountUsd;
+  private String composition;
+  private String tariffNumber;
+  private String remark;
+  private String genericField4;
+  private String genericField5;
+  private String genericField6;
+  private String genericField7;
+  private String genericField8;
+  private String genericField9;
+  private String genericField10;
+  private BigDecimal confirmBonded;
+  private BigDecimal confirmFree;
+  private BigDecimal confirmKit;
+  private BigDecimal bondedQty;
+  private BigDecimal freeQty;
+  private BigDecimal asnQty;
+  private BigDecimal preBondedQty;
+  private BigDecimal preFreeQty;
+  private String isRekitItem;
+  private Instant genericDate1;
+  private Instant genericDate2;
+  private Instant genericDate3;
+  private BigDecimal genericQty1;
+  private BigDecimal genericQty2;
+  private BigDecimal genericQty3;
+  private String genericField11;
+  private String genericField12;
+  private String genericField13;
+  private String genericField14;
+  private String genericField15;
+  private String createdBy;
+  private String updatedBy;
+  private Instant createDate;
+  private Instant updatedDate;
+}
