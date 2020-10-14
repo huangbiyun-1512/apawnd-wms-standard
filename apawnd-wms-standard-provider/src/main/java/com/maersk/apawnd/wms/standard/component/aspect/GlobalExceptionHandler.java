@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
         e.getBindingResult().getFieldErrors().stream()
             .map(x -> errorUtil.buildError(
                 HttpStatus.BAD_REQUEST.value(),
-                MessageConstant.MESSAGE_KEY_E01_0003,
+                MessageConstant.MESSAGE_KEY_E01_01_0003,
                 x.toString()))
             .collect(toList());
     return buildResponseEntity(errors);
@@ -58,7 +58,7 @@ public class GlobalExceptionHandler {
     log.error("MethodArgumentTypeMismatchException: ", e);
     return buildResponseEntity(
         errorUtil.build400ErrorList(
-            MessageConstant.MESSAGE_KEY_E01_0003, e.getMessage()));
+            MessageConstant.MESSAGE_KEY_E01_01_0003, e.getMessage()));
   }
 
   @ExceptionHandler(HttpClientErrorException.class)
@@ -66,7 +66,7 @@ public class GlobalExceptionHandler {
     log.error("HttpClientErrorException: ", e);
     return buildResponseEntity(
         errorUtil.build400ErrorList(
-            MessageConstant.MESSAGE_KEY_E01_0001, e.getMessage()));
+            MessageConstant.MESSAGE_KEY_E01_01_0001, e.getMessage()));
   }
 
   @ExceptionHandler(HttpServerErrorException.class)
@@ -74,7 +74,7 @@ public class GlobalExceptionHandler {
     log.error("HttpServerErrorException: ", e);
     return buildResponseEntity(
         errorUtil.build500ErrorList(
-            MessageConstant.MESSAGE_KEY_E01_0001, e.getMessage()));
+            MessageConstant.MESSAGE_KEY_E01_01_0001, e.getMessage()));
   }
 
   @ExceptionHandler(ResourceAccessException.class)
@@ -82,7 +82,7 @@ public class GlobalExceptionHandler {
     log.error("ResourceAccessException: ", e);
     return buildResponseEntity(
         errorUtil.build500ErrorList(
-            MessageConstant.MESSAGE_KEY_E01_0001, e.getMessage()));
+            MessageConstant.MESSAGE_KEY_E01_01_0001, e.getMessage()));
   }
 
   @ExceptionHandler(TimeoutException.class)
@@ -90,7 +90,7 @@ public class GlobalExceptionHandler {
     log.error("TimeoutException: ", e);
     return buildResponseEntity(
         errorUtil.build408ErrorList(
-            MessageConstant.MESSAGE_KEY_E01_0002, e.getMessage()));
+            MessageConstant.MESSAGE_KEY_E01_01_0002, e.getMessage()));
   }
 
   @ExceptionHandler(ExecutionException.class)
@@ -104,7 +104,7 @@ public class GlobalExceptionHandler {
     log.error("Exception: ", e);
     return buildResponseEntity(
         errorUtil.build500ErrorList(
-            MessageConstant.MESSAGE_KEY_E01_0001, e.getMessage()));
+            MessageConstant.MESSAGE_KEY_E01_01_0001, e.getMessage()));
   }
 
   private ResponseEntity buildResponseEntity(Iterable<? extends BaseErrorDto> errors) {
