@@ -14,6 +14,7 @@ import java.util.List;
 @Alias("RcptShipPoDetailModel")
 public class RcptShipPoDetailModel implements Serializable {
 
+  private String actionCode;
   private String whId;
 	private String shipmentNumber;
   private String poNumber;

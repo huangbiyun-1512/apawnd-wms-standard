@@ -3,6 +3,7 @@ package com.maersk.apawnd.wms.standard.service.impl;
 import com.maersk.apawnd.commons.component.exception.BusinessException;
 import com.maersk.apawnd.commons.component.util.ErrorUtil;
 import com.maersk.apawnd.wms.standard.component.constant.MessageConstant;
+import com.maersk.apawnd.wms.standard.component.enums.ActionCodeEnum;
 import com.maersk.apawnd.wms.standard.component.enums.ReceiptStatusEnum;
 import com.maersk.apawnd.wms.standard.component.enums.ShipmentStatusEnum;
 import com.maersk.apawnd.wms.standard.dto.AsnDto;
@@ -19,6 +20,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,8 +111,8 @@ public class AsnServiceImpl implements AsnService {
         rcptShipCartonDetailModelList);
 
     int result = rcptShipMapper.update(rcptShipModel);
-    rcptShipPoMapper.bulkUpdate(rcptShipPoModelList);
-    rcptShipPoDetailMapper.bulkUpdate(rcptShipPoDetailModelList);
+    updateRcptShipPoByActionCode(rcptShipPoModelList);
+    updateRcptShipPoDetailByActionCode(rcptShipPoDetailModelList);
     rcptShipCartonDetailMapper.bulkUpdate(rcptShipCartonDetailModelList);
 
     return result;
@@ -242,6 +244,7 @@ public class AsnServiceImpl implements AsnService {
     rcptShipPoModel.setWhId(asnDto.getWhId());
     rcptShipPoModel.setShipmentNumber(asnDto.getShipmentNumber());
     rcptShipPoModel.setPoNumber(rcptShipPoDto.getPoNumber());
+    rcptShipPoModel.setActionCode(rcptShipPoDto.getActionCode());
     rcptShipPoModel.setCasesExpected(rcptShipPoDto.getCasesExpected());
     rcptShipPoModel.setCasesReceived(rcptShipPoDto.getCasesReceived());
     rcptShipPoModel.setOpenToBuyDate(rcptShipPoDto.getOpenToBuyDate());
@@ -259,6 +262,7 @@ public class AsnServiceImpl implements AsnService {
     rcptShipPoDetailModel.setPoNumber(rcptShipPoDto.getPoNumber());
     rcptShipPoDetailModel.setLineNumber(rcptShipPoDetailDto.getLineNumber());
     rcptShipPoDetailModel.setItemNumber(rcptShipPoDetailDto.getItemNumber());
+    rcptShipPoDetailModel.setActionCode(rcptShipPoDetailDto.getActionCode());
     if (Objects.isNull(rcptShipPoDetailDto.getScheduleNumber())) {
       rcptShipPoDetailDto.setScheduleNumber(1);
     }
@@ -268,7 +272,15 @@ public class AsnServiceImpl implements AsnService {
     rcptShipPoDetailModel.setReconciledDate(rcptShipPoDetailDto.getReconciledDate());
     rcptShipPoDetailModel.setStatus(rcptShipPoDetailDto.getStatus());
     rcptShipPoDetailModel.setShipmentLineNumber(rcptShipPoDetailDto.getShipmentLineNumber());
-    rcptShipPoDetailModel.setWeight(rcptShipPoDetailDto.getWeight());
+    if (Objects.nonNull(rcptShipPoDetailDto.getWeight())) {
+      if (Objects.isNull(rcptShipPoDetailDto.getExpectedQty()) ||
+          BigDecimal.ZERO.compareTo(rcptShipPoDetailDto.getExpectedQty()) == 0) {
+        rcptShipPoDetailModel.setWeight(rcptShipPoDetailDto.getExpectedQty());
+      } else {
+        rcptShipPoDetailModel.setWeight(
+            rcptShipPoDetailDto.getWeight().divide(rcptShipPoDetailDto.getExpectedQty()));
+      }
+    }
     rcptShipPoDetailModel.setCalculationUom(rcptShipPoDetailDto.getCalculationUom());
     rcptShipPoDetailModel.setPropertyMark(rcptShipPoDetailDto.getPropertyMark());
     rcptShipPoDetailModel.setGenericField1(rcptShipPoDetailDto.getGenericField1());
@@ -419,5 +431,111 @@ public class AsnServiceImpl implements AsnService {
   private List<RcptShipModel> retrieveShipmentByWhIdAndShipmentNumber(
       String whId, String shipmentNumber) {
     return rcptShipMapper.selectByWhIdAndShipmentNumber(whId, shipmentNumber);
+  }
+
+  private void updateRcptShipPoByActionCode(List<RcptShipPoModel> rcptShipPoModelList) {
+    if (Objects.nonNull(rcptShipPoModelList)) {
+      rcptShipPoModelList.stream().forEach( rcptShipPoModel -> {
+        switch (ActionCodeEnum.valueOf(rcptShipPoModel.getActionCode())) {
+          case ACTION_CODE_CREATE:
+            rcptShipPoMapper.insert(rcptShipPoModel);
+            break;
+          case ACTION_CODE_UPDATE:
+            rcptShipPoMapper.update(rcptShipPoModel);
+            break;
+          case ACTION_CODE_DELETE:
+            rcptShipPoMapper.deleteByWhIdAndShipmentNumberAndPoNumber(
+                rcptShipPoModel.getWhId(),
+                rcptShipPoModel.getShipmentNumber(),
+                rcptShipPoModel.getPoNumber());
+            break;
+          case ACTION_CODE_MERGE:
+            if (0 == rcptShipPoMapper.selectCountByWhIdAndShipmentNumberAndPoNumber(
+                rcptShipPoModel.getWhId(),
+                rcptShipPoModel.getShipmentNumber(),
+                rcptShipPoModel.getPoNumber())) {
+              rcptShipPoMapper.insert(rcptShipPoModel);
+            } else {
+              rcptShipPoMapper.update(rcptShipPoModel);
+            }
+            break;
+          case ACTION_CODE_EXIST_BY_PASS:
+            if (0 == rcptShipPoMapper.selectCountByWhIdAndShipmentNumberAndPoNumber(
+                rcptShipPoModel.getWhId(),
+                rcptShipPoModel.getShipmentNumber(),
+                rcptShipPoModel.getPoNumber())) {
+              rcptShipPoMapper.insert(rcptShipPoModel);
+            }
+            break;
+          case ACTION_CODE_ADD_AFTER_DELETE:
+            rcptShipPoMapper.deleteByWhIdAndShipmentNumberAndPoNumber(
+                rcptShipPoModel.getWhId(),
+                rcptShipPoModel.getShipmentNumber(),
+                rcptShipPoModel.getPoNumber());
+            rcptShipPoMapper.insert(rcptShipPoModel);
+            break;
+          default:
+            throw new BusinessException(
+                errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0010));
+        }
+      });
+    }
+  }
+
+  private void updateRcptShipPoDetailByActionCode(List<RcptShipPoDetailModel> rcptShipPoDetailModelList) {
+    if (Objects.nonNull(rcptShipPoDetailModelList)) {
+      rcptShipPoDetailModelList.stream().forEach( rcptShipPoDetailModel -> {
+        switch (ActionCodeEnum.valueOf(rcptShipPoDetailModel.getActionCode())) {
+          case ACTION_CODE_CREATE:
+            rcptShipPoDetailMapper.insert(rcptShipPoDetailModel);
+            break;
+          case ACTION_CODE_UPDATE:
+            rcptShipPoDetailMapper.update(rcptShipPoDetailModel);
+            break;
+          case ACTION_CODE_DELETE:
+            rcptShipPoDetailMapper.deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber(
+                rcptShipPoDetailModel.getWhId(),
+                rcptShipPoDetailModel.getShipmentNumber(),
+                rcptShipPoDetailModel.getPoNumber(),
+                rcptShipPoDetailModel.getLineNumber(),
+                rcptShipPoDetailModel.getItemNumber());
+            break;
+          case ACTION_CODE_MERGE:
+            if (0 == rcptShipPoDetailMapper.selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber(
+                rcptShipPoDetailModel.getWhId(),
+                rcptShipPoDetailModel.getShipmentNumber(),
+                rcptShipPoDetailModel.getPoNumber(),
+                rcptShipPoDetailModel.getLineNumber(),
+                rcptShipPoDetailModel.getItemNumber())) {
+              rcptShipPoDetailMapper.insert(rcptShipPoDetailModel);
+            } else {
+              rcptShipPoDetailMapper.update(rcptShipPoDetailModel);
+            }
+            break;
+          case ACTION_CODE_EXIST_BY_PASS:
+            if (0 == rcptShipPoDetailMapper.selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber(
+                rcptShipPoDetailModel.getWhId(),
+                rcptShipPoDetailModel.getShipmentNumber(),
+                rcptShipPoDetailModel.getPoNumber(),
+                rcptShipPoDetailModel.getLineNumber(),
+                rcptShipPoDetailModel.getItemNumber())) {
+              rcptShipPoDetailMapper.insert(rcptShipPoDetailModel);
+            }
+            break;
+          case ACTION_CODE_ADD_AFTER_DELETE:
+            rcptShipPoDetailMapper.deleteByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumber(
+                rcptShipPoDetailModel.getWhId(),
+                rcptShipPoDetailModel.getShipmentNumber(),
+                rcptShipPoDetailModel.getPoNumber(),
+                rcptShipPoDetailModel.getLineNumber(),
+                rcptShipPoDetailModel.getItemNumber());
+            rcptShipPoDetailMapper.insert(rcptShipPoDetailModel);
+            break;
+          default:
+            throw new BusinessException(
+                errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_0010));
+        }
+      });
+    }
   }
 }

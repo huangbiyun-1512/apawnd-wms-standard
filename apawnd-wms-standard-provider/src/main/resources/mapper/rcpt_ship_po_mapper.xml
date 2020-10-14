@@ -34,6 +34,18 @@
     </foreach>
   </insert>
 
+  <update id="update" parameterType="RcptShipPoModel">
+    UPDATE t_rcpt_ship_po
+    SET
+    cases_expected = #{item.casesExpected, jdbcType=FLOAT},
+    cases_received = #{item.casesReceived, jdbcType=FLOAT},
+    open_to_buy_date = #{item.openToBuyDate}
+    WHERE
+    wh_id = #{item.whId}
+    AND shipment_number = #{item.shipmentNumber}
+    AND po_number = #{item.poNumber}
+  </update>
+
   <update id="bulkUpdate" parameterType="java.util.List">
     <foreach collection="list" item="item" separator=";">
       UPDATE t_rcpt_ship_po
@@ -51,4 +63,12 @@
   <delete id="deleteByWhIdAndShipmentNumber">
     DELETE FROM t_rcpt_ship_po WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber}
   </delete>
+
+  <delete id="deleteByWhIdAndShipmentNumberAndPoNumber">
+    DELETE FROM t_rcpt_ship_po WHERE wh_id = #{whId} AND shipment_number = #{shipmentNumber} AND po_number = #{poNumber}
+  </delete>
+
+  <select id="selectCountByWhIdAndShipmentNumberAndPoNumber" resultType="java.lang.Integer">
+    SELECT COUNT(*) FROM t_rcpt_ship_po t WHERE t.wh_id = #{whId} AND t.shipment_number = #{shipmentNumber} AND t.po_number = #{poNumber}
+  </select>
 </mapper>

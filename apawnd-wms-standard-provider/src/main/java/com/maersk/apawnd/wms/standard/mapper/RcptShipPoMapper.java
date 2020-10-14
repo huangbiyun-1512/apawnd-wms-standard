@@ -13,10 +13,22 @@ public interface RcptShipPoMapper {
 
   void bulkInsert(List<RcptShipPoModel> rcptShipPoModelList);
 
+  int update(RcptShipPoModel rcptShipPoModel);
+
   int bulkUpdate(List<RcptShipPoModel> rcptShipPoModelList);
 
   int deleteByWhIdAndShipmentNumber(
       @Param("whId") String whId,
       @Param("shipmentNumber") String shipmentNumber);
+
+  int deleteByWhIdAndShipmentNumberAndPoNumber(
+      @Param("whId") String whId,
+      @Param("shipmentNumber") String shipmentNumber,
+      @Param("poNumber") String poNumber);
+
+  int selectCountByWhIdAndShipmentNumberAndPoNumber(
+      @Param("whId") String whId,
+      @Param("shipmentNumber") String shipmentNumber,
+      @Param("poNumber") String poNumber);
 
 }
