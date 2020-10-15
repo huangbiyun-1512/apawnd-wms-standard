@@ -148,7 +148,7 @@ public class AsnServiceImpl implements AsnService {
         carrierService.retrieveByCarrierName(asnDto.getCarrierName());
     if (Objects.isNull(carrierModels) || carrierModels.size() == 0) {
       throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0008));
+          errorUtil.build409ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0008));
     }
     rcptShipModel.setCarrierId(carrierModels.get(0).getCarrierId());
     rcptShipModel.setTrailerNumber(asnDto.getTrailerNumber());
