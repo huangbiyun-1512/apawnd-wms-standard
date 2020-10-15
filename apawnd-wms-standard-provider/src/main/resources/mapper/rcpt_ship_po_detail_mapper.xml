@@ -209,12 +209,12 @@
   </delete>
 
   <select id="selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber" resultType="java.lang.Integer">
-    DELETE FROM t_rcpt_ship_carton_detail
-    WHERE wh_id = #{whId}
-    AND shipment_number = #{shipmentNumber}
-    AND po_number = #{poNumber}
-    AND line_number = #{lineNumber}
-    AND item_number = #{itemNumber}
-    AND schedule_number = #{scheduleNumber}
+    SELECT COUNT(*) FROM t_rcpt_ship_carton_detail t
+    WHERE t.wh_id = #{whId}
+    AND t.shipment_number = #{shipmentNumber}
+    AND t.po_number = #{poNumber}
+    AND t.line_number = #{lineNumber}
+    AND t.item_number = #{itemNumber}
+    AND t.schedule_number = #{scheduleNumber}
   </select>
 </mapper>
