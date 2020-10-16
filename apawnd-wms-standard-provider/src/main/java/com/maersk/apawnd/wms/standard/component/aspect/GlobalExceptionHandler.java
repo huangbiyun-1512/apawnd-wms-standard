@@ -43,7 +43,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(ConstraintViolationException.class)
   public ResponseEntity handleConstraintViolationException(ConstraintViolationException e) {
-    log.error("MethodArgumentNotValidException: ", e);
+    log.error("ConstraintViolationException: ", e);
     List<BaseErrorDto> errors =
         e.getConstraintViolations().stream()
             .map(x -> errorUtil.buildError(
