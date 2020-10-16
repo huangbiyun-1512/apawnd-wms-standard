@@ -10,8 +10,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
-
 @Slf4j
 @RestController
 @RequestMapping("api/v1/dc")
@@ -36,7 +34,7 @@ public class DcGenericApiController implements DcGenericApi {
   @Override
   @PostMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity<BaseResponseDto> createAsn(@Valid @RequestBody AsnDto asnDto) {
+  public ResponseEntity<BaseResponseDto> createAsn(@RequestBody AsnDto asnDto) {
     asnService.create(asnDto);
     return ResponseEntity
         .created(null)
@@ -46,7 +44,7 @@ public class DcGenericApiController implements DcGenericApi {
   @Override
   @PatchMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity updateAsn(@Valid @RequestBody AsnDto asnDto) {
+  public ResponseEntity updateAsn(@RequestBody AsnDto asnDto) {
     asnService.update(asnDto);
     return ResponseEntity.ok(BaseResponseDto.ok());
   }
@@ -54,7 +52,7 @@ public class DcGenericApiController implements DcGenericApi {
   @Override
   @PutMapping(value = "/asn", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity<BaseResponseDto> mergeAsn(@Valid @RequestBody AsnDto asnDto) {
+  public ResponseEntity<BaseResponseDto> mergeAsn(@RequestBody AsnDto asnDto) {
     if (asnService.merge(asnDto)) {
       return ResponseEntity.ok(BaseResponseDto.ok());
     }
@@ -77,7 +75,7 @@ public class DcGenericApiController implements DcGenericApi {
   @Override
   @PutMapping(value = "/asn/replace", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity<BaseResponseDto> replaceAsn(@Valid @RequestBody AsnDto asnDto) {
+  public ResponseEntity<BaseResponseDto> replaceAsn(@RequestBody AsnDto asnDto) {
     asnService.replace(asnDto);
     return ResponseEntity
         .created(null)

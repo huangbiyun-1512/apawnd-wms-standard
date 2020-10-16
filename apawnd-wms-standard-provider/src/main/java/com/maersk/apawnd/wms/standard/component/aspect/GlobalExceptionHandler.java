@@ -17,6 +17,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.ExecutionException;
@@ -38,6 +39,19 @@ public class GlobalExceptionHandler {
   public ResponseEntity handleBusinessException(BusinessException e) {
     log.error("BusinessException: ", e);
     return buildResponseEntity(e.getErrors());
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  public ResponseEntity handleConstraintViolationException(ConstraintViolationException e) {
+    log.error("MethodArgumentNotValidException: ", e);
+    List<BaseErrorDto> errors =
+        e.getConstraintViolations().stream()
+            .map(x -> errorUtil.buildError(
+                HttpStatus.BAD_REQUEST.value(),
+                MessageConstant.MESSAGE_KEY_E01_01_0003,
+                x.toString()))
+            .collect(toList());
+    return buildResponseEntity(errors);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
