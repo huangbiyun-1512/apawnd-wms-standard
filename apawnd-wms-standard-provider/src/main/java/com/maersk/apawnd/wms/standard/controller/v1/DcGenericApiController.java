@@ -77,8 +77,6 @@ public class DcGenericApiController implements DcGenericApi {
   @AutoLogging
   public ResponseEntity<BaseResponseDto> replaceAsn(@RequestBody AsnDto asnDto) {
     asnService.replace(asnDto);
-    return ResponseEntity
-        .created(null)
-        .body(BaseResponseDto.ok());
+    return ResponseEntity.ok(BaseResponseDto.ok());
   }
 }

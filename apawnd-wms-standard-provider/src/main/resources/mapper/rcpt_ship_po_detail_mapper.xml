@@ -209,7 +209,7 @@
   </delete>
 
   <select id="selectCountByWhIdAndShipmentNumberAndPoNumberAndLineNumberAndItemNumberAndScheduleNumber" resultType="java.lang.Integer">
-    SELECT COUNT(*) FROM t_rcpt_ship_carton_detail t
+    SELECT COUNT(*) FROM t_rcpt_ship_po_detail t
     WHERE t.wh_id = #{whId}
     AND t.shipment_number = #{shipmentNumber}
     AND t.po_number = #{poNumber}
