@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maersk.apawnd.wms.standard.mapper.EsbRcptMsgPreambleMapper">
+    <resultMap id="esbRcptMsgPreambleModel" type="EsbRcptMsgPreambleModel">
+        <result column="hjs_parent_id" property="hjsParentId"/>
+        <result column="hjs_node_id" property="hjsNodeId"/>
+        <result column="hjs_sequence" property="hjsSequence"/>
+        <result column="hjs_error_number" property="hjsErrorNumber"/>
+        <result column="hjs_error_message" property="hjsErrorMessage"/>
+        <result column="MSGPREAMBLE" property="msgPreamble"/>
+        <result column="SENDER" property="sender"/>
+        <result column="RECEIVER" property="receiver"/>
+        <result column="MESSAGE_TYPE" property="messageType"/>
+        <result column="MESSAGE_VERSION" property="messageVersion"/>
+        <result column="MESSAGE_DATE" property="messageDate"/>
+        <result column="MESSAGE_ID" property="messageId"/>
+    </resultMap>
+
+    <select id="selectByHjsParentId" resultMap="esbRcptMsgPreambleModel">
+        SELECT * FROM tbl_ESB_RCPT_MSGPREAMBLE t WHERE t.hjs_parent_id = #{hjsParentId}
+    </select>
+</mapper>

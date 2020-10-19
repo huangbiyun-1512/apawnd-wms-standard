@@ -27,7 +27,7 @@ public class CarrierServiceImpl implements CarrierService {
       unless = "#result == null || #result.size() == 0")
   @Override
   @Transactional
-  public List<CarrierModel> retrieveByCarrierName(String carrierName) {
+  public List<CarrierModel> retrieve(String carrierName) {
     List<CarrierModel> carrierModels = carrierMapper.selectByCarrierName(carrierName);
 
     return carrierModels;

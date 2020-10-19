@@ -9,7 +9,7 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @Alias("EsbRcptSerialNoModel")
-public class EsbRcptSerialNo implements Serializable {
+public class EsbRcptSerialNoModel implements Serializable {
 
   private String hjsParentId;
   private String hjsNodeId;

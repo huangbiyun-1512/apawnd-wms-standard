@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface EventQueueService {
 
-  List<EventQueueApiModel> retrieveByEventName(String eventName);
+  List<EventQueueApiModel> retrieve(String eventName);
 
   int updateStatusStartByFifoSequence(Long fifoSequence);
 

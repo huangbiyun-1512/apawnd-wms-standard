@@ -26,7 +26,7 @@ public class EventQueueServiceImpl implements EventQueueService {
 
   @Override
   @Transactional
-  public List<EventQueueApiModel> retrieveByEventName(String eventName) {
+  public List<EventQueueApiModel> retrieve(String eventName) {
     return eventQueueApiMapper.selectByEventName(
         eventName,
         eventQueueServiceConfig.getBatchQueueCount(),

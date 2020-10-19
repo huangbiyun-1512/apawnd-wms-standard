@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface CarrierService {
 
-  List<CarrierModel> retrieveByCarrierName(String carrierName);
+  List<CarrierModel> retrieve(String carrierName);
 }

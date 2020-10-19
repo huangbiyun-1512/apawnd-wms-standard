@@ -145,7 +145,7 @@ public class AsnServiceImpl implements AsnService {
     rcptShipModel.setWhId(asnDto.getWhId());
     rcptShipModel.setShipmentNumber(asnDto.getShipmentNumber());
     List<CarrierModel> carrierModels =
-        carrierService.retrieveByCarrierName(asnDto.getCarrierName());
+        carrierService.retrieve(asnDto.getCarrierName());
     if (Objects.isNull(carrierModels) || carrierModels.size() == 0) {
       throw new BusinessException(
           errorUtil.build409ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0008));

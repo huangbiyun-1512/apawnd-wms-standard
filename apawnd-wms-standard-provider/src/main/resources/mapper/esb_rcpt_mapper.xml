@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maersk.apawnd.wms.standard.mapper.EsbRcptMapper">
+    <resultMap id="esbRcptModel" type="EsbRcptModel">
+        <result column="hjs_node_id" property="hjsNodeId"/>
+        <result column="hjs_sequence" property="hjsSequence"/>
+        <result column="hjs_error_number" property="hjsErrorNumber"/>
+        <result column="hjs_error_message" property="hjsErrorMessage"/>
+    </resultMap>
+
+    <select id="selectByHjsNodeId" resultMap="esbRcptModel">
+        SELECT * FROM tbl_ESB_RCPT t WHERE t.hjs_node_id = #{hjsNodeId}
+    </select>
+</mapper>

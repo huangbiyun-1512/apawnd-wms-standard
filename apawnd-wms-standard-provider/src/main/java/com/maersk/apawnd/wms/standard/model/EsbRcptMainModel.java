@@ -61,6 +61,8 @@ public class EsbRcptMainModel implements Serializable {
   private String genericField1;
   private String genericField2;
   private String genericField3;
+  private String qtyExpected;
+  private String proNumber;
   private String genericField4;
   private String genericField5;
   private String genericField6;
@@ -81,6 +83,7 @@ public class EsbRcptMainModel implements Serializable {
   private String receiptDatetime;
   private String expirationDate;
   private String damagedReasonCode;
+  private String reasonGenericField1;
   private String processAttribute1;
   private String processAttribute2;
   private String processAttribute3;

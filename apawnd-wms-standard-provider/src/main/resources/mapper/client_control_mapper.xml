@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maersk.apawnd.wms.standard.mapper.ClientControlMapper">
+    <resultMap id="clientControlModel" type="ClientControlModel">
+        <result column="client_control_id" property="clientControlId"/>
+        <result column="wh_id" property="whId"/>
+        <result column="client_code" property="clientCode"/>
+        <result column="control_type" property="controlType"/>
+        <result column="description" property="description"/>
+        <result column="next_value" property="nextValue"/>
+        <result column="allow_edit" property="allowEdit"/>
+        <result column="c1" property="c1"/>
+        <result column="c2" property="c2"/>
+        <result column="f1" property="f1"/>
+        <result column="c3" property="c3"/>
+        <result column="c4" property="c4"/>
+    </resultMap>
+
+    <select id="selectByWhIdAndClientCodeAndControlTypeAndC1" resultMap="clientControlModel">
+        SELECT * FROM tbl_client_control t
+        WHERE t.wh_id = #{whId}
+        AND t.client_code = #{clientCode}
+        AND t.control_type = #{controlType}
+        AND t.c1 = #{c1}
+    </select>
+</mapper>
