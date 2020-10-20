@@ -165,7 +165,7 @@ public class AsnServiceImpl implements AsnService {
     }
     rcptShipModel.setDateShipped(asnDto.getDateShipped());
     if (StringUtils.isEmpty(asnDto.getStatus())) {
-      asnDto.setStatus(ShipmentStatusEnum.SHIPMENT_STATUS_CODE_OPEN.getCode());
+      asnDto.setStatus(ShipmentStatusEnum.SHIPMENT_STATUS_OPEN.getCode());
     }
     rcptShipModel.setStatus(asnDto.getStatus());
     rcptShipModel.setComments(asnDto.getComments());
@@ -391,7 +391,7 @@ public class AsnServiceImpl implements AsnService {
 
   private boolean isShipmentClosed(RcptShipModel rcptShipModel) {
     if (ShipmentStatusEnum
-        .SHIPMENT_STATUS_CODE_CLOSED
+        .SHIPMENT_STATUS_CLOSED
         .getCode().equals(rcptShipModel.getStatus())) {
       return true;
     }
@@ -400,7 +400,7 @@ public class AsnServiceImpl implements AsnService {
 
   private boolean isShipmentReconciled(RcptShipModel rcptShipModel) {
     if (ShipmentStatusEnum
-        .SHIPMENT_STATUS_CODE_RECONCILED
+        .SHIPMENT_STATUS_RECONCILED
         .getCode().equals(rcptShipModel.getStatus())) {
       return true;
     }
@@ -410,7 +410,7 @@ public class AsnServiceImpl implements AsnService {
   private boolean isShipmentUnderReceiving(String whId, String shipmentNumber) {
     int count =
         receiptMapper.selectCountByWhIdAndShipmentNumberAndStatus(
-            whId, shipmentNumber, ReceiptStatusEnum.RECEIPT_STATUS_CODE_OPEN.getCode());
+            whId, shipmentNumber, ReceiptStatusEnum.RECEIPT_STATUS_OPEN.getCode());
     if (count == 0) {
       return false;
     }

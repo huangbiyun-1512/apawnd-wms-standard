@@ -21,4 +21,9 @@ public interface EventQueueApiMapper {
 
   int updateStatusFinishedByFifoSequence(
       @Param("fifoSequence") Long fifoSequence);
+
+  int updateErrorByFifoSequence(
+      @Param("fifoSequence") Long fifoSequence,
+      @Param("status") String status,
+      @Param("message") String message);
 }

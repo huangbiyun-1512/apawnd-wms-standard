@@ -48,4 +48,14 @@
     WHERE
         t.fifo_sequence = #{fifoSequence}
   </update>
+
+
+  <update id="updateErrorByFifoSequence">
+    UPDATE t_event_queue_API t
+    SET t.retry_count = t.retry_count + 1,
+        t.status = #{status},
+        t.error_msg = #{message}
+    WHERE
+        t.fifo_sequence = #{fifoSequence}
+  </update>
 </mapper>

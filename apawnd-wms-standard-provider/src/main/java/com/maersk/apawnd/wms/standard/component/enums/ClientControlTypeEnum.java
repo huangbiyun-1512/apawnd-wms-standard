@@ -5,9 +5,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum ReceiptStatusEnum {
-  RECEIPT_STATUS_OPEN("O", "Open");
+public enum ClientControlTypeEnum {
+  CLIENT_CONTROL_TYPE_EDI_TRIGGER("EDITrigger");
 
   private String code;
-  private String name;
 }

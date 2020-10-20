@@ -1,6 +1,5 @@
 package com.maersk.apawnd.wms.standard.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maersk.apawnd.wms.standard.dto.EsbRcptDto;
 import com.maersk.apawnd.wms.standard.dto.EsbRcptMainDto;
@@ -32,25 +31,16 @@ public class EsbReceptionServiceImpl implements EsbReceptionService {
   private final EsbRcptMainMapper esbRcptMainMapper;
   private final EsbRcptMsgPreambleMapper esbRcptMsgPreambleMapper;
   private final EsbRcptSerialNoMapper esbRcptSerialNoMapper;
-  private final ObjectMapper objectMapper;
 
   public EsbReceptionServiceImpl(
       EsbRcptMapper esbRcptMapper,
       EsbRcptMainMapper esbRcptMainMapper,
       EsbRcptMsgPreambleMapper esbRcptMsgPreambleMapper,
-      EsbRcptSerialNoMapper esbRcptSerialNoMapper,
-      ObjectMapper objectMapper) {
+      EsbRcptSerialNoMapper esbRcptSerialNoMapper) {
     this.esbRcptMapper = esbRcptMapper;
     this.esbRcptMainMapper = esbRcptMainMapper;
     this.esbRcptMsgPreambleMapper = esbRcptMsgPreambleMapper;
     this.esbRcptSerialNoMapper = esbRcptSerialNoMapper;
-    this.objectMapper = objectMapper;
-  }
-
-  @Override
-  @Transactional
-  public String generateJsonGrnAck(String eventData) throws JsonProcessingException {
-    return objectMapper.writeValueAsString(generateGrnAck(eventData));
   }
 
   @Override

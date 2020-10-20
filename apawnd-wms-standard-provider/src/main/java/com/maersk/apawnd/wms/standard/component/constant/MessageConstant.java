@@ -19,5 +19,8 @@ public class MessageConstant {
   public static final String MESSAGE_KEY_E01_01_0011 = "E01-01-0011";
   public static final String MESSAGE_KEY_E01_01_0012 = "E01-01-0012";
   public static final String MESSAGE_KEY_E01_01_0013 = "E01-01-0013";
+  public static final String MESSAGE_KEY_E01_01_0101 = "E01-01-0101";
+  public static final String MESSAGE_KEY_E01_01_0102 = "E01-01-0102";
+  public static final String MESSAGE_KEY_E01_01_0103 = "E01-01-0103";
 
 }

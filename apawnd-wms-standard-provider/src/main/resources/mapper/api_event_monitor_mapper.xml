@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.maersk.apawnd.wms.standard.mapper.ApiEventMonitorMapper">
+  <resultMap id="apiEventMonitorModel" type="ApiEventMonitorModel">
+    <result column="monitor_id" property="monitorId"/>
+    <result column="wh_id" property="whId"/>
+    <result column="client_code" property="clientCode"/>
+    <result column="event_name" property="eventName"/>
+    <result column="current_status" property="currentStatus"/>
+    <result column="set_status" property="setStatus"/>
+    <result column="process_id" property="processId"/>
+    <result column="next_run_time" property="nextRunTime"/>
+    <result column="last_run_time" property="lastRunTime"/>
+    <result column="last_run_result" property="lastRunResult"/>
+    <result column="application_folder" property="applicationFolder"/>
+    <result column="priority" property="priority"/>
+  </resultMap>
+
+  <update id="updateMonitorEndByEventName">
+    UPDATE tbl_api_event_monitor t
+    SET t.process_id = NULL,
+        t.current_status = 'Stopped',
+        t.next_run_time = DATEADD(S, #{jobSleepSecond}, GETDATE()),
+        t.last_run_result = #{lastRunResult}
+    WHERE
+        t.event_name = #{eventName}
+  </update>
+</mapper>

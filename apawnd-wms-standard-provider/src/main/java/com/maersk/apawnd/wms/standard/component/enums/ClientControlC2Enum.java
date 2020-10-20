@@ -5,9 +5,8 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum ReceiptStatusEnum {
-  RECEIPT_STATUS_OPEN("O", "Open");
+public enum ClientControlC2Enum {
+  CLIENT_CONTROL_C2_WEB_API("WebAPI");
 
   private String code;
-  private String name;
 }

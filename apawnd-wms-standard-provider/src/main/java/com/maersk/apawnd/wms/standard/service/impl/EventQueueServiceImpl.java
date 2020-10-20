@@ -1,5 +1,6 @@
 package com.maersk.apawnd.wms.standard.service.impl;
 
+import com.maersk.apawnd.wms.standard.mapper.ApiEventMonitorMapper;
 import com.maersk.apawnd.wms.standard.mapper.EventQueueApiMapper;
 import com.maersk.apawnd.wms.standard.model.EventQueueApiModel;
 import com.maersk.apawnd.wms.standard.service.EventQueueService;
@@ -16,12 +17,15 @@ public class EventQueueServiceImpl implements EventQueueService {
 
   private final EventQueueServiceConfig eventQueueServiceConfig;
   private final EventQueueApiMapper eventQueueApiMapper;
+  private final ApiEventMonitorMapper apiEventMonitorMapper;
 
   public EventQueueServiceImpl(
       EventQueueServiceConfig eventQueueServiceConfig,
-      EventQueueApiMapper eventQueueApiMapper) {
+      EventQueueApiMapper eventQueueApiMapper,
+      ApiEventMonitorMapper apiEventMonitorMapper) {
     this.eventQueueServiceConfig = eventQueueServiceConfig;
     this.eventQueueApiMapper = eventQueueApiMapper;
+    this.apiEventMonitorMapper = apiEventMonitorMapper;
   }
 
   @Override
@@ -45,5 +49,20 @@ public class EventQueueServiceImpl implements EventQueueService {
   @Transactional
   public int updateStatusFinishedByFifoSequence(Long fifoSequence) {
     return eventQueueApiMapper.updateStatusFinishedByFifoSequence(fifoSequence);
+  }
+
+  @Override
+  @Transactional
+  public int updateErrorByFifoSequence(EventQueueApiModel eventQueueApiModel, String message) {
+    boolean isMailAlert = eventQueueServiceConfig.isMailAlert() &&
+        eventQueueApiModel.getRetryCount() >= eventQueueServiceConfig.getRetryCount() - 1;
+    String status = isMailAlert ? "MAIL" : "ERROR";
+
+    return eventQueueApiMapper.updateErrorByFifoSequence(eventQueueApiModel.getFifoSequence(), status, message);
+  }
+
+  @Override
+  public int updateMonitorEndByEventName(String eventName, String message) {
+    return apiEventMonitorMapper.updateMonitorEndByEventName(eventName, message, eventQueueServiceConfig.getJobSleepSecond());
   }
 }

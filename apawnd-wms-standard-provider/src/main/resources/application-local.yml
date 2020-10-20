@@ -29,3 +29,5 @@ biz:
       event-type: WS
       retry-count: 3
       timeout-retry-minute: 5
+      mail-alert: false
+      job-sleep-second: 20

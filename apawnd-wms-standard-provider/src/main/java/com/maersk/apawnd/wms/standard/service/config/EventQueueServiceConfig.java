@@ -19,4 +19,10 @@ public class EventQueueServiceConfig {
 
   @Value("${biz.event-queue-service.config.timeout-retry-minute}")
   private Integer timeoutRetryMinute;
+
+  @Value("${biz.event-queue-service.config.mail-alert}")
+  private boolean mailAlert;
+
+  @Value("${biz.event-queue-service.config.job-sleep-second}")
+  private Integer jobSleepSecond;
 }
