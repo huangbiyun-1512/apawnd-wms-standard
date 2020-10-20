@@ -18,7 +18,7 @@
   </resultMap>
 
   <select id="selectByEventName" resultMap="eventQueueApiModel">
-    SELECT TOP #{batchQueueCount} * FROM t_event_queue_API t
+    SELECT TOP (#{batchQueueCount}) * FROM t_event_queue_API t
     WHERE
         t.event_name = #{eventName}
     AND t.event_type = #{eventType}
@@ -34,28 +34,28 @@
   </select>
 
   <update id="updateStatusStartByFifoSequence">
-    UPDATE t_event_queue_API t
-    SET t.date_started = GETDATE(),
-        t.status = 'START'
+    UPDATE t_event_queue_API
+    SET date_started = GETDATE(),
+        status = 'START'
     WHERE
-        t.fifo_sequence = #{fifoSequence}
+        fifo_sequence = #{fifoSequence}
   </update>
 
   <update id="updateStatusFinishedByFifoSequence">
-    UPDATE t_event_queue_API t
-    SET t.date_finished = GETDATE(),
-        t.status = 'DONE'
+    UPDATE t_event_queue_API
+    SET date_finished = GETDATE(),
+        status = 'DONE'
     WHERE
-        t.fifo_sequence = #{fifoSequence}
+        fifo_sequence = #{fifoSequence}
   </update>
 
 
   <update id="updateErrorByFifoSequence">
-    UPDATE t_event_queue_API t
-    SET t.retry_count = t.retry_count + 1,
-        t.status = #{status},
-        t.error_msg = #{message}
+    UPDATE t_event_queue_API
+    SET retry_count = retry_count + 1,
+        status = #{status},
+        error_msg = #{message}
     WHERE
-        t.fifo_sequence = #{fifoSequence}
+        fifo_sequence = #{fifoSequence}
   </update>
 </mapper>

@@ -17,12 +17,12 @@
   </resultMap>
 
   <update id="updateMonitorEndByEventName">
-    UPDATE tbl_api_event_monitor t
-    SET t.process_id = NULL,
-        t.current_status = 'Stopped',
-        t.next_run_time = DATEADD(S, #{jobSleepSecond}, GETDATE()),
-        t.last_run_result = #{lastRunResult}
+    UPDATE tbl_api_event_monitor
+    SET process_id = NULL,
+        current_status = 'Stopped',
+        next_run_time = DATEADD(S, #{jobSleepSecond}, GETDATE()),
+        last_run_result = #{lastRunResult}
     WHERE
-        t.event_name = #{eventName}
+        event_name = #{eventName}
   </update>
 </mapper>

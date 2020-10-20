@@ -17,7 +17,7 @@ public class OutboundScheduler {
     this.outboundService = outboundService;
   }
 
-  @Scheduled(cron = "0/5 * * * * ?")
+//  @Scheduled(cron = "0/5 * * * * ?")
   @AutoLogging
   public void sendGrnAck() {
     outboundService.sendAck(EventNameEnum.EVENT_NAME_SCA_RCPT.getCode());
