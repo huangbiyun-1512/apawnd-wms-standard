@@ -13,7 +13,6 @@ public interface EventQueueService {
   int updateErrorByFifoSequence(EventQueueApiModel eventQueueApiModel, String message);
   List<ApiEventMonitorModel> retrieveEventMonitorByCurrentStatus(String currentStatus);
   int updateMonitorStartByMonitorId(String processId, Integer monitorId);
-  int updateMonitorRunningByEventName(String eventName);
   int updateMonitorEndByEventName(String eventName, String lastRunResult);
   int initMonitorStatus(String currentStatus);
 }

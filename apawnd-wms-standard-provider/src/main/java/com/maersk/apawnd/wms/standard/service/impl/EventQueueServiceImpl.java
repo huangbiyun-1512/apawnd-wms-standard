@@ -77,12 +77,6 @@ public class EventQueueServiceImpl implements EventQueueService {
 
   @Override
   @Transactional
-  public int updateMonitorRunningByEventName(String eventName) {
-    return apiEventMonitorMapper.updateMonitorRunningByEventName(eventName);
-  }
-
-  @Override
-  @Transactional
   public int updateMonitorEndByEventName(String eventName, String lastRunResult) {
     return apiEventMonitorMapper.updateMonitorEndByEventName(
         eventName, lastRunResult, eventQueueServiceConfig.getJobSleepSecond());
