@@ -2,6 +2,7 @@ package com.maersk.apawnd.wms.standard.service.impl;
 
 import com.maersk.apawnd.wms.standard.mapper.ApiEventMonitorMapper;
 import com.maersk.apawnd.wms.standard.mapper.EventQueueApiMapper;
+import com.maersk.apawnd.wms.standard.model.ApiEventMonitorModel;
 import com.maersk.apawnd.wms.standard.model.EventQueueApiModel;
 import com.maersk.apawnd.wms.standard.service.EventQueueService;
 import com.maersk.apawnd.wms.standard.service.config.EventQueueServiceConfig;
@@ -58,11 +59,38 @@ public class EventQueueServiceImpl implements EventQueueService {
         eventQueueApiModel.getRetryCount() >= eventQueueServiceConfig.getRetryCount() - 1;
     String status = isMailAlert ? "MAIL" : "ERROR";
 
-    return eventQueueApiMapper.updateErrorByFifoSequence(eventQueueApiModel.getFifoSequence(), status, message);
+    return eventQueueApiMapper.updateErrorByFifoSequence(
+        eventQueueApiModel.getFifoSequence(), status, message);
   }
 
   @Override
-  public int updateMonitorEndByEventName(String eventName, String message) {
-    return apiEventMonitorMapper.updateMonitorEndByEventName(eventName, message, eventQueueServiceConfig.getJobSleepSecond());
+  @Transactional
+  public List<ApiEventMonitorModel> retrieveEventMonitorByCurrentStatus(String currentStatus) {
+    return apiEventMonitorMapper.selectByCurrentStatus(currentStatus);
+  }
+
+  @Override
+  @Transactional
+  public int updateMonitorStartByMonitorId(String processId, Integer monitorId) {
+    return apiEventMonitorMapper.updateMonitorStartByMonitorId(processId, monitorId);
+  }
+
+  @Override
+  @Transactional
+  public int updateMonitorRunningByEventName(String eventName) {
+    return apiEventMonitorMapper.updateMonitorRunningByEventName(eventName);
+  }
+
+  @Override
+  @Transactional
+  public int updateMonitorEndByEventName(String eventName, String lastRunResult) {
+    return apiEventMonitorMapper.updateMonitorEndByEventName(
+        eventName, lastRunResult, eventQueueServiceConfig.getJobSleepSecond());
+  }
+
+  @Override
+  @Transactional
+  public int initMonitorStatus(String currentStatus) {
+    return apiEventMonitorMapper.updateMonitorInitiation(currentStatus);
   }
 }

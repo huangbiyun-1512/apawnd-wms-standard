@@ -16,6 +16,23 @@
     <result column="priority" property="priority"/>
   </resultMap>
 
+  <update id="updateMonitorStartByMonitorId">
+    UPDATE tbl_api_event_monitor
+    SET process_id = #{processId},
+        current_status = 'Running',
+        last_run_time = GETDATE()
+    WHERE
+        monitor_id = #{monitorId}
+  </update>
+
+  <update id="updateMonitorRunningByEventName">
+    UPDATE tbl_api_event_monitor
+    SET current_status = 'Running',
+        last_run_time = GETDATE()
+    WHERE
+        event_name = #{eventName}
+  </update>
+
   <update id="updateMonitorEndByEventName">
     UPDATE tbl_api_event_monitor
     SET process_id = NULL,
@@ -25,4 +42,23 @@
     WHERE
         event_name = #{eventName}
   </update>
+
+  <update id="updateMonitorInitiation">
+    UPDATE tbl_api_event_monitor
+    SET current_status = #{currentStatus},
+        last_run_result = NULL
+    WHERE
+        set_status = 'Y'
+    AND (
+        ((ISNULL(current_status, '') = '' OR current_status = 'Stopped') AND (next_run_time IS NULL OR next_run_time <![CDATA[<=]]> GETDATE()))
+        OR
+        (DATEDIFF(minute, next_run_time, GETDATE()) <![CDATA[>]]> 10)
+    )
+  </update>
+
+  <select id="selectByCurrentStatus" resultMap="apiEventMonitorModel">
+      SELECT * FROM tbl_api_event_monitor t
+      WHERE t.current_status = #{currentStatus}
+      ORDER BY t.priority desc
+  </select>
 </mapper>

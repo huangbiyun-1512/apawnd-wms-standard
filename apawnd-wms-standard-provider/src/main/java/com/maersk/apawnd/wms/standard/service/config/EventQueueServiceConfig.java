@@ -25,4 +25,7 @@ public class EventQueueServiceConfig {
 
   @Value("${biz.event-queue-service.config.job-sleep-second}")
   private Integer jobSleepSecond;
+
+  @Value("${biz.event-queue-service.config.job-skip-second}")
+  private Integer jobSkipSecond;
 }

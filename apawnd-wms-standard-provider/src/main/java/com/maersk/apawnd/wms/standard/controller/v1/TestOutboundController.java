@@ -1,12 +1,9 @@
 package com.maersk.apawnd.wms.standard.controller.v1;
 
 import com.maersk.apawnd.commons.component.annotation.AutoLogging;
-import com.maersk.apawnd.commons.component.dto.BaseResponseDto;
-import com.maersk.apawnd.wms.standard.dto.AsnDto;
 import com.maersk.apawnd.wms.standard.service.OutboundService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Slf4j
@@ -22,10 +19,8 @@ public class TestOutboundController {
 
   @GetMapping(value = "/ack", produces = MediaType.APPLICATION_JSON_VALUE)
   @AutoLogging
-  public ResponseEntity sendGrn(
-      @RequestParam(name = "event_name") String eventName) {
-    outboundService.sendAck(eventName);
-    return ResponseEntity.ok(BaseResponseDto.ok());
+  public void execute() {
+    outboundService.execute();
   }
 
   @PostMapping(value = "/ack", produces = MediaType.APPLICATION_JSON_VALUE)

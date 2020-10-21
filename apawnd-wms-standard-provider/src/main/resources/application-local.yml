@@ -31,3 +31,4 @@ biz:
       timeout-retry-minute: 5
       mail-alert: false
       job-sleep-second: 20
+      job-skip-second: 10
