@@ -8,8 +8,8 @@ import com.maersk.apawnd.wms.standard.component.constant.MessageConstant;
 import com.maersk.apawnd.wms.standard.component.enums.ClientControlC2Enum;
 import com.maersk.apawnd.wms.standard.component.enums.ClientControlTypeEnum;
 import com.maersk.apawnd.wms.standard.component.enums.EventNameEnum;
-import com.maersk.apawnd.wms.standard.dto.EsbRcptDto;
 import com.maersk.apawnd.wms.standard.dto.EsbRcptMainDto;
+import com.maersk.apawnd.wms.standard.dto.GrnAckDto;
 import com.maersk.apawnd.wms.standard.model.ApiEventMonitorModel;
 import com.maersk.apawnd.wms.standard.model.ClientControlModel;
 import com.maersk.apawnd.wms.standard.model.EventQueueApiModel;
@@ -143,18 +143,20 @@ public class OutboundServiceImpl implements OutboundService {
   }
 
   private void sendGrnAck(EventQueueApiModel eventQueueApiModel) throws JsonProcessingException {
-    EsbRcptDto esbRcptDto =
+    GrnAckDto grnAckDto =
         esbReceptionService.generateGrnAck(eventQueueApiModel.getEventData());
 
-    if (Objects.nonNull(esbRcptDto) &&
-        Objects.nonNull(esbRcptDto.getEsbRcptMainDtoList()) &&
-        esbRcptDto.getEsbRcptMainDtoList().size() > 0) {
+    if (Objects.nonNull(grnAckDto) &&
+        Objects.nonNull(grnAckDto.getEsbRcptDto()) &&
+        Objects.nonNull(grnAckDto.getEsbRcptDto().getEsbRcptMainCollectionDto()) &&
+        Objects.nonNull(grnAckDto.getEsbRcptDto().getEsbRcptMainCollectionDto().getEsbRcptMainDtoList()) &&
+        grnAckDto.getEsbRcptDto().getEsbRcptMainCollectionDto().getEsbRcptMainDtoList().size() > 0) {
       EsbRcptMainDto esbRcptMainDto =
-          esbRcptDto.getEsbRcptMainDtoList().get(0);
+          grnAckDto.getEsbRcptDto().getEsbRcptMainCollectionDto().getEsbRcptMainDtoList().get(0);
       postAckRequest(eventQueueApiModel.getEventName(),
           esbRcptMainDto.getWhId(),
           esbRcptMainDto.getClientCode(),
-          esbRcptDto);
+          grnAckDto);
     }
   }
 

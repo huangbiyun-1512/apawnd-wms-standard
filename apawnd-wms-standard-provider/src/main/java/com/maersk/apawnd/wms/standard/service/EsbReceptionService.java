@@ -1,8 +1,8 @@
 package com.maersk.apawnd.wms.standard.service;
 
-import com.maersk.apawnd.wms.standard.dto.EsbRcptDto;
+import com.maersk.apawnd.wms.standard.dto.GrnAckDto;
 
 public interface EsbReceptionService {
 
-  EsbRcptDto generateGrnAck(String eventData);
+  GrnAckDto generateGrnAck(String eventData);
 }

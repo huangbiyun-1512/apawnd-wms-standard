@@ -1,10 +1,6 @@
 package com.maersk.apawnd.wms.standard.service.impl;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.maersk.apawnd.wms.standard.dto.EsbRcptDto;
-import com.maersk.apawnd.wms.standard.dto.EsbRcptMainDto;
-import com.maersk.apawnd.wms.standard.dto.EsbRcptMsgPreambleDto;
-import com.maersk.apawnd.wms.standard.dto.EsbRcptSerialNoDto;
+import com.maersk.apawnd.wms.standard.dto.*;
 import com.maersk.apawnd.wms.standard.mapper.EsbRcptMainMapper;
 import com.maersk.apawnd.wms.standard.mapper.EsbRcptMapper;
 import com.maersk.apawnd.wms.standard.mapper.EsbRcptMsgPreambleMapper;
@@ -45,12 +41,14 @@ public class EsbReceptionServiceImpl implements EsbReceptionService {
 
   @Override
   @Transactional
-  public EsbRcptDto generateGrnAck(String eventData) {
+  public GrnAckDto generateGrnAck(String eventData) {
+    GrnAckDto grnAckDto = new GrnAckDto();
     EsbRcptDto esbRcptDto = composeEsbRcptDto(eventData);
-    esbRcptDto.setEsbRcptMsgPreambleDtoList(composeEsbRcptMsgPreambleDto(eventData));
-    esbRcptDto.setEsbRcptMainDtoList(composeEsbRcptMainDto(eventData));
+    grnAckDto.setEsbRcptDto(esbRcptDto);
+    esbRcptDto.setEsbRcptMsgPreambleCollectionDto(composeEsbRcptMsgPreambleDto(eventData));
+    esbRcptDto.setEsbRcptMainCollectionDto(composeEsbRcptMainDto(eventData));
 
-    return esbRcptDto;
+    return grnAckDto;
   }
 
   private EsbRcptDto composeEsbRcptDto(String eventData) {
@@ -62,20 +60,23 @@ public class EsbReceptionServiceImpl implements EsbReceptionService {
     return esbRcptDto;
   }
 
-  private List<EsbRcptMsgPreambleDto> composeEsbRcptMsgPreambleDto(String eventData) {
-    List<EsbRcptMsgPreambleDto> esbRcptMsgPreambleDtoList = new ArrayList<>();
+  private EsbRcptMsgPreambleCollectionDto composeEsbRcptMsgPreambleDto(String eventData) {
+    EsbRcptMsgPreambleCollectionDto esbRcptMsgPreambleCollectionDto =
+        new EsbRcptMsgPreambleCollectionDto();
     List<EsbRcptMsgPreambleModel> esbRcptMsgPreambleModelList =
         esbRcptMsgPreambleMapper.selectByHjsParentId(eventData);
     if (Objects.nonNull(esbRcptMsgPreambleModelList) && esbRcptMsgPreambleModelList.size() > 0) {
       EsbRcptMsgPreambleDto esbRcptMsgPreambleDto = new EsbRcptMsgPreambleDto();
       BeanUtils.copyProperties(esbRcptMsgPreambleModelList.get(0), esbRcptMsgPreambleDto);
-      esbRcptMsgPreambleDtoList.add(esbRcptMsgPreambleDto);
+      esbRcptMsgPreambleCollectionDto.setEsbRcptMsgPreambleDto(esbRcptMsgPreambleDto);
     }
-    return esbRcptMsgPreambleDtoList;
+    return esbRcptMsgPreambleCollectionDto;
   }
 
-  private List<EsbRcptMainDto> composeEsbRcptMainDto(String eventData) {
+  private EsbRcptMainCollectionDto composeEsbRcptMainDto(String eventData) {
+    EsbRcptMainCollectionDto esbRcptMainCollectionDto = new EsbRcptMainCollectionDto();
     List<EsbRcptMainDto> esbRcptMainDtoList = new ArrayList<>();
+    esbRcptMainCollectionDto.setEsbRcptMainDtoList(esbRcptMainDtoList);
 
     List<EsbRcptMainModel> esbRcptMainModelList = esbRcptMainMapper.selectByHjsParentId(eventData);
     List<EsbRcptSerialNoModel> esbRcptSerialNoModelList = esbRcptSerialNoMapper.selectByHjsParentId(eventData);
@@ -87,7 +88,9 @@ public class EsbReceptionServiceImpl implements EsbReceptionService {
         esbRcptMainDtoList.add(esbRcptMainDto);
 
         if (Objects.nonNull(esbRcptSerialNoModelList) && esbRcptSerialNoModelList.size() > 0) {
+          EsbRcptSerialNoCollectionDto esbRcptSerialNoCollectionDto = new EsbRcptSerialNoCollectionDto();
           List<EsbRcptSerialNoDto> esbRcptSerialNoDtoList = new ArrayList<>();
+          esbRcptSerialNoCollectionDto.setEsbRcptSerialNoDtoList(esbRcptSerialNoDtoList);
           esbRcptSerialNoModelList.stream().filter(
               esbRcptSerialNoModel -> esbRcptMainDto.getHjsNodeId().equals(esbRcptSerialNoModel.getHjsParentId())
           ).forEach(esbRcptSerialNoModel -> {
@@ -95,11 +98,11 @@ public class EsbReceptionServiceImpl implements EsbReceptionService {
             BeanUtils.copyProperties(esbRcptSerialNoModel, esbRcptSerialNoDto);
             esbRcptSerialNoDtoList.add(esbRcptSerialNoDto);
           });
-          esbRcptMainDto.setEsbRcptSerialNoDtoList(esbRcptSerialNoDtoList);
+          esbRcptMainDto.setEsbRcptSerialNoCollectionDto(esbRcptSerialNoCollectionDto);
         }
       });
     }
 
-    return esbRcptMainDtoList;
+    return esbRcptMainCollectionDto;
   }
 }

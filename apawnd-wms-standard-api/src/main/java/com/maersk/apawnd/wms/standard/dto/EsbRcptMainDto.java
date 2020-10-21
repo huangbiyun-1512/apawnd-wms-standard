@@ -1,114 +1,215 @@
 package com.maersk.apawnd.wms.standard.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 public class EsbRcptMainDto implements Serializable {
 
+  @JsonProperty(value = "hjsParentId")
   private String hjsParentId;
+  @JsonProperty(value = "hjsNodeId")
   private String hjsNodeId;
+  @JsonProperty(value = "hjsSequence")
   private Integer hjsSequence;
+  @JsonProperty(value = "hjsErrorNumber")
   private Integer hjsErrorNumber;
+  @JsonProperty(value = "hjsErrorMessage")
   private String hjsErrorMessage;
+  @JsonProperty(value = "receiptId")
   private String receiptId;
+  @JsonProperty(value = "messageId")
   private String messageId;
+  @JsonProperty(value = "poNumber")
   private String poNumber;
+  @JsonProperty(value = "displayPoNumber")
   private String displayPoNumber;
+  @JsonProperty(value = "receiptDate")
   private String receiptDate;
+  @JsonProperty(value = "carrierScacCode")
   private String carrierScacCode;
+  @JsonProperty(value = "status")
   private String status;
+  @JsonProperty(value = "itemNumber")
   private String itemNumber;
+  @JsonProperty(value = "displayItemNumber")
   private String displayItemNumber;
+  @JsonProperty(value = "lotNumber")
   private String lotNumber;
+  @JsonProperty(value = "lineNumber")
   private String lineNumber;
+  @JsonProperty(value = "scheduleNumber")
   private String scheduleNumber;
+  @JsonProperty(value = "qtyReceived")
   private String qtyReceived;
+  @JsonProperty(value = "qtyDamaged")
   private String qtyDamaged;
+  @JsonProperty(value = "huId")
   private String huId;
+  @JsonProperty(value = "packingSlipNo")
   private String packingSlipNo;
+  @JsonProperty(value = "forkId")
   private String forkId;
+  @JsonProperty(value = "uom")
   private String uom;
+  @JsonProperty(value = "shipmentNumber")
   private String shipmentNumber;
+  @JsonProperty(value = "whId")
   private String whId;
+  @JsonProperty(value = "clientCode")
   private String clientCode;
+  @JsonProperty(value = "genericAttribute1")
   private String genericAttribute1;
+  @JsonProperty(value = "genericAttribute2")
   private String genericAttribute2;
+  @JsonProperty(value = "genericAttribute3")
   private String genericAttribute3;
+  @JsonProperty(value = "genericAttribute4")
   private String genericAttribute4;
+  @JsonProperty(value = "genericAttribute5")
   private String genericAttribute5;
+  @JsonProperty(value = "genericAttribute6")
   private String genericAttribute6;
+  @JsonProperty(value = "genericAttribute7")
   private String genericAttribute7;
+  @JsonProperty(value = "genericAttribute8")
   private String genericAttribute8;
+  @JsonProperty(value = "genericAttribute9")
   private String genericAttribute9;
+  @JsonProperty(value = "genericAttribute10")
   private String genericAttribute10;
+  @JsonProperty(value = "genericAttribute11")
   private String genericAttribute11;
+  @JsonProperty(value = "vendorCode")
   private String vendorCode;
+  @JsonProperty(value = "cartonReceived")
   private String cartonReceived;
+  @JsonProperty(value = "volumeReceived")
   private String volumeReceived;
+  @JsonProperty(value = "weightReceived")
   private String weightReceived;
+  @JsonProperty(value = "shipmentLineNumber")
   private String shipmentLineNumber;
+  @JsonProperty(value = "altItemNumber")
   private String altItemNumber;
+  @JsonProperty(value = "subInventory")
   private String subInventory;
+  @JsonProperty(value = "scannedUpc")
   private String scannedUpc;
+  @JsonProperty(value = "pomType")
   private String pomType;
+  @JsonProperty(value = "pomMode")
   private String pomMode;
+  @JsonProperty(value = "genericField1")
   private String genericField1;
+  @JsonProperty(value = "genericField2")
   private String genericField2;
+  @JsonProperty(value = "genericField3")
   private String genericField3;
+  @JsonProperty(value = "qtyExpected")
   private String qtyExpected;
+  @JsonProperty(value = "proNumber")
   private String proNumber;
+  @JsonProperty(value = "genericField4")
   private String genericField4;
+  @JsonProperty(value = "genericField5")
   private String genericField5;
+  @JsonProperty(value = "genericField6")
   private String genericField6;
+  @JsonProperty(value = "genericField7")
   private String genericField7;
+  @JsonProperty(value = "genericField8")
   private String genericField8;
+  @JsonProperty(value = "genericField9")
   private String genericField9;
+  @JsonProperty(value = "genericField10")
   private String genericField10;
+  @JsonProperty(value = "genericField11")
   private String genericField11;
+  @JsonProperty(value = "genericField12")
   private String genericField12;
+  @JsonProperty(value = "genericField13")
   private String genericField13;
+  @JsonProperty(value = "genericField14")
   private String genericField14;
+  @JsonProperty(value = "genericField15")
   private String genericField15;
+  @JsonProperty(value = "trailerNumber")
   private String trailerNumber;
+  @JsonProperty(value = "prepackQty")
   private Integer prePackQty;
+  @JsonProperty(value = "itemDescription")
   private String itemDescription;
+  @JsonProperty(value = "clientOrderNumber")
   private String clientOrderNumber;
+  @JsonProperty(value = "FileSeq")
   private String fileSeq;
+  @JsonProperty(value = "ReceiptDatetime")
   private String receiptDatetime;
+  @JsonProperty(value = "ExpirationDate")
   private String expirationDate;
+  @JsonProperty(value = "DamagedReasonCode")
   private String damagedReasonCode;
+  @JsonProperty(value = "ReasonGenericField1")
   private String reasonGenericField1;
+  @JsonProperty(value = "ProcAttr1")
   private String processAttribute1;
+  @JsonProperty(value = "ProcAttr2")
   private String processAttribute2;
+  @JsonProperty(value = "ProcAttr3")
   private String processAttribute3;
+  @JsonProperty(value = "ProcAttr4")
   private String processAttribute4;
+  @JsonProperty(value = "ProcAttr5")
   private String processAttribute5;
+  @JsonProperty(value = "ProcAttr6")
   private String processAttribute6;
+  @JsonProperty(value = "ProcAttr7")
   private String processAttribute7;
+  @JsonProperty(value = "ProcAttr8")
   private String processAttribute8;
+  @JsonProperty(value = "ProcAttr9")
   private String processAttribute9;
+  @JsonProperty(value = "ProcAttr10")
   private String processAttribute10;
+  @JsonProperty(value = "ProcAttr11")
   private String processAttribute11;
+  @JsonProperty(value = "GenericField16")
   private String genericField16;
+  @JsonProperty(value = "GenericField17")
   private String genericField17;
+  @JsonProperty(value = "GenericField18")
   private String genericField18;
+  @JsonProperty(value = "GenericField19")
   private String genericField19;
+  @JsonProperty(value = "GenericField20")
   private String genericField20;
+  @JsonProperty(value = "GenericField21")
   private String genericField21;
+  @JsonProperty(value = "GenericField22")
   private String genericField22;
+  @JsonProperty(value = "GenericField23")
   private String genericField23;
+  @JsonProperty(value = "GenericField24")
   private String genericField24;
+  @JsonProperty(value = "GenericField25")
   private String genericField25;
+  @JsonProperty(value = "GenericField26")
   private String genericField26;
+  @JsonProperty(value = "GenericField27")
   private String genericField27;
+  @JsonProperty(value = "GenericField28")
   private String genericField28;
+  @JsonProperty(value = "GenericField29")
   private String genericField29;
+  @JsonProperty(value = "GenericField30")
   private String genericField30;
+  @JsonProperty(value = "HuId2")
   private String huId2;
-  private List<EsbRcptSerialNoDto> esbRcptSerialNoDtoList;
+  @JsonProperty(value = "RCPT_SERIALNO_COLLECTION")
+  private EsbRcptSerialNoCollectionDto esbRcptSerialNoCollectionDto;
 }
