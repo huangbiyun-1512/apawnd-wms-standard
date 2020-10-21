@@ -1,5 +1,7 @@
 package com.maersk.apawnd.wms.standard.service.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maersk.apawnd.commons.component.exception.BusinessException;
 import com.maersk.apawnd.commons.component.util.ErrorUtil;
 import com.maersk.apawnd.wms.standard.component.constant.MessageConstant;
@@ -35,18 +37,21 @@ public class OutboundServiceImpl implements OutboundService {
   private final ClientControlService clientControlService;
   private final ErrorUtil errorUtil;
   private final RestTemplate restTemplate;
+  private final ObjectMapper objectMapper;
 
   public OutboundServiceImpl(
       EventQueueService eventQueueService,
       EsbReceptionService esbReceptionService,
       ClientControlService clientControlService,
       ErrorUtil errorUtil,
-      RestTemplate restTemplate) {
+      RestTemplate restTemplate,
+      ObjectMapper objectMapper) {
     this.eventQueueService = eventQueueService;
     this.esbReceptionService = esbReceptionService;
     this.clientControlService = clientControlService;
     this.errorUtil = errorUtil;
     this.restTemplate = restTemplate;
+    this.objectMapper = objectMapper;
   }
 
   @Override
@@ -80,7 +85,7 @@ public class OutboundServiceImpl implements OutboundService {
     }
   }
 
-  private void sendGrnAck(EventQueueApiModel eventQueueApiModel) {
+  private void sendGrnAck(EventQueueApiModel eventQueueApiModel) throws JsonProcessingException {
     EsbRcptDto esbRcptDto =
         esbReceptionService.generateGrnAck(eventQueueApiModel.getEventData());
 
@@ -100,7 +105,7 @@ public class OutboundServiceImpl implements OutboundService {
       String eventName,
       String whId,
       String clientCode,
-      Object payload) {
+      Object payload) throws JsonProcessingException {
     String url = retrieveAckUrl(whId, clientCode, eventName);
     HttpEntity httpEntity = composeAckRequest(payload);
     restTemplate.postForEntity(url, httpEntity, String.class);
@@ -132,10 +137,10 @@ public class OutboundServiceImpl implements OutboundService {
     return url;
   }
 
-  private HttpEntity composeAckRequest(Object payload) {
+  private HttpEntity composeAckRequest(Object payload) throws JsonProcessingException {
     HttpHeaders headers = new HttpHeaders();
     headers.setContentType(MediaType.APPLICATION_JSON);
-    HttpEntity httpEntity = new HttpEntity<>(payload, headers);
+    HttpEntity httpEntity = new HttpEntity<>(objectMapper.writeValueAsBytes(payload), headers);
     return httpEntity;
   }
 }
