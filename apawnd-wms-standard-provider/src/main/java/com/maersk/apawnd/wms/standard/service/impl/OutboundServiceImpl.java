@@ -3,7 +3,7 @@ package com.maersk.apawnd.wms.standard.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.maersk.apawnd.commons.component.exception.BusinessException;
-import com.maersk.apawnd.commons.component.util.ErrorUtil;
+import com.maersk.apawnd.commons.component.util.MessageUtil;
 import com.maersk.apawnd.wms.standard.component.constant.MessageConstant;
 import com.maersk.apawnd.wms.standard.component.enums.ClientControlC2Enum;
 import com.maersk.apawnd.wms.standard.component.enums.ClientControlTypeEnum;
@@ -42,7 +42,7 @@ public class OutboundServiceImpl implements OutboundService {
   private final EventQueueServiceConfig eventQueueServiceConfig;
   private final EsbReceptionService esbReceptionService;
   private final ClientControlService clientControlService;
-  private final ErrorUtil errorUtil;
+  private final MessageUtil messageUtil;
   private final RestTemplate restTemplate;
   private final ObjectMapper objectMapper;
 
@@ -53,14 +53,14 @@ public class OutboundServiceImpl implements OutboundService {
       EventQueueServiceConfig eventQueueServiceConfig,
       EsbReceptionService esbReceptionService,
       ClientControlService clientControlService,
-      ErrorUtil errorUtil,
+      MessageUtil messageUtil,
       RestTemplate restTemplate,
       ObjectMapper objectMapper) {
     this.eventQueueService = eventQueueService;
     this.eventQueueServiceConfig = eventQueueServiceConfig;
     this.esbReceptionService = esbReceptionService;
     this.clientControlService = clientControlService;
-    this.errorUtil = errorUtil;
+    this.messageUtil = messageUtil;
     this.restTemplate = restTemplate;
     this.objectMapper = objectMapper;
   }
@@ -93,24 +93,19 @@ public class OutboundServiceImpl implements OutboundService {
 
             if (interval > eventQueueServiceConfig.getJobSkipSecond()) {
               monitorExecuteTimeMap.put(eventName, startTime);
-              sendAck(eventName, threadId);
               eventQueueService.updateMonitorStartByMonitorId(
                   threadId, apiEventMonitorModel.getMonitorId());
+              sendAck(eventName, threadId);
             } else {
               eventQueueService.updateMonitorEndByEventName(eventName, "Skip");
             }
-
           } else {
             eventQueueService.updateMonitorEndByEventName(eventName, "Configuration Error");
           }
         } catch(Exception e) {
-          log.error(e.getMessage(), e);
           eventQueueService.updateMonitorEndByEventName(
               apiEventMonitorModel.getEventName(), e.getMessage());
         }
-
-        eventQueueService.updateMonitorEndByEventName(
-            apiEventMonitorModel.getEventName(), "Success");
       });
     }
   }
@@ -120,24 +115,41 @@ public class OutboundServiceImpl implements OutboundService {
       List<EventQueueApiModel> eventQueueApiModelList = eventQueueService.retrieve(eventName);
 
       if (Objects.nonNull(eventQueueApiModelList) && eventQueueApiModelList.size() > 0) {
-        eventQueueApiModelList.stream().forEach(eventQueueApiModel -> {
+        for (EventQueueApiModel eventQueueApiModel : eventQueueApiModelList) {
+
           try {
             eventQueueService.updateStatusStartByFifoSequence(eventQueueApiModel.getFifoSequence());
             EventNameEnum eventNameEnum = EventNameEnum.getByCode(eventQueueApiModel.getEventName());
+
+            if (Objects.isNull(eventNameEnum)) {
+              throw new BusinessException(
+                  messageUtil.getDetail(
+                      MessageConstant.MESSAGE_KEY_E01_01_0101,
+                      new Object[] {eventQueueApiModel.getEventName()}));
+            }
+
             switch (eventNameEnum) {
               case EVENT_NAME_SCA_RCPT:
                 sendGrnAck(eventQueueApiModel);
                 break;
               default:
                 throw new BusinessException(
-                    errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0101, eventQueueApiModel.getEventName()));
+                    messageUtil.getDetail(
+                        MessageConstant.MESSAGE_KEY_E01_01_0101,
+                        new Object[] {eventQueueApiModel.getEventName()}));
             }
+
             eventQueueService.updateStatusFinishedByFifoSequence(eventQueueApiModel.getFifoSequence());
+            eventQueueService.updateMonitorEndByEventName(eventQueueApiModel.getEventName(), "Success");
+
           } catch (Exception e) {
-            log.error(e.getMessage(), e);
             eventQueueService.updateErrorByFifoSequence(eventQueueApiModel, e.getMessage());
+            eventQueueService.updateMonitorEndByEventName(eventQueueApiModel.getEventName(), e.getMessage());
           }
-        });
+
+        }
+      } else {
+        eventQueueService.updateMonitorEndByEventName(eventName, "Success");
       }
     }
   }
@@ -183,14 +195,16 @@ public class OutboundServiceImpl implements OutboundService {
         clientControlModelList.size() > 0) {
       if (!ClientControlC2Enum.CLIENT_CONTROL_C2_WEB_API.getCode().equals(clientControlModelList.get(0).getC2())) {
         throw new BusinessException(
-            errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0102));
+            messageUtil.getDetail(
+                MessageConstant.MESSAGE_KEY_E01_01_0102));
       }
       url = clientControlModelList.get(0).getC3();
     }
 
     if (StringUtils.isEmpty(url)) {
       throw new BusinessException(
-          errorUtil.build400ErrorList(MessageConstant.MESSAGE_KEY_E01_01_0103));
+          messageUtil.getDetail(
+              MessageConstant.MESSAGE_KEY_E01_01_0103));
     }
 
     return url;
