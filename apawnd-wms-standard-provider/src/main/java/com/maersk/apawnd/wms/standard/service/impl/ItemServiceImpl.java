@@ -4,6 +4,7 @@ import com.maersk.apawnd.wms.standard.mapper.ItemMasterMapper;
 import com.maersk.apawnd.wms.standard.service.ItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -16,6 +17,7 @@ public class ItemServiceImpl implements ItemService {
   }
 
   @Override
+  @Transactional
   public boolean isItemExisted(String whId, String itemNumber) {
     if (itemMasterMapper.selectCountByWhIdAndItemNumber(whId, itemNumber) > 0) {
       return true;

@@ -1,5 +1,6 @@
 package com.maersk.apawnd.wms.standard.service.impl;
 
+import com.maersk.apawnd.wms.standard.component.enums.EventQueueStatusEnum;
 import com.maersk.apawnd.wms.standard.mapper.ApiEventMonitorMapper;
 import com.maersk.apawnd.wms.standard.mapper.EventQueueApiMapper;
 import com.maersk.apawnd.wms.standard.model.ApiEventMonitorModel;
@@ -57,7 +58,9 @@ public class EventQueueServiceImpl implements EventQueueService {
   public int updateErrorByFifoSequence(EventQueueApiModel eventQueueApiModel, String message) {
     boolean isMailAlert = eventQueueServiceConfig.isMailAlert() &&
         eventQueueApiModel.getRetryCount() >= eventQueueServiceConfig.getRetryCount() - 1;
-    String status = isMailAlert ? "MAIL" : "ERROR";
+    String status = isMailAlert ?
+        EventQueueStatusEnum.EVENT_QUEUE_STATUS_MAIL.getCode() :
+        EventQueueStatusEnum.EVENT_QUEUE_STATUS_ERROR.getCode();
 
     return eventQueueApiMapper.updateErrorByFifoSequence(
         eventQueueApiModel.getFifoSequence(), status, message);

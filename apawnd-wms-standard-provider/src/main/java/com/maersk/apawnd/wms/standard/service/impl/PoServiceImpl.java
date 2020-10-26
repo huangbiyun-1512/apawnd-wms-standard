@@ -5,6 +5,7 @@ import com.maersk.apawnd.wms.standard.mapper.PoMasterMapper;
 import com.maersk.apawnd.wms.standard.service.PoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
@@ -21,6 +22,7 @@ public class PoServiceImpl implements PoService {
   }
 
   @Override
+  @Transactional
   public boolean isPoExisted(String whId, String poNumber) {
     if (poMasterMapper.selectCountByWhIdAndPoNumber(whId, poNumber) > 0) {
       return true;
@@ -29,6 +31,7 @@ public class PoServiceImpl implements PoService {
   }
 
   @Override
+  @Transactional
   public boolean isPoDetailExisted(
       String whId, String poNumber,
       String lineNumber, String itemNumber, Integer scheduleNumber) {
