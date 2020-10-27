@@ -95,7 +95,7 @@ public class OutboundServiceImpl implements OutboundService {
               monitorExecuteTimeMap.put(eventName, startTime);
               eventQueueService.updateMonitorStartByMonitorId(
                   threadId, apiEventMonitorModel.getMonitorId());
-              sendAck(eventName, threadId);
+              sendAck(eventName);
             } else {
               eventQueueService.updateMonitorEndByEventName(eventName, "Skip");
             }
@@ -110,7 +110,7 @@ public class OutboundServiceImpl implements OutboundService {
     }
   }
 
-  private void sendAck(String eventName, String threadId) {
+  private void sendAck(String eventName) {
     if (StringUtils.isNotBlank(eventName)) {
       List<EventQueueApiModel> eventQueueApiModelList = eventQueueService.retrieve(eventName);
 
