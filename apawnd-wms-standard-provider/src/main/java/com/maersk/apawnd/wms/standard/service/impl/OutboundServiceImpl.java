@@ -190,7 +190,7 @@ public class OutboundServiceImpl implements OutboundService {
             ClientControlTypeEnum.CLIENT_CONTROL_TYPE_EDI_TRIGGER.getCode(),
             eventName);
 
-    String url = "";
+    String url = null;
     if (Objects.nonNull(clientControlModelList) &&
         clientControlModelList.size() > 0) {
       if (!ClientControlC2Enum.CLIENT_CONTROL_C2_WEB_API.getCode().equals(clientControlModelList.get(0).getC2())) {
