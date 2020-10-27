@@ -1,4 +1,4 @@
-package com.maersk.apawnd.wms.standard.scheduler;
+package com.maersk.apawnd.wms.standard.component.scheduler;
 
 import com.maersk.apawnd.wms.standard.service.OutboundService;
 import lombok.extern.slf4j.Slf4j;
